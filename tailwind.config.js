@@ -98,6 +98,15 @@ export default {
         cairo : ['Cairo', 'sans-serif'],
         rubik : ['Rubik', 'sans-serif'],
         tajawal : ['Tajawal', 'sans-serif'],
+      },
+      keyframes :{
+        dropdown:{
+          '0%' : {transform: 'translateY(-15%)'},
+          '100%' : {reansform : 'translateY(0)'}
+        }
+      },
+      animation :{
+        dropdown : 'dropdown 0.2s ease-out'
       }
     },
   },
