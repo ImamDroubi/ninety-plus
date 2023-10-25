@@ -6,7 +6,9 @@ function App() {
   return (
     <>
     <Routes>
-        <Route path='/' element ={<MainLayout/>} />
+        <Route path='/' element ={<MainLayout/>}>
+          <Route index element ={<Home/>} />
+        </Route>
         {/* <Route path='/try' element ={<QuickTry/>} />
         
         <Route path='/*' element={<TopbarLayout/>}>
