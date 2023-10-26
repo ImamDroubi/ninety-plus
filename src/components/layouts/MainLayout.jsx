@@ -10,7 +10,7 @@ export default function MainLayout() {
       <TopBar/>
       <Header/>
       <Outlet />
-      <FooterInfo/>
+      
       <Footer/>
     </>
   )

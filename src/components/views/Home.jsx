@@ -3,6 +3,7 @@ import TopBar from "../menus/TopBar";
 import MathBook from "../../assets/images/book-covers/math-scientific.jpg"
 import Hero from "../other/Hero";
 import Teacher from "../cards/Teacher";
+import FooterInfo from "../other/FooterInfo";
 
 export default function Home() {
   return (
@@ -23,6 +24,7 @@ export default function Home() {
         stars={4.1}
         studentsNo={1324}
       ></Teacher>
+      <FooterInfo/>
     </>
   )
 }

@@ -101,8 +101,8 @@ export default {
       },
       keyframes :{
         dropdown:{
-          '0%' : {transform: 'translateY(-15%)'},
-          '100%' : {reansform : 'translateY(0)'}
+          '0%' : {transform: 'translateY(-15%)',opacity : '0' },
+          '100%' : {reansform : 'translateY(0)',opacity : '1'}
         }
       },
       animation :{

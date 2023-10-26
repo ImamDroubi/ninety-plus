@@ -6,6 +6,7 @@ import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 import {useAuth} from "../../contexts/AuthContext";
 import LoggedUser from "./LoggedUser";
 import { useRef } from "react";
+import { Link } from "react-router-dom";
 export default function Header() {
   const {login, currentUser} = useAuth();
   const searchRef = useRef();
@@ -21,14 +22,15 @@ export default function Header() {
           {
             !currentUser?
               <div className="flex gap-1">
-              <Button
+              <Link to="/sign-up"><Button
               text="تسجيل"
               type="secondary"
-              />
+              /></Link>
+              <Link to="/sign-in">
               <Button
               text="دخول"
-              action={login}
-              />
+              // action={login}
+              /></Link>
               </div>
             :
               <LoggedUser/>

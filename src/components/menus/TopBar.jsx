@@ -26,7 +26,7 @@ export default function TopBar() {
         <ul className="flex ">
           {
             links.map((link,ind)=>{
-              return <NavLink to={link.destination}><li key={ind} className="px-1 py-1 text-xs text-center hover:bg-gray-700 sm:text-base" >{link.text}</li></NavLink>
+              return <NavLink className={({isActive})=>isActive?'border-t-2 border-primary-500':undefined} to={link.destination}><li key={ind} className="px-1 py-1 text-xs text-center hover:bg-gray-700 sm:text-base" >{link.text}</li></NavLink>
             })
           }
         </ul>
