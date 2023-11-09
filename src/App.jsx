@@ -4,6 +4,7 @@ import MainLayout from "./components/layouts/MainLayout"
 import SignIn from "./components/views/SignIn"
 import SignUp from "./components/views/SignUp"
 import NotFound from "./components/views/NotFound"
+import CoursePage from "./components/views/CoursePage"
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <Route path='/' element ={<MainLayout/>}>
           <Route index element ={<Home/>} />
           <Route path="/not-found" element ={<NotFound/>} />
+          <Route path="course-page/:id" element ={<CoursePage/>} />
         </Route>
         <Route path="/sign-in" element={<SignIn/>} />
         <Route path="/sign-up" element={<SignUp/>} />
