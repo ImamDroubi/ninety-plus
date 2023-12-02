@@ -33,7 +33,7 @@ export default {
       },
       'gray' : {
         'white' : '#FFFFFF',
-        50 : 'F5F7FA',
+        50 : '#F5F7FA',
         100 : '#E9EAF0',
         200 : '#CED1D9',
         300 : '#B7BAC7',

@@ -3,8 +3,8 @@ import Button from "../buttons/Button";
 import FooterMenu from "../menus/FooterMenu";
 import Logo from "./Logo";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-// import { faFacebookF,faInstagram,faTwitter,faYoutube } from '@fortawesome/free-solid-svg-icons'
-import { faStar} from '@fortawesome/free-solid-svg-icons'
+import { faFacebookF,faInstagram,faXTwitter,faYoutube } from '@fortawesome/free-brands-svg-icons'
+
 
 export default function Footer() {
   const footerLists = [
@@ -76,22 +76,22 @@ export default function Footer() {
     {
       "name" : "Facebook",
       "dest" : "/",
-      "icon" : "F"
+      "icon" : <FontAwesomeIcon icon={faFacebookF} />
     },
     {
       "name" : "Instagram",
       "dest" : "/",
-      "icon" : "I"
+      "icon" : <FontAwesomeIcon icon={faInstagram} />
     },
     {
       "name" : "Twitter",
       "dest" : "/",
-      "icon" : "T"
+      "icon" : <FontAwesomeIcon icon={faXTwitter} />
     },
     {
       "name" : "Youtube",
       "dest" : "/",
-      "icon" : "Y"
+      "icon" : <FontAwesomeIcon icon={faYoutube} />
     },
   ]
   return (
@@ -107,7 +107,7 @@ export default function Footer() {
             <p className="text-gray-500">منصة إلكترونية تعليمية للدروس المباشرة لطلبة التوجيهي</p>
           <div className="flex flex-row-reverse gap-3 social-links">
             {socialList.map((link)=>{
-              return <Link title={link.name} to={link.dest}><div className="icon p-1 bg-[rgba(255,255,255,0.05)] text-gray-white hover:bg-primary-500 hover:shadow-[0px_0px_15px_0px_rgba(255,102,54,0.2)]"><FontAwesomeIcon icon={faStar} /></div></Link>
+              return <Link title={link.name} to={link.dest}><div className="icon w-[3rem] h-[3rem] flex items-center justify-center bg-[rgba(255,255,255,0.05)] text-gray-white hover:bg-primary-500 hover:shadow-[0px_0px_15px_0px_rgba(255,102,54,0.2)]">{link.icon}</div></Link>
             })}
           </div>
         </div>

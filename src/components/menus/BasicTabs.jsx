@@ -41,7 +41,7 @@ function a11yProps(index) {
 function Description(){
   return (
     <>
-      <h3 className='title text-gray-900 font-bold text-xl mb-3'>الوصف</h3>
+      <h3 className='mb-3 text-xl font-bold text-gray-900 title'>الوصف</h3>
       <p className='text-gray-700'>
         دورة شاملة في منهاج الرياضيات للتوجيهي العلمي على مدار الفصل الأول كاملاً، ثلاث لقاءات أسبوعيا،
         بثوث مباشرة وحلول لأسئلة الدروس وأسئلة خارجية وأسئلة سنوات سابقة
@@ -53,13 +53,13 @@ function Description(){
 function Teacher(){
   return (
     <>
-      <h3 className='title text-gray-900 font-bold text-xl mb-3'>الأستاذ</h3>
-      <div className="teacher flex flex-col gap-3">
-        <div className="img w-full object-cover">
+      <h3 className='mb-3 text-xl font-bold text-gray-900 title'>الأستاذ</h3>
+      <div className="flex flex-col gap-3 teacher">
+        <div className="object-cover w-full img">
           <img src={user} alt="" className='w-full h-full' />
         </div>
         <p className='text-gray-700'>
-          <span className='text-gray-900 font-bold'>أ.محمد حرزالله </span>
+          <span className='font-bold text-gray-900'>أ.محمد حرزالله </span>
           خبرة 30 عاماً في تدريس التوجيهي، خريج جامعة كذا كذا
           خبرة 30 عاماً في تدريس التوجيهي، خريج جامعة كذا كذا
           خبرة 30 عاماً في تدريس التوجيهي، خريج جامعة كذا كذا
@@ -73,16 +73,16 @@ function StudentComment(){
   const text = "هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى، حيث يمكنك أن تولد مثل هذا النص أو العديد من النصوص الأخرى إضافة إلى زيادة عدد الحروف التى يولدها التطبيق. إذا كنت تحتاج إلى عدد أكبر من الفقرات";
   return(
     <>
-      <div className="header flex gap-2 items-center">
-        <div className="img w-6 h-6 object-cover rounded-full">
+      <div className="flex items-center gap-2 text-sm header">
+        <div className="object-cover w-6 h-6 rounded-full img">
           <img src={user} alt="" className='w-full h-full rounded-full' />
         </div>
         <div className="info">
-          <div className="name text-gray-900 font-bold">يعقوب قمر الدين<span className='time text-gray-600 text-sm font-normal'> • 5 دقائق</span></div>
+          <div className="font-bold text-gray-900 name">يعقوب قمر الدين<span className='text-sm font-normal text-gray-600 time'> • 5 دقائق</span></div>
         </div>
       </div>
       <div className="body">
-        <p className='text-gray-700 pr-[3.5rem]'>
+        <p className='text-gray-700 pr-[3.5rem] text-sm'>
           {
           text.length>150?
           extended?
@@ -95,9 +95,9 @@ function StudentComment(){
           {
             text.length>150?
             extended?
-            <button onClick={()=>setExtended(false)} className='text-primary-700 font-bold text-sm'>إظهار أقل</button>
+            <button onClick={()=>setExtended(false)} className='text-sm font-bold text-primary-700'>إظهار أقل</button>
             :
-            <button onClick={()=>setExtended(true)} className='text-primary-700 font-bold text-sm'>إظهار المزيد</button>
+            <button onClick={()=>setExtended(true)} className='text-sm font-bold text-primary-700'>إظهار المزيد</button>
             :
             null
           }
@@ -110,7 +110,7 @@ function StudentComment(){
 function StudentsFeedback(){
   return (
     <>
-      <h3 className='title text-gray-900 font-bold text-xl mb-3'>تعليقات الطلاب</h3>
+      <h3 className='mb-3 text-xl font-bold text-gray-900 title'>تعليقات الطلاب</h3>
       <StudentComment/>
       <StudentComment/>
       <StudentComment/>
