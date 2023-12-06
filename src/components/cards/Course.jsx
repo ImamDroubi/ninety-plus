@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faStar } from '@fortawesome/free-solid-svg-icons'
 export default function Course({preview,category,price,title,stars,studentsNo}) {
   return (
-    <div className="group max-w-[16rem] min-h-[20rem] bg-gray-white m-4 flex flex-col cursor-pointer border-2 border-gray-100">
+    <div className="group w-[20rem] sm:w-[16rem] min-h-[20rem] bg-gray-white  flex flex-col cursor-pointer border-2 border-gray-100">
       <div className="preview w-full h-[12rem] object-cover overflow-hidden relative">
         <div className="absolute hidden w-full h-full overlay bg-gray-white opacity-30 group-hover:block"></div>
         <img src={preview} alt="math book" className="w-full"/>

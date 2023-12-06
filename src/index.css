@@ -8,3 +8,13 @@
   box-sizing: border-box;
   font-family: 'Cairo' , 'sans-serif';
 }
+
+.grid{
+  grid-template-columns: repeat(auto-fit, 16rem);
+}
+@media only screen and (max-width: 640px) {
+  .grid{
+    grid-template-columns: repeat(auto-fit, 20rem);
+  }
+}
+

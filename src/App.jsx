@@ -5,6 +5,7 @@ import SignIn from "./components/views/SignIn"
 import SignUp from "./components/views/SignUp"
 import NotFound from "./components/views/NotFound"
 import CoursePage from "./components/views/CoursePage"
+import Courses from "./components/views/Courses"
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           <Route index element ={<Home/>} />
           <Route path="/not-found" element ={<NotFound/>} />
           <Route path="course-page/:id" element ={<CoursePage/>} />
+          <Route path="courses" element ={<Courses/>} />
         </Route>
         <Route path="/sign-in" element={<SignIn/>} />
         <Route path="/sign-up" element={<SignUp/>} />

@@ -47,7 +47,7 @@ export default function CoursePage() {
               <BasicTabs/>
             </div>
           </div>
-          <div className="sticky hidden w-3/4 shadow-md widget lg:flex bg-gray-white h-fit top-2">
+          <div className="sticky hidden w-1/2 shadow-md widget lg:flex bg-gray-white h-fit top-2">
             <BuyCourse/>
           </div>
           <button onClick={()=>setBuyModalOpen(!buyModalOpen)} className="w-[4rem] h-[4rem] rounded-full bg-primary-500 text-gray-white fixed bottom-3 left-1 hover:bg-primary-600 duration-100 lg:hidden ">

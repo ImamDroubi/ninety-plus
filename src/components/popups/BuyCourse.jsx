@@ -25,7 +25,7 @@ export default function BuyCourse() {
     
   ]
   return (
-    <div className="z-10 w-full p-3">
+    <div className="z-10 w-full p-5">
       <div className="flex items-center justify-between price">
         <p className="text-2xl">{price.toFixed(2)}$ {discount?<span className="text-xl text-gray-500 line-through">{original.toFixed(2)}</span>:null}</p>
         <p className="p-1 text-sm text-primary-500 bg-primary-100">{discount}% خصم</p>
