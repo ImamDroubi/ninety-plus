@@ -1,11 +1,11 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar,faCartShopping,faXmark} from '@fortawesome/free-solid-svg-icons'
 import user from "../../assets/images/user.jpg"
-import BasicTabs from "../menus/BasicTabs";
 import Container90 from "../containers/Container90";
 import BuyCourse from "../popups/BuyCourse";
 import PopupLayout from "../layouts/PopupLayout";
 import { useState } from "react";
+import CoursePageTabs from "../menus/CoursePageTabs";
 
 export default function CoursePage() {
   const teacherImage = user;
@@ -44,7 +44,7 @@ export default function CoursePage() {
               <img src={booksImgae} alt="" className="w-full h-full" />
             </div>
             <div className="information">
-              <BasicTabs/>
+              <CoursePageTabs/>
             </div>
           </div>
           <div className="sticky hidden w-1/2 shadow-md widget lg:flex bg-gray-white h-fit top-2">
