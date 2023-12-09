@@ -1,3 +1,5 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {faComment} from '@fortawesome/free-solid-svg-icons'
 import PropTypes from 'prop-types';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
@@ -5,6 +7,9 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import user from "../../assets/images/user.jpg";
 import { useState } from 'react';
+import { Button } from '@mui/material';
+import AddComent from "../popups/AddComent";
+import PopupLayout from "../layouts/PopupLayout";
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -108,12 +113,43 @@ function StudentComment(){
   )
 }
 function StudentsFeedback(){
+  const [addCommentPopupOpen,setAddCommentPopupOpen] = useState(false);
   return (
     <>
-      <h3 className='mb-3 text-xl font-bold text-gray-900 title'>تعليقات الطلاب</h3>
+      <div className='flex items-center justify-between'>
+        <h3 className='mb-3 text-xl font-bold text-gray-900 title'>تعليقات الطلاب</h3>
+        <Button variant='contained' >
+          <div onClick={()=>setAddCommentPopupOpen(true)} className="flex items-center gap-1">
+            <p>تعليق</p>
+            <FontAwesomeIcon icon={faComment} />
+          </div>
+        </Button>
+      </div>
       <StudentComment/>
       <StudentComment/>
       <StudentComment/>
+      {
+        addCommentPopupOpen?
+        <PopupLayout>
+          <div className="relative z-10 w-10/12 max-w-[40rem] pt-6 pb-2 px-3 bg-gray-white">
+            <button onClick={()=>setAddCommentPopupOpen(false)} className="absolute top-[-1rem] right-[-1rem] text-gray-white bg-primary-500 p-2 w-6 h-6 rounded-full flex items-center justify-center text-xl hover:bg-primary-600">
+                X
+              </button>
+              <AddComent/>
+              <div className="flex justify-between buttons">
+                <Button variant="contained" sx={{color:"rgb(29 32 38)" , backgroundColor:"rgb(245 247 250)", "&:hover" :{backgroundColor:"rgb(206 209 217)"}}}>إلغاء</Button>
+                <Button variant='contained' >
+                  <div onClick={()=>setAddCommentPopupOpen(true)} className="flex items-center gap-1">
+                    <p>تعليق</p>
+                    <FontAwesomeIcon icon={faComment} />
+                  </div>
+                </Button>
+              </div>
+            </div>
+        </PopupLayout>
+        :
+        null
+      }
     </>
   )
 }
