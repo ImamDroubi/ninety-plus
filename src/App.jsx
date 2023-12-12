@@ -7,6 +7,7 @@ import NotFound from "./components/views/NotFound"
 import CoursePage from "./components/views/CoursePage"
 import Courses from "./components/views/Courses"
 import Course from "./components/views/Course"
+import Student from "./components/views/Student"
 
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
           <Route path="course-page/:id" element ={<CoursePage/>} />
           <Route path="courses" element ={<Courses/>} />
           <Route path="course/:id" element ={<Course/>} />
+          <Route path="student/:id" element ={<Student/>} />
         </Route>
         <Route path="/sign-in" element={<SignIn/>} />
         <Route path="/sign-up" element={<SignUp/>} />

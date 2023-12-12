@@ -1,49 +1,12 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faFile,faComment} from '@fortawesome/free-solid-svg-icons'
-import PropTypes from 'prop-types';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
 import user from "../../assets/images/user.jpg";
-
 import { useState } from 'react';
 import Button from '@mui/material/Button';
 import PopupLayout from "../layouts/PopupLayout";
 import AddComent from "../popups/AddComent";
+import SlidingTabs from "./SlidingTabs";
 
-function CustomTabPanel(props) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
-    </div>
-  );
-}
-
-CustomTabPanel.propTypes = {
-  children: PropTypes.node,
-  index: PropTypes.number.isRequired,
-  value: PropTypes.number.isRequired,
-};
-
-function a11yProps(index) {
-  return {
-    id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
-  };
-}
 function Description(){
   return (
     <>
@@ -119,8 +82,8 @@ function StudentsFeedback(){
     <>
       <div className='flex items-center justify-between'>
         <h3 className='mb-3 text-xl font-bold text-gray-900 title'>تعليقات الطلاب</h3>
-        <Button variant='contained' >
-          <div onClick={()=>setAddCommentPopupOpen(true)} className="flex items-center gap-1">
+        <Button onClick={()=>setAddCommentPopupOpen(true)} variant='contained' >
+          <div className="flex items-center gap-1">
             <p>تعليق</p>
             <FontAwesomeIcon icon={faComment} />
           </div>
@@ -154,31 +117,13 @@ function StudentsFeedback(){
     </>
   )
 }
-export default function CourseInfoTabs() {
-  const [value, setValue] = useState(0);
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
-
-  return (
-    <Box sx={{ width: '100%' }}>
-      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-          <Tab label="الوصف" {...a11yProps(0)} />
-          <Tab label="الملفات المرفقة" {...a11yProps(1)} />
-          <Tab label="تعليقات الطلاب" {...a11yProps(2)} />
-        </Tabs>
-      </Box>
-      <CustomTabPanel value={value} index={0}>
-        <Description/>
-      </CustomTabPanel>
-      <CustomTabPanel value={value} index={1}>
-        <AttachedFiles/>
-      </CustomTabPanel>
-      <CustomTabPanel value={value} index={2}>
-        <StudentsFeedback/>
-      </CustomTabPanel>
-    </Box>
-  );
+export default function CourseInfoTabs(){
+  return(
+    <SlidingTabs>
+      <Description label="الوصف"/>
+      <AttachedFiles label="الملفات المرفقة"/>
+      <StudentsFeedback label="تعليقات الطلاب"/>
+    </SlidingTabs>
+  )
 }
