@@ -10,10 +10,10 @@ export default function SelectStream() {
 }
 
 export  function SelectAutoWidth() {
-  const [stram, setStram] = React.useState('');
+  const [stream, setStream] = React.useState('');
 
   const handleChange = (event) => {
-    setStram(event.target.value);
+    setStream(event.target.value);
   };
 
   return (
@@ -23,7 +23,7 @@ export  function SelectAutoWidth() {
         <Select
           labelId="demo-simple-select-autowidth-label"
           id="demo-simple-select-autowidth"
-          value={stram}
+          value={stream}
           onChange={handleChange}
           autoWidth
           label="الفرع"
