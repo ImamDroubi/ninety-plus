@@ -1,7 +1,10 @@
 import SlidingTabs from "../menus/SlidingTabs";
 import Courses from "../studentPageComponents/Courses";
+import Favourite from "../studentPageComponents/Favourite";
 import Messages from "../studentPageComponents/Messages";
 import Overview from "../studentPageComponents/Overview";
+import PurchaseHistory from "../studentPageComponents/PurchaseHistory";
+import Settings from "../studentPageComponents/Settings";
 import Teachers from "../studentPageComponents/Teachers";
 
 function Content() {
@@ -49,9 +52,9 @@ export default function Student() {
           <Courses label="الدورات" />
           <Teachers label="الأساتذة" />
           <Messages label="الرسائل" />
-          <Content label="المفضلة" />
-          <Content label="عمليات الشراء" />
-          <Content label="الإعدادات" />
+          <Favourite label="المفضلة" />
+          <PurchaseHistory label="عمليات الشراء" />
+          <Settings label="الإعدادات" />
         </SlidingTabs>
       </div>
     </div>

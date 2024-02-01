@@ -1,7 +1,7 @@
 import { useState } from "react";
 import SearchInput from "../other/SearchInput";
 import { Avatar, Button } from "@mui/material";
-import { SendIcon, ThreeDots } from "../icons/icons";
+import { SendIcon, ThreeDotsIcon } from "../icons/icons";
 import DropDownMenu from "../menus/DropdownMenu";
 
 export default function Messages() {
@@ -22,7 +22,7 @@ export default function Messages() {
           <ConversationPreview />
         </div>
       </div>
-      <div className="conversation-body w-2/3  border-[1px] border-gray-100 hidden md:block px-2">
+      <div className="conversation-body w-full hidden md:w-2/3  border-[1px] border-gray-100  md:block px-2">
         <ConversationBody />
       </div>
     </section>
@@ -108,7 +108,7 @@ export function ConversationBody() {
         </div>
         <div className="options">
           <DropDownMenu list={optionsMenu}>
-            <ThreeDots className="cursor-pointer text-gray-900 bg-gray-50 p-2 hover:bg-primary-200" />
+            <ThreeDotsIcon className="cursor-pointer text-gray-900 bg-gray-50 p-2 hover:bg-primary-200" />
           </DropDownMenu>
         </div>
       </div>
@@ -138,7 +138,7 @@ export function ConversationBody() {
           name=""
           id=""
         />
-        <Button variant="contained" sx={{ display: "flex", gap: "5px" }}>
+        <Button variant="contained" disableElevation sx={{ display: "flex", gap: "5px" }}>
           إرسال
           {<SendIcon />}
         </Button>
