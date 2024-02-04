@@ -5,7 +5,7 @@ import Hero from "../other/Hero";
 import Teacher from "../cards/Teacher";
 import FooterInfo from "../other/FooterInfo";
 
-export default function Home() {
+export default function HomePage() {
   return (
     <>
       <Hero />

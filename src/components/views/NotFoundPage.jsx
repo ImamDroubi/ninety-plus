@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom"
 import error from "../../assets/images/not-found.png"
 import Button from "../buttons/Button"
-export default function NotFound() {
+export default function NotFoundPage() {
   return (
     <div className="flex flex-col-reverse w-100 items-center md:flex-row">
       <div className="content flex flex-col gap-2 items-center w-2/3 text-center py-6 md:items-start md:px-6 lg:px-[5rem]  md:text-right md:gap-4">

@@ -106,8 +106,8 @@ export default function Footer() {
           <Logo/>
             <p className="text-gray-500">منصة إلكترونية تعليمية للدروس المباشرة لطلبة التوجيهي</p>
           <div className="flex flex-row-reverse gap-3 social-links">
-            {socialList.map((link)=>{
-              return <Link title={link.name} to={link.dest}><div className="icon w-[3rem] h-[3rem] flex items-center justify-center bg-[rgba(255,255,255,0.05)] text-gray-white hover:bg-primary-500 hover:shadow-[0px_0px_15px_0px_rgba(255,102,54,0.2)]">{link.icon}</div></Link>
+            {socialList.map((link,ind)=>{
+              return <Link key={ind} title={link.name} to={link.dest}><div className="icon w-[3rem] h-[3rem] flex items-center justify-center bg-[rgba(255,255,255,0.05)] text-gray-white hover:bg-primary-500 hover:shadow-[0px_0px_15px_0px_rgba(255,102,54,0.2)]">{link.icon}</div></Link>
             })}
           </div>
         </div>

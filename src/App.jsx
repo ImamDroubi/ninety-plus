@@ -1,30 +1,31 @@
 import { Route, Routes } from "react-router-dom";
-import Home from "./components/views/Home";
+import HomePage from "./components/views/HomePage";
 import MainLayout from "./components/layouts/MainLayout";
-import SignIn from "./components/views/SignIn";
-import SignUp from "./components/views/SignUp";
-import NotFound from "./components/views/NotFound";
-import CoursePage from "./components/views/CoursePage";
-import Courses from "./components/views/Courses";
-import Course from "./components/views/Course";
-import Student from "./components/views/Student";
+import SignInPage from "./components/views/SignInPage";
+import SignUpPage from "./components/views/SignUpPage";
+import NotFoundPage from "./components/views/NotFoundPage";
+import CourseContentPage from "./components/views/CourseContentPage";
+import CoursesPage from "./components/views/CoursesPage";
+import CourseInfoPage from "./components/views/CourseInfoPage";
+import StudentPage from "./components/views/StudentPage";
+
 
 function App() {
   return (
     <>
       <Routes>
         <Route path="/" element={<MainLayout />}>
-          <Route index element={<Home />} />
-          <Route path="/not-found" element={<NotFound />} />
-          <Route path="course-page/:id" element={<CoursePage />} />
-          <Route path="courses" element={<Courses />} />
-          <Route path="course/:id" element={<Course />} />
-          <Route path="student/:id" element={<Student />} />
+          <Route index element={<HomePage />} />
+          <Route path="/not-found" element={<NotFoundPage />} />
+          <Route path="course-page/:id" element={<CourseContentPage />} />
+          <Route path="courses" element={<CoursesPage />} />
+          <Route path="course/:id" element={<CourseInfoPage />} />
+          <Route path="student/:id" element={<StudentPage />}/>
         </Route>
-        <Route path="/sign-in" element={<SignIn />} />
-        <Route path="/sign-up" element={<SignUp />} />
+        <Route path="/sign-in" element={<SignInPage />} />
+        <Route path="/sign-up" element={<SignUpPage />} />
         <Route path="/*" element={<MainLayout />}>
-          <Route path="*" element={<NotFound />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Routes>
     </>

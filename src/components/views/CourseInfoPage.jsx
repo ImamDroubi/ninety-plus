@@ -8,7 +8,7 @@ import WatchCourseMenu from "../menus/WatchCourseMenu";
 import PopupLayout from "../layouts/PopupLayout";
 import { useState } from "react";
 import WatchMenu from "../popups/watchMenu";
-export default function Course() {
+export default function CourseInfoPage() {
   const [watchPopupOpen,setWatchPopupOpen] = useState(false);
 
   return (

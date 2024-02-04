@@ -9,7 +9,7 @@ import Pagination from "@mui/material/Pagination";
 import { streamsList } from "../data/streamsList";
 const NUMBER_OF_COURSES_IN_THE_PAGE = 7;
 const NUMBER_OF_DATA = 10;
-export default function Courses() {
+export default function CoursesPage() {
   const searchRef = useRef();
   const [currentStream, setCurrentStream] = useState();
 

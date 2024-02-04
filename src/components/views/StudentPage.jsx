@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import SlidingTabs from "../menus/SlidingTabs";
 import Courses from "../studentPageComponents/Courses";
 import Favourite from "../studentPageComponents/Favourite";
@@ -6,16 +7,18 @@ import Overview from "../studentPageComponents/Overview";
 import PurchaseHistory from "../studentPageComponents/PurchaseHistory";
 import Settings from "../studentPageComponents/Settings";
 import Teachers from "../studentPageComponents/Teachers";
+import { useParams, useSearchParams } from "react-router-dom";
 
-function Content() {
-  return (
-    <>
-      <p>content</p>
-    </>
-  );
-}
-
-export default function Student() {
+const pagesList = [
+  "overview",
+  "courses",
+  "teachers",
+  "messages",
+  "favourite",
+  "purchases",
+  "settings",
+];
+export default function StudentPage() {
   const studentInfo = {
     id: 1,
     name: "يعقوب قمر الدين",
@@ -27,6 +30,18 @@ export default function Student() {
     completedCourses: 3,
     coursesInstructors: 3,
   };
+  const [searchParams, setSearchParams] = useSearchParams();
+  const handleTabChange = (index) => {
+    console.log(index);
+    setSearchParams({ tab: pagesList[index] });
+  };
+  const [currentIndex, setCurrentIndex] = useState(0);
+  useEffect(() => {
+    let tab = searchParams.get("tab");
+    let index = pagesList.indexOf(tab);
+    if (index == -1) index = 0;
+    setCurrentIndex(index);
+  }, [searchParams]);
 
   return (
     <div className="relative lg:pt-[7rem]">
@@ -47,7 +62,10 @@ export default function Student() {
             </div>
           </div>
         </header>
-        <SlidingTabs>
+        <SlidingTabs
+          handleTabChange={handleTabChange}
+          currentIndex={currentIndex}
+        >
           <Overview student={studentInfo} label="نظرة عامة" />
           <Courses label="الدورات" />
           <Teachers label="الأساتذة" />

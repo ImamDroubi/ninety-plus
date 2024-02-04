@@ -6,7 +6,8 @@ import {
   faStar,
   faHeart as solidHeart,
   faTrash,
-  faCircleCheck
+  faCircleCheck,
+  faArrowUpFromBracket
 } from "@fortawesome/free-solid-svg-icons";
 import { faHeart } from "@fortawesome/free-regular-svg-icons";
 
@@ -35,6 +36,9 @@ export function TrashIcon(props) {
 }
 export function CircleCheckIcon(props) {
   return <FontAwesomeIcon {...props} icon={faCircleCheck} />;
+}
+export function UploadArrowIcon(props) {
+  return <FontAwesomeIcon {...props} icon={faArrowUpFromBracket} />
 }
 
 
