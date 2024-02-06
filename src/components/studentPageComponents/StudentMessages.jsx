@@ -4,7 +4,7 @@ import { Avatar, Button } from "@mui/material";
 import { SendIcon, ThreeDotsIcon } from "../icons/icons";
 import DropDownMenu from "../menus/DropdownMenu";
 
-export default function Messages() {
+export default function StudentMessages() {
   const [searchText, setSearchText] = useState();
 
   return (

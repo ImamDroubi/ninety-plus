@@ -39,7 +39,7 @@ function Lecture() {
     </div>
   );
 }
-export default function Courses() {
+export default function StudentCourses() {
   const [pagination, setPagination] = useState({
     count: NUMBER_OF_DATA,
     from: 0,

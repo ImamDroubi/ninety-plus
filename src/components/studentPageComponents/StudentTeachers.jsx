@@ -6,7 +6,7 @@ import Teacher from "../cards/Teacher";
 const NUMBER_OF_TEACHERS_IN_THE_PAGE = 8;
 const NUMBER_OF_DATA = 4;
 
-export default function Teachers() {
+export default function StudentTeachers() {
   const [pagination, setPagination] = useState({
     count: NUMBER_OF_DATA,
     from: 0,

@@ -1,30 +1,29 @@
 import { Button } from "@mui/material";
-import { StarIcon, TrashIcon } from "../icons/icons";
-
-export default function Favourite() {
+import { CircleCheckIcon, StarIcon, TrashIcon } from "../icons/icons";
+export default function StudentPurchaseHistory() {
   return (
     <section className="mb-4">
       <h2 className="mb-3 text-lg text-gray-900 font-semibold">
-        المفضلة <span>(3)</span>
+        عمليات الشراء <span>(3)</span>
       </h2>
 
       <div className="favourite-list ">
         <div className="header hidden md:flex text-gray-700 border-[1px] border-gray-100 font-bold text-sm  p-2">
           <p className="w-7/12">الدورات</p>
           <p className="w-2/12">السعر</p>
-          <p className="w-3/12">الإجراءات</p>
+          <p className="w-3/12">التاريخ</p>
         </div>
         <div className="body border-x-[1px] border-gray-100 p-2 border-b-[1px] md:h-[32rem] overflow-auto">
-          <CourseCardInFavourite />
-          <CourseCardInFavourite />
-          <CourseCardInFavourite />
+          <CourseCardInPurchaseHistory />
+          <CourseCardInPurchaseHistory />
+          <CourseCardInPurchaseHistory />
         </div>
       </div>
     </section>
   );
 }
 
-export function CourseCardInFavourite() {
+export function CourseCardInPurchaseHistory() {
   const course = {
     photoUrl:
       "https://images.unsplash.com/photo-1501504905252-473c47e087f8?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -35,7 +34,7 @@ export function CourseCardInFavourite() {
     price: 200,
   };
   return (
-    <div className="card flex flex-col items-center md:flex-row border-b-[1px] gap-4 md:gap-[0] border-gray-100 py-3">
+    <div className="card flex-col md:flex-row items-center flex border-b-[1px] border-gray-100 gap-4 md:gap-[0] py-3">
       <div className="course w-full md:w-7/12 flex flex-col md:flex-row gap-2 cursor-pointer group/card">
         <div className="preview w-full h-[10rem] md:w-[12rem] md:h-[8rem] relative">
           <div className="absolute hidden w-full h-full overlay bg-gray-white opacity-30 group-hover/card:block"></div>
@@ -63,27 +62,13 @@ export function CourseCardInFavourite() {
       <div className="price w-full md:w-2/12 flex flex-col md:flex-row items-center">
         <p className="text-primary-500 text-2xl md:text-lg">{course.price}₪</p>
       </div>
-      <div className="actions w-full md:w-3/12 flex justify-center items-center gap-2">
-        <Button
-          variant="contained"
-          disableElevation
-          fullWidth
-          sx={{ borderRadius: 0 }}
-        >
-          اشتر الآن
-        </Button>
-        <Button
-          variant="outlined"
-          disableElevation
-          fullWidth
-          sx={{ borderRadius: 0, display: "flex", gap: "5px" }}
-        >
-          حذف
-          <TrashIcon />
-        </Button>
+      <div className="date w-full md:w-3/12 flex flex-col md:flex-row text-center md:text-right items-center gap-2">
+        <p>
+          تم الشراء بتاريخ : <br />
+          <span>12/12/2024 12:35PM </span>
+          <CircleCheckIcon className={"text-success-500"} />
+        </p>
       </div>
     </div>
-    //
-    //
   );
 }

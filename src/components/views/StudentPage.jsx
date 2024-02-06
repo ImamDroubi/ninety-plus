@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import SlidingTabs from "../menus/SlidingTabs";
-import Courses from "../studentPageComponents/Courses";
-import Favourite from "../studentPageComponents/Favourite";
-import Messages from "../studentPageComponents/Messages";
-import Overview from "../studentPageComponents/Overview";
-import PurchaseHistory from "../studentPageComponents/PurchaseHistory";
-import Settings from "../studentPageComponents/Settings";
-import Teachers from "../studentPageComponents/Teachers";
+import StudentCourses from "../studentPageComponents/StudentCourses";
+import StudentFavourite from "../studentPageComponents/StudentFavourite";
+import StudentMessages from "../studentPageComponents/StudentMessages";
+import StudentOverview from "../studentPageComponents/StudentOverview";
+import StudentPurchaseHistory from "../studentPageComponents/StudentPurchaseHistory";
+import StudentSettings from "../studentPageComponents/StudentSettings";
+import StudentTeachers from "../studentPageComponents/StudentTeachers";
 import { useSearchParams } from "react-router-dom";
 import {
   BookIcon,
@@ -122,13 +122,13 @@ export default function StudentPage() {
             currentIndex={currentIndex}
             showTabes={false}
           >
-            <Overview student={studentInfo} label="نظرة عامة" />
-            <Courses label="الدورات" />
-            <Teachers label="الأساتذة" />
-            <Messages label="الرسائل" />
-            <Favourite label="المفضلة" />
-            <PurchaseHistory label="عمليات الشراء" />
-            <Settings label="الإعدادات" />
+            <StudentOverview student={studentInfo} label="نظرة عامة" />
+            <StudentCourses label="الدورات" />
+            <StudentTeachers label="الأساتذة" />
+            <StudentMessages label="الرسائل" />
+            <StudentFavourite label="المفضلة" />
+            <StudentPurchaseHistory label="عمليات الشراء" />
+            <StudentSettings label="الإعدادات" />
           </SlidingTabs>
           <MenuDrawer
             listItems={listItems}
@@ -144,13 +144,13 @@ export default function StudentPage() {
             currentIndex={currentIndex}
             showTabs={true}
           >
-            <Overview student={studentInfo} label="نظرة عامة" />
-            <Courses label="الدورات" />
-            <Teachers label="الأساتذة" />
-            <Messages label="الرسائل" />
-            <Favourite label="المفضلة" />
-            <PurchaseHistory label="عمليات الشراء" />
-            <Settings label="الإعدادات" />
+            <StudentOverview student={studentInfo} label="نظرة عامة" />
+            <StudentCourses label="الدورات" />
+            <StudentTeachers label="الأساتذة" />
+            <StudentMessages label="الرسائل" />
+            <StudentFavourite label="المفضلة" />
+            <StudentPurchaseHistory label="عمليات الشراء" />
+            <StudentSettings label="الإعدادات" />
           </SlidingTabs>
         </section>
       </div>

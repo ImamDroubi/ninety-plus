@@ -8,7 +8,7 @@ import {
 import Course from "../cards/Course";
 import MathBook from "../../assets/images/book-covers/math-scientific.jpg";
 import { Button } from "@mui/material";
-export default function Overview({ student }) {
+export default function StudentOverview({ student }) {
   const icons = {
     enrolled: <FontAwesomeIcon icon={faVideo} />,
     active: <FontAwesomeIcon icon={faSpinner} />,
