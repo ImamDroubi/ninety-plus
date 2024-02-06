@@ -9,7 +9,7 @@ export default function Messages() {
 
   return (
     <section className="mb-4 flex justify-between gap-1">
-      <div className="nav-section w-full md:w-1/3 border-[1px] border-gray-100 h-[35rem] overflow-auto">
+      <div className="nav-section w-full md:w-1/3 border-[1px] border-gray-100 md:h-[35rem] overflow-auto">
         <div className="nav-header p-3">
           <h2 className="mb-3 text-lg font-semibold">الرسائل</h2>
           <SearchInput stateChanger={setSearchText} />
@@ -138,7 +138,11 @@ export function ConversationBody() {
           name=""
           id=""
         />
-        <Button variant="contained" disableElevation sx={{ display: "flex", gap: "5px" }}>
+        <Button
+          variant="contained"
+          disableElevation
+          sx={{ display: "flex", gap: "5px" }}
+        >
           إرسال
           {<SendIcon />}
         </Button>

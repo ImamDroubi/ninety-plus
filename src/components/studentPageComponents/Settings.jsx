@@ -1,6 +1,6 @@
 import ChangePasswordForm from "../forms/ChangePasswordForm";
 import StudentSettingsForm from "../forms/StudentSettingsForm";
-import TemporaryDrawer from "../menus/TempraryDrawer";
+import TemporaryDrawer from "../menus/MenuDrawer";
 import UploadPhotoOverlayButton from "../overlays/uploadPhotoOverlayButton";
 
 export default function Settings() {
@@ -37,13 +37,12 @@ export default function Settings() {
           <StudentSettingsForm />
           <div className="change-password mt-5 border-t-[1px] border-gray-100 py-4">
             <h3 className="mb-3 text-lg text-center text-gray-900 font-semibold">
-              تغيير كلمة السر 
+              تغيير كلمة السر
             </h3>
-            <ChangePasswordForm/>
+            <ChangePasswordForm />
           </div>
         </div>
       </div>
-      <TemporaryDrawer/>
     </section>
   );
 }

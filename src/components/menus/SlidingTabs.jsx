@@ -17,11 +17,7 @@ function CustomTabPanel(props) {
       aria-labelledby={`simple-tab-${index}`}
       {...other}
     >
-      {value === index && (
-        <Box sx={{ p: 3 }}>
-          {children}
-        </Box>
-      )}
+      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
     </div>
   );
 }
@@ -41,29 +37,35 @@ function a11yProps(index) {
 
 export default function SlidingTabs(props) {
   const [value, setValue] = useState(0);
-  
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
-    props.handleTabChange(newValue);
+    if (props.handleTabChange) props.handleTabChange(newValue);
   };
 
-  useEffect(()=>{
+  useEffect(() => {
     setValue(props.currentIndex);
-  },[props.currentIndex])
+  }, [props.currentIndex]);
   return (
     <Box sx={{ width: "100%" }}>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-        <Tabs
-          value={value}
-          onChange={handleChange}
-          aria-label="basic tabs example"
-        >
-          {props.children.map((tab, index) => {
-            return (
-              <Tab key={index} label={tab.props.label} {...a11yProps(index)} />
-            );
-          })}
-        </Tabs>
+        {props.showTabs && (
+          <Tabs
+            value={value}
+            onChange={handleChange}
+            aria-label="basic tabs example"
+          >
+            {props.children.map((tab, index) => {
+              return (
+                <Tab
+                  key={index}
+                  label={tab.props.label}
+                  {...a11yProps(index)}
+                />
+              );
+            })}
+          </Tabs>
+        )}
       </Box>
       {props.children.map((tab, index) => {
         return (

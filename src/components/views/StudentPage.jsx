@@ -7,8 +7,55 @@ import Overview from "../studentPageComponents/Overview";
 import PurchaseHistory from "../studentPageComponents/PurchaseHistory";
 import Settings from "../studentPageComponents/Settings";
 import Teachers from "../studentPageComponents/Teachers";
-import { useParams, useSearchParams } from "react-router-dom";
-
+import { useSearchParams } from "react-router-dom";
+import {
+  BookIcon,
+  EyeIcon,
+  FilledHeartIcon,
+  MessageIcon,
+  MoneyIcon,
+  SettingsIcon,
+  TeacherIcon,
+} from "../icons/icons";
+import HamburgerMenuOpenner from "../other/HamburgerMenuOpenner";
+import MenuDrawer from "../menus/MenuDrawer";
+const listItems = [
+  {
+    text: "نظرة عامة",
+    icon: <EyeIcon />,
+    url: "?tab=overview",
+  },
+  {
+    text: "الدورات",
+    icon: <BookIcon />,
+    url: "?tab=courses",
+  },
+  {
+    text: "الأساتذة",
+    icon: <TeacherIcon />,
+    url: "?tab=teachers",
+  },
+  {
+    text: "الرسائل",
+    icon: <MessageIcon />,
+    url: "?tab=messages",
+  },
+  {
+    text: "المفضلة",
+    icon: <FilledHeartIcon />,
+    url: "?tab=favourite",
+  },
+  {
+    text: "عمليات الشراء",
+    icon: <MoneyIcon />,
+    url: "?tab=purchases",
+  },
+  {
+    text: "الإعدادات",
+    icon: <SettingsIcon />,
+    url: "?tab=settings",
+  },
+];
 const pagesList = [
   "overview",
   "courses",
@@ -30,9 +77,9 @@ export default function StudentPage() {
     completedCourses: 3,
     coursesInstructors: 3,
   };
+  // ============ This is to put the current page in the parameters  =======================
   const [searchParams, setSearchParams] = useSearchParams();
   const handleTabChange = (index) => {
-    console.log(index);
     setSearchParams({ tab: pagesList[index] });
   };
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -41,7 +88,14 @@ export default function StudentPage() {
     let index = pagesList.indexOf(tab);
     if (index == -1) index = 0;
     setCurrentIndex(index);
+    window.scrollTo(0, 0);
   }, [searchParams]);
+  // ==========================================================================================
+
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const toggleOpenSidebar = () => {
+    setSidebarOpen(!sidebarOpen);
+  };
 
   return (
     <div className="relative lg:pt-[7rem]">
@@ -62,18 +116,43 @@ export default function StudentPage() {
             </div>
           </div>
         </header>
-        <SlidingTabs
-          handleTabChange={handleTabChange}
-          currentIndex={currentIndex}
-        >
-          <Overview student={studentInfo} label="نظرة عامة" />
-          <Courses label="الدورات" />
-          <Teachers label="الأساتذة" />
-          <Messages label="الرسائل" />
-          <Favourite label="المفضلة" />
-          <PurchaseHistory label="عمليات الشراء" />
-          <Settings label="الإعدادات" />
-        </SlidingTabs>
+        <section className="mobile block md:hidden">
+          <SlidingTabs
+            handleTabChange={handleTabChange}
+            currentIndex={currentIndex}
+            showTabes={false}
+          >
+            <Overview student={studentInfo} label="نظرة عامة" />
+            <Courses label="الدورات" />
+            <Teachers label="الأساتذة" />
+            <Messages label="الرسائل" />
+            <Favourite label="المفضلة" />
+            <PurchaseHistory label="عمليات الشراء" />
+            <Settings label="الإعدادات" />
+          </SlidingTabs>
+          <MenuDrawer
+            listItems={listItems}
+            side="right"
+            onClickFunction={toggleOpenSidebar}
+          >
+            {!sidebarOpen && <HamburgerMenuOpenner />}
+          </MenuDrawer>
+        </section>
+        <section className="desktop hidden md:block">
+          <SlidingTabs
+            handleTabChange={handleTabChange}
+            currentIndex={currentIndex}
+            showTabs={true}
+          >
+            <Overview student={studentInfo} label="نظرة عامة" />
+            <Courses label="الدورات" />
+            <Teachers label="الأساتذة" />
+            <Messages label="الرسائل" />
+            <Favourite label="المفضلة" />
+            <PurchaseHistory label="عمليات الشراء" />
+            <Settings label="الإعدادات" />
+          </SlidingTabs>
+        </section>
       </div>
     </div>
   );
