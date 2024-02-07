@@ -14,7 +14,11 @@ import {
   faMoneyCheckDollar,
   faEnvelope,
   faGear,
-  faBars
+  faBars,
+  faChartLine,
+  faCirclePlus,
+  faRightFromBracket,
+  faBell,
 } from "@fortawesome/free-solid-svg-icons";
 import { faHeart } from "@fortawesome/free-regular-svg-icons";
 
@@ -69,4 +73,21 @@ export function SettingsIcon(props) {
 
 export function HumburgerIcon(props) {
   return <FontAwesomeIcon {...props} icon={faBars} />;
+}
+// teacher page icons
+
+export function DashboardIcon(props) {
+  return <FontAwesomeIcon {...props} icon={faChartLine} />;
+}
+
+export function AddIcon(props) {
+  return <FontAwesomeIcon {...props} icon={faCirclePlus} />;
+}
+
+export function LogoutIcon(props) {
+  return <FontAwesomeIcon {...props} icon={faRightFromBracket} />;
+}
+
+export function BellIcon(props) {
+  return <FontAwesomeIcon {...props} icon={faBell} />;
 }
