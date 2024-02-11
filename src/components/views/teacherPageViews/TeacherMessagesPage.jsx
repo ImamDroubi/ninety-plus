@@ -1,6 +1,6 @@
 
 
-export default function TeacherMessages() {
+export default function TeacherMessagesPage() {
   return (
     <div>TeacherMessages</div>
   )

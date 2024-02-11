@@ -3,12 +3,11 @@ import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import SelectDropdown from "../menus/SelectDropdown";
 import { useRef, useState } from "react";
 import Container90 from "../containers/Container90";
-import Course from "../cards/Course";
-import mathBook from "../../assets/images/book-covers/math-scientific.jpg";
-import Pagination from "@mui/material/Pagination";
+import CourseCard from "../cards/CourseCard";
 import { streamsList } from "../data/streamsList";
+import BasicPagination from "../other/BasicPagination";
 const NUMBER_OF_COURSES_IN_THE_PAGE = 7;
-const NUMBER_OF_DATA = 10;
+const NUMBER_OF_DATA = 12;
 export default function CoursesPage() {
   const searchRef = useRef();
   const [currentStream, setCurrentStream] = useState();
@@ -19,86 +18,18 @@ export default function CoursesPage() {
     to: NUMBER_OF_COURSES_IN_THE_PAGE,
   });
   const courses = [
-    <Course
-      title={"رياضيات توجيهي علمي وصناعي للأستاذ محمد حرزالله"}
-      category={"علمي"}
-      price={400}
-      stars={4.5}
-      preview={mathBook}
-      studentsNo={120}
-    ></Course>,
-    <Course
-      title={"رياضيات توجيهي علمي وصناعي للأستاذ محمد حرزالله"}
-      category={"علمي"}
-      price={400}
-      stars={4.5}
-      preview={mathBook}
-      studentsNo={120}
-    ></Course>,
-    <Course
-      title={"رياضيات توجيهي علمي وصناعي للأستاذ محمد حرزالله"}
-      category={"علمي"}
-      price={400}
-      stars={4.5}
-      preview={mathBook}
-      studentsNo={120}
-    ></Course>,
-    <Course
-      title={"علوم توجيهي علمي وصناعي للأستاذ محمد حرزالله"}
-      category={"علمي"}
-      price={400}
-      stars={4.5}
-      preview={mathBook}
-      studentsNo={120}
-    ></Course>,
-    <Course
-      title={"علوم توجيهي علمي وصناعي للأستاذ محمد حرزالله"}
-      category={"علمي"}
-      price={400}
-      stars={4.5}
-      preview={mathBook}
-      studentsNo={120}
-    ></Course>,
-    <Course
-      title={"علوم توجيهي علمي وصناعي للأستاذ محمد حرزالله"}
-      category={"علمي"}
-      price={400}
-      stars={4.5}
-      preview={mathBook}
-      studentsNo={120}
-    ></Course>,
-    <Course
-      title={"فيزياء توجيهي علمي وصناعي للأستاذ محمد حرزالله"}
-      category={"علمي"}
-      price={400}
-      stars={4.5}
-      preview={mathBook}
-      studentsNo={120}
-    ></Course>,
-    <Course
-      title={"فيزياء توجيهي علمي وصناعي للأستاذ محمد حرزالله"}
-      category={"علمي"}
-      price={400}
-      stars={4.5}
-      preview={mathBook}
-      studentsNo={120}
-    ></Course>,
-    <Course
-      title={"فيزياء توجيهي علمي وصناعي للأستاذ محمد حرزالله"}
-      category={"علمي"}
-      price={400}
-      stars={4.5}
-      preview={mathBook}
-      studentsNo={120}
-    ></Course>,
-    <Course
-      title={"فيزياء توجيهي علمي وصناعي للأستاذ محمد حرزالله"}
-      category={"علمي"}
-      price={400}
-      stars={4.5}
-      preview={mathBook}
-      studentsNo={120}
-    ></Course>,
+    <CourseCard />,
+    <CourseCard />,
+    <CourseCard />,
+    <CourseCard />,
+    <CourseCard />,
+    <CourseCard />,
+    <CourseCard />,
+    <CourseCard />,
+    <CourseCard />,
+    <CourseCard />,
+    <CourseCard />,
+    <CourseCard />,
   ];
 
   return (
@@ -138,29 +69,10 @@ export default function CoursesPage() {
           <BasicPagination
             pagination={pagination}
             setPagination={setPagination}
+            numberOfItemsInThePage={NUMBER_OF_COURSES_IN_THE_PAGE}
           />
         </div>
       </div>
     </Container90>
-  );
-}
-export function BasicPagination({ pagination, setPagination }) {
-  const handlePageChange = (event, page) => {
-    const from = (page - 1) * NUMBER_OF_COURSES_IN_THE_PAGE;
-    const to = page * NUMBER_OF_COURSES_IN_THE_PAGE;
-    setPagination((prev) => {
-      return {
-        ...prev,
-        from: from,
-        to: to,
-      };
-    });
-  };
-  return (
-    <Pagination
-      count={Math.ceil(pagination?.count / NUMBER_OF_COURSES_IN_THE_PAGE)}
-      onChange={handlePageChange}
-      color="primary"
-    />
   );
 }

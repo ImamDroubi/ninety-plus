@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function TeacherEarnings() {
+export default function TeacherEarningsPage() {
   return (
     <div>TeacherEarnings</div>
   )

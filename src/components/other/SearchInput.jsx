@@ -12,7 +12,7 @@ export default function SearchInput({ stateChanger }) {
         type="search"
         name="search"
         id="search"
-        className="w-full duration-150 h-5 border-2 rounded-sm outline-none  peer border-gray-100 focus:border-2 focus:border-primary-500 sm:border-2 text-primary-700"
+        className="w-full duration-150 px-2 py-[7px] border-2 rounded-sm outline-none  peer border-gray-100 focus:border-2 focus:border-primary-500 sm:border-2 text-primary-700"
       />
       <MagnifyingGlassIcon
         onClick={() => searchRef.current.focus()}

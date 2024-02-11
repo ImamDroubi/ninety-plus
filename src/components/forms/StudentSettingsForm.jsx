@@ -80,7 +80,7 @@ export default function StudentSettingsForm() {
 
       {/* Stream, City, Gender select-dropdown */}
       <div className="flex flex-col md:flex-row justify-between">
-        <div className="mb-3 flex items-center">
+        <div className="mb-3 flex items-center gap-1">
           <label className={`${labelBaseStyle}`}>الفرع</label>
           <SelectDropdown
             title="الفرع"
@@ -88,7 +88,7 @@ export default function StudentSettingsForm() {
             stateChanger={setCurrentStream}
           />
         </div>
-        <div className="mb-3 flex items-center">
+        <div className="mb-3 flex items-center gap-1">
           <label className={`${labelBaseStyle}`}>المحافظة</label>
           <SelectDropdown
             title="المحافظة"
@@ -96,7 +96,7 @@ export default function StudentSettingsForm() {
             stateChanger={setCurrentCity}
           />
         </div>
-        <div className="mb-3 flex items-center">
+        <div className="mb-3 flex items-center gap-1">
           <label className={`${labelBaseStyle}`}>الجنس</label>
           <SelectDropdown
             title="الجنس"
@@ -106,7 +106,12 @@ export default function StudentSettingsForm() {
         </div>
       </div>
 
-      <Button variant="contained" sx={{borderRadius: "0px"}} fullWidth disableElevation>
+      <Button
+        variant="contained"
+        sx={{ borderRadius: "0px" }}
+        fullWidth
+        disableElevation
+      >
         حفظ التغييرات
       </Button>
     </form>

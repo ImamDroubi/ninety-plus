@@ -9,12 +9,12 @@ import CoursesPage from "./components/views/CoursesPage";
 import CourseInfoPage from "./components/views/CourseInfoPage";
 import StudentPage from "./components/views/StudentPage";
 import TeacherPageLayout from "./components/layouts/TeacherPageLayout";
-import TeacherDashboard from "./components/views/teacherPageViews/TeacherDashboard";
-import TeacherCourses from "./components/views/teacherPageViews/TeacherCourses";
-import TeacherCreateCourse from "./components/views/teacherPageViews/TeacherCreateCourse";
-import TeacherEarnings from "./components/views/teacherPageViews/TeacherEarnings";
-import TeacherMessages from "./components/views/teacherPageViews/TeacherMessages";
-import TeacherSettings from "./components/views/teacherPageViews/TeacherSettings";
+import TeacherDashboardPage from "./components/views/teacherPageViews/TeacherDashboardPage";
+import TeacherCoursesPage from "./components/views/teacherPageViews/TeacherCoursesPage";
+import TeacherCreateCoursePage from "./components/views/teacherPageViews/TeacherCreateCoursePage";
+import TeacherEarningsPage from "./components/views/teacherPageViews/TeacherEarningsPage";
+import TeacherMessagesPage from "./components/views/teacherPageViews/TeacherMessagesPage";
+import TeacherSettingsPage from "./components/views/teacherPageViews/TeacherSettingsPage";
 function App() {
   return (
     <>
@@ -28,12 +28,12 @@ function App() {
           <Route path="student/:id" element={<StudentPage />} />
         </Route>
         <Route path="/teacher/:id/" element={<TeacherPageLayout />}>
-          <Route path="dashboard" element={<TeacherDashboard />} />
-          <Route path="courses" element={<TeacherCourses />} />
-          <Route path="create-course" element={<TeacherCreateCourse />} />
-          <Route path="earnings" element={<TeacherEarnings />} />
-          <Route path="messages" element={<TeacherMessages />} />
-          <Route path="settings" element={<TeacherSettings />} />
+          <Route path="dashboard" element={<TeacherDashboardPage />} />
+          <Route path="courses" element={<TeacherCoursesPage />} />
+          <Route path="create-course" element={<TeacherCreateCoursePage />} />
+          <Route path="earnings" element={<TeacherEarningsPage />} />
+          <Route path="messages" element={<TeacherMessagesPage />} />
+          <Route path="settings" element={<TeacherSettingsPage />} />
         </Route>
         <Route path="/sign-in" element={<SignInPage />} />
         <Route path="/sign-up" element={<SignUpPage />} />

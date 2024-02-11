@@ -7,14 +7,13 @@ import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
 import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
-import { BellIcon, MessageIcon, TeacherIcon } from "../icons/icons";
-import { Badge } from "@mui/material";
+import { TeacherIcon } from "../icons/icons";
 import Box from "@mui/material/Box";
+import MessagesMenu from "./MessagesMenu";
+import NotificationsMenu from "./NotificationsMenu";
 
 export default function AccountAvatarMenu() {
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const [notificationsCount, setNotificationsCount] = React.useState(2);
-  const [messagesCount, setMessagesCount] = React.useState(3);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -33,20 +32,11 @@ export default function AccountAvatarMenu() {
         }}
       >
         {/* add other badges here */}
-        <Badge
-          color="primary"
-          className="text-xl text-gray-700"
-          badgeContent={notificationsCount}
-        >
-          <BellIcon />
-        </Badge>
-        <Badge
-          color="primary"
-          className="text-xl text-gray-700"
-          badgeContent={messagesCount}
-        >
-          <MessageIcon />
-        </Badge>
+        {/* Prvide a count for the notifications */}
+        <NotificationsMenu/>
+        {/* provide a count for the messages  */}
+        <MessagesMenu  /> 
+
 
         <Tooltip title="Account settings">
           <IconButton

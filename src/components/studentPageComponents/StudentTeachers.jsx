@@ -2,7 +2,7 @@ import { Pagination } from "@mui/material";
 import { useState } from "react";
 import mathBook from "../../assets/images/book-covers/math-scientific.jpg";
 import Button from "@mui/material/Button";
-import Teacher from "../cards/Teacher";
+import TeacherCard from "../cards/TeacherCard";
 const NUMBER_OF_TEACHERS_IN_THE_PAGE = 8;
 const NUMBER_OF_DATA = 4;
 
@@ -13,42 +13,12 @@ export default function StudentTeachers() {
     to: NUMBER_OF_TEACHERS_IN_THE_PAGE,
   });
   const teachers = [
-    <Teacher
-      name={"محمد حرزالله"}
-      major={"رياضيات"}
-      preview={
-        "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=1887&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-      }
-      stars={4.1}
-      studentsNo={1324}
-    ></Teacher>,
-    <Teacher
-      name={"محمد حرزالله"}
-      major={"رياضيات"}
-      preview={
-        "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=1887&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-      }
-      stars={4.1}
-      studentsNo={1324}
-    ></Teacher>,
-    <Teacher
-      name={"محمد حرزالله"}
-      major={"رياضيات"}
-      preview={
-        "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=1887&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-      }
-      stars={4.1}
-      studentsNo={1324}
-    ></Teacher>,
-    <Teacher
-      name={"محمد حرزالله"}
-      major={"رياضيات"}
-      preview={
-        "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=1887&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-      }
-      stars={4.1}
-      studentsNo={1324}
-    ></Teacher>,
+    <TeacherCard />,
+    <TeacherCard />,
+    <TeacherCard />,
+    <TeacherCard />,
+    <TeacherCard />,
+    <TeacherCard />,
   ];
 
   return (

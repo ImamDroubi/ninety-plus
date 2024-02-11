@@ -5,7 +5,7 @@ import {
   faTrophy,
   faChalkboardUser,
 } from "@fortawesome/free-solid-svg-icons";
-import Course from "../cards/Course";
+import CourseCard from "../cards/CourseCard";
 import MathBook from "../../assets/images/book-covers/math-scientific.jpg";
 import { Button } from "@mui/material";
 export default function StudentOverview({ student }) {
