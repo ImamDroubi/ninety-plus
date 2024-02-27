@@ -44,7 +44,7 @@ export default function SlidingTabs(props) {
   };
 
   useEffect(() => {
-    setValue(props.currentIndex);
+    setValue(props.currentIndex || 0);
   }, [props.currentIndex]);
   return (
     <Box sx={{ width: "100%" }}>
