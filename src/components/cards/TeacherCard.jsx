@@ -15,7 +15,7 @@ export default function TeacherCard({
   name = teacherSample.name,
   major = teacherSample.major,
   stars = teacherSample.stars,
-  studentsNo = teacherSample.major,
+  studentsNo = teacherSample.studentsNo,
 }) {
   return (
     <div className="group max-w-[16rem] min-h-[15rem] bg-gray-white  flex flex-col cursor-pointer  border-2 border-gray-100">
