@@ -1,7 +1,6 @@
 import { NavLink } from "react-router-dom";
-import { teacherPageList } from "../data/teacherPageList";
 import Logo from "../other/Logo";
-export default function Sidebar({ list = teacherPageList }) {
+export default function Sidebar({ list=[] }) {
   return (
     <>
       <div className="top-section p-2  flex items-center gap-2 border-b-[1px] border-gray-500">
@@ -13,7 +12,7 @@ export default function Sidebar({ list = teacherPageList }) {
           return (
             <NavLink
               key={key}
-              to={item.link}
+              to={item.url}
               className={({ isActive }) =>
                 isActive
                   ? "[&>*]:bg-primary-500 [&>*]:text-gray-white"

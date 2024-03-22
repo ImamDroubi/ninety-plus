@@ -11,36 +11,36 @@ export const teacherPageList = [
   {
     text: "لوحة التحكم",
     icon: <DashboardIcon />,
-    link: "dashboard",
+    url: "dashboard",
   },
   {
     text: "إنشاء دورة جديدة",
     icon: <AddIcon />,
-    link: "create-course",
+    url: "create-course",
   },
   {
     text: "دوراتي",
     icon: <BookIcon />,
-    link: "courses",
+    url: "courses",
   },
   {
     text: "الأرباح",
     icon: <MoneyIcon />,
-    link: "earnings",
+    url: "earnings",
   },
   {
     text: "الرسائل",
     icon: <MessageIcon />,
-    link: "messages",
+    url: "messages",
   },
   {
     text: "الإعدادات",
     icon: <SettingsIcon />,
-    link: "settings",
+    url: "settings",
   },
   {
     text: "تسجيل الخروج",
     icon: <LogoutIcon />,
-    link: "/logout",
+    url: "/logout",
   },
 ];

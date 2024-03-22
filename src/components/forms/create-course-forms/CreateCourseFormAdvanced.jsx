@@ -3,8 +3,6 @@ import SingleFormInputContainer from "../../containers/SingleFormInputContainer"
 import { Button } from "@mui/material";
 import { UploadArrowIcon } from "../../icons/icons";
 export default function CreateCourseFormAdvanced() {
-
-
   const labelBaseStyle = "mb-2 text-sm block font-semibold";
   const inputBaseStyle =
     "border-[2px] border-gray-100 p-2 w-full focus:border-primary-500 outline-none duration-200";
@@ -15,8 +13,8 @@ export default function CreateCourseFormAdvanced() {
         <h3 className="font-bold text-lg">المعلومات المتقدمة</h3>
       </div>
       <form className="text-gray-900 text-sm space-y-5" action="">
-        <div className="media w-full flex border-gray-100 pb-2 border-b-[2px]">
-          <div className="thmbnail-section w-1/2 p-2">
+        <div className="media w-full flex flex-col md:flex-row border-gray-100 pb-2 border-b-[2px]">
+          <div className="thmbnail-section w-full md:w-1/2 p-2">
             <h4 className="font-semibold text-base mb-2">صورة العرض</h4>
             <div className="thmbnail flex gap-2">
               <div className="image w-3/5 aspect-[3/2] object-cover bg-error-400">
@@ -38,7 +36,7 @@ export default function CreateCourseFormAdvanced() {
               </div>
             </div>
           </div>
-          <div className="video-section w-1/2 p-2">
+          <div className="video-section w-full md:w-1/2 p-2">
             <h4 className="font-semibold text-base mb-2">فيديو تعريفي</h4>
             <div className="video flex gap-2">
               <div className="video w-3/5 aspect-[3/2] object-cover bg-error-400">

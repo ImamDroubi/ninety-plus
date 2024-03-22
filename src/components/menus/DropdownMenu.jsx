@@ -3,8 +3,7 @@ import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 
-
-export default function DropdownMenu({ list, children }) {
+export default function DropdownMenu({ list, children, small = false }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -37,7 +36,11 @@ export default function DropdownMenu({ list, children }) {
       >
         {list?.map((item, ind) => {
           return (
-            <MenuItem key={ind} onClick={() => handleClose(item.callback)}>
+            <MenuItem
+              sx={small ? { fontSize: "14px" } : null}
+              key={ind}
+              onClick={() => handleClose(item.callback)}
+            >
               {item.text}
             </MenuItem>
           );

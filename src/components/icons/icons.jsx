@@ -19,6 +19,9 @@ import {
   faCirclePlus,
   faRightFromBracket,
   faBell,
+  faPencil,
+  faPlus,
+  faChevronDown,
 } from "@fortawesome/free-solid-svg-icons";
 import { faHeart } from "@fortawesome/free-regular-svg-icons";
 
@@ -90,4 +93,16 @@ export function LogoutIcon(props) {
 
 export function BellIcon(props) {
   return <FontAwesomeIcon {...props} icon={faBell} />;
+}
+
+export function EditIcon(props) {
+  return <FontAwesomeIcon {...props} icon={faPencil} />;
+}
+
+export function PlusIcon(props) {
+  return <FontAwesomeIcon {...props} icon={faPlus} />;
+}
+
+export function ArrowDownIcon(props){
+  return <FontAwesomeIcon {...props} icon={faChevronDown} />
 }

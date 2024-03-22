@@ -13,8 +13,8 @@ export default function CreateCourseFormPublish() {
         <h3 className="font-bold text-lg">نشر الدورة</h3>
       </div>
       <form className="text-gray-900 text-sm space-y-5" action="">
-        <DoubleFormInputContainer>
-          <SingleFormInputContainer extraStyles={"w-1/2"} error={null}>
+        <DoubleFormInputContainer extraStyles={"flex-col md:flex-row"}>
+          <SingleFormInputContainer extraStyles={"md:w-1/2"} error={null}>
             <label className={`${labelBaseStyle}`}>رسالة ترحيبية</label>
             <textarea
               className={`${inputBaseStyle}`}
@@ -25,7 +25,7 @@ export default function CreateCourseFormPublish() {
               rows={5}
             />
           </SingleFormInputContainer>
-          <SingleFormInputContainer extraStyles={"w-1/2"} error={null}>
+          <SingleFormInputContainer extraStyles={"md:w-1/2"} error={null}>
             <label className={`${labelBaseStyle}`}>توصيات</label>
             <textarea
               className={`${inputBaseStyle}`}
