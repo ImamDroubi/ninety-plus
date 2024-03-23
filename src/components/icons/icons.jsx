@@ -22,6 +22,11 @@ import {
   faPencil,
   faPlus,
   faChevronDown,
+  faLayerGroup,
+  faCrown,
+  faCreditCard,
+  faWallet
+
 } from "@fortawesome/free-solid-svg-icons";
 import { faHeart } from "@fortawesome/free-regular-svg-icons";
 
@@ -103,6 +108,18 @@ export function PlusIcon(props) {
   return <FontAwesomeIcon {...props} icon={faPlus} />;
 }
 
-export function ArrowDownIcon(props){
-  return <FontAwesomeIcon {...props} icon={faChevronDown} />
+export function ArrowDownIcon(props) {
+  return <FontAwesomeIcon {...props} icon={faChevronDown} />;
+}
+export function StackIcon(props) {
+  return <FontAwesomeIcon {...props} icon={faLayerGroup} />;
+}
+export function WalletIcon(props) {
+  return <FontAwesomeIcon {...props} icon={faWallet} />;
+}
+export function CreditCardIcon(props) {
+  return <FontAwesomeIcon {...props} icon={faCreditCard} />;
+}
+export function CrownIcon(props) {
+  return <FontAwesomeIcon {...props} icon={faCrown} />;
 }

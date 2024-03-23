@@ -64,7 +64,7 @@ export default function TeacherCoursesPage() {
         </div>
       </section>
       <main className="w-full md:w-[90%] m-auto py-2">
-        <div className="courses-list flex justify-center md:justify-start flex-wrap gap-[45px]">
+        <div className="courses-list flex justify-center md:justify-between gap-2 flex-wrap ">
           {courses.slice(pagination.from, pagination.to).map((course) => {
             return course;
           })}
