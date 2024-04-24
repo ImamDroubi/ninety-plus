@@ -1,11 +1,12 @@
-import { useMutation } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { API_BASE_URL } from "./index";
 import axios from "axios";
-export default function useGetResourceس(resourceName) {
-  const mutation = useMutation({
-    mutationFn: () => {
+export default function useGetResource(resourceName) {
+  const query = useQuery({
+    queryFn: () => {
       return axios.get(`${API_BASE_URL}/${resourceName}`);
     },
+    queryKey: [`${resourceName}`],
   });
-  return mutation;
+  return query;
 }

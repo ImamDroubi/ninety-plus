@@ -9,6 +9,7 @@ export default function useUpdateResource(resourceName, resourceId, payload) {
         payload
       );
     },
+    mutationKey: [`${resourceName}`, `${resourceId}`],
   });
   return mutation;
 }
