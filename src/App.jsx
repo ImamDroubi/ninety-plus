@@ -18,6 +18,7 @@ import TeacherSettingsPage from "./components/views/teacherPageViews/TeacherSett
 import VerifyEmailPage from "./components/views/VerifyEmailPage";
 import ForgotPasswordEmailPage from "./components/views/ForgotPasswordEmailPage";
 import ForgotPasswordPage from "./components/views/ForgotPasswordPage";
+import ResetPasswordPage from "./components/views/ResetPasswordPage";
 function App() {
   return (
     <>
@@ -43,6 +44,7 @@ function App() {
         <Route path="/sign-in" element={<SignInPage />} />
         <Route path="/sign-up" element={<SignUpPage />} />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+        <Route path="/reset-password" element={<ResetPasswordPage />} />
         <Route path="/*" element={<MainLayout />}>
           <Route path="*" element={<NotFoundPage />} />
         </Route>
