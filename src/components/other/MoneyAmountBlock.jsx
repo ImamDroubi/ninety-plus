@@ -1,3 +1,4 @@
+
 export default function MoneyAmountBlock({
   icon,
   amount = 0,
@@ -22,7 +23,7 @@ export default function MoneyAmountBlock({
   };
 
   return (
-    <div className="py-3 px-2 w-[12rem] flex gap-3 text-gray-900 text-lg bg-gray-white">
+    <div className="py-3 px-2 w-[12rem] md:w-[15rem] flex gap-3 text-gray-900 text-lg bg-gray-white">
       <div className={`icon py-2 px-3 aspect-square ${chooseStyle(style)}`}>
         {icon}
       </div>

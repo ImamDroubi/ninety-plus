@@ -6,6 +6,7 @@ import { BrowserRouter } from 'react-router-dom'
 import { AuthProvider } from './contexts/AuthContext.jsx'
 import { createTheme } from '@mui/material/styles'
 import { ThemeProvider } from '@emotion/react'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 const theme = createTheme({
   palette: {
@@ -19,14 +20,19 @@ const theme = createTheme({
   },
   direction:"rtl"
 });
+
+const queryClient = new QueryClient();
+
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <AuthProvider>
-    <BrowserRouter>
-      <React.StrictMode>
-        <ThemeProvider theme={theme}>
-          <App />
-        </ThemeProvider>
-      </React.StrictMode>
-    </BrowserRouter>
-  </AuthProvider>,
+  <QueryClientProvider client={queryClient}>
+    <AuthProvider>
+      <BrowserRouter>
+        <React.StrictMode>
+          <ThemeProvider theme={theme}>
+            <App />
+          </ThemeProvider>
+        </React.StrictMode>
+      </BrowserRouter>
+    </AuthProvider>
+  </QueryClientProvider>,
 )

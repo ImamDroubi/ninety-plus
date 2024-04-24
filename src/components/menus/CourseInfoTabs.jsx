@@ -101,6 +101,8 @@ function StudentsFeedback() {
           تعليقات الطلاب
         </h3>
         <Button
+          disableElevation
+          sx={{borderRadius : "0px"}}
           onClick={() => setAddCommentPopupOpen(true)}
           variant="contained"
         >
@@ -125,16 +127,18 @@ function StudentsFeedback() {
             <AddComent />
             <div className="flex justify-between buttons">
               <Button
+                disableElevation
                 variant="contained"
                 sx={{
                   color: "rgb(29 32 38)",
                   backgroundColor: "rgb(245 247 250)",
                   "&:hover": { backgroundColor: "rgb(206 209 217)" },
+                  borderRadius: "0px"
                 }}
               >
                 إلغاء
               </Button>
-              <Button variant="contained">
+              <Button disableElevation sx={{borderRadius : "0px"}} variant="contained" >
                 <div
                   onClick={() => setAddCommentPopupOpen(true)}
                   className="flex items-center gap-1"
@@ -153,7 +157,7 @@ function StudentsFeedback() {
 
 export default function CourseInfoTabs() {
   return (
-    <SlidingTabs>
+    <SlidingTabs showTabs={true}>
       <Description label="الوصف" />
       <AttachedFiles label="الملفات المرفقة" />
       <StudentsFeedback label="تعليقات الطلاب" />
