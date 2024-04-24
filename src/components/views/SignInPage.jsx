@@ -2,6 +2,7 @@ import Logo from "../other/Logo";
 import Button from "../buttons/Button";
 import book from "../../assets/images/book.jpg";
 import { Link } from "react-router-dom";
+import LoginUserForm from "../forms/LoginUserForm";
 export default function SignInPage() {
   return (
     <div className="sign-in">
@@ -22,7 +23,7 @@ export default function SignInPage() {
           <h2 className="text-center text-gray-900 text-2xl font-bold">
             تسجيل الدخول
           </h2>
-          <form action="" className="w-11/12 flex flex-col gap-4 lg:w-2/3">
+          {/* <form action="" className="w-11/12 flex flex-col gap-4 lg:w-2/3">
             <div className="from-input  flex flex-col gap-2 w-full">
               <label htmlFor="email" className="text-gray-900">
                 البريد الإلكتروني
@@ -59,7 +60,8 @@ export default function SignInPage() {
               </div>
               <Button text="تسجيل الدخول" />
             </div>
-          </form>
+          </form> */}
+          <LoginUserForm/>
         </div>
       </div>
     </div>
