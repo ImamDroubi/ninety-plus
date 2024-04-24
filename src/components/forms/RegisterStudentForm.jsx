@@ -6,7 +6,7 @@ import SelectDropdown from "../menus/SelectDropdown";
 import { streamsList } from "../data/streamsList";
 import { citiesList } from "../data/citiesList";
 
-export default function StudentSettingsForm() {
+export default function RegisterStudentForm() {
   const [currentStream, setCurrentStream] = useState();
   const [currentCity, setCurrentCity] = useState();
   const [currentGender, setCurrentGender] = useState();
@@ -16,7 +16,7 @@ export default function StudentSettingsForm() {
     "border-[2px] border-gray-100 p-2 w-full focus:border-primary-500 outline-none duration-200";
 
   return (
-    <form className="text-gray-900 text-sm" action="">
+    <form className="text-gray-900  w-9/12" action="">
       {/* FullName  */}
       <SingleFormInputContainer>
         <label className={`${labelBaseStyle}`}>الاسم الكامل</label>
@@ -42,18 +42,21 @@ export default function StudentSettingsForm() {
         </DoubleFormInputContainer>
       </SingleFormInputContainer>
 
+      {/* Email */}
+      <SingleFormInputContainer error={null}>
+        <label className={`${labelBaseStyle}`}>البريد الإلكتروني</label>
+        <input
+          className={`${inputBaseStyle}`}
+          type="email"
+          placeholder="example@example.com"
+          name=""
+          id=""
+        />
+      </SingleFormInputContainer>
+
+
       {/* birth date & phone number */}
       <DoubleFormInputContainer>
-        {/* <SingleFormInputContainer extraStyles={"w-1/2"} error={null}>
-          <label className={`${labelBaseStyle}`}>اسم الحساب</label>
-          <input
-            className={`${inputBaseStyle}`}
-            type="text"
-            placeholder="اسم الحساب"
-            name=""
-            id=""
-          />
-        </SingleFormInputContainer> */}
         <SingleFormInputContainer extraStyles={"w-1/2"} error={null}>
           <label className={`${labelBaseStyle}`}>تاريخ الميلاد</label>
           <input
@@ -75,21 +78,10 @@ export default function StudentSettingsForm() {
         </SingleFormInputContainer>
       </DoubleFormInputContainer>
 
-      {/* Email */}
-      <SingleFormInputContainer error={null}>
-        <label className={`${labelBaseStyle}`}>البريد الإلكتروني</label>
-        <input
-          className={`${inputBaseStyle}`}
-          type="email"
-          placeholder="example@example.com"
-          name=""
-          id=""
-        />
-      </SingleFormInputContainer>
 
       {/* Stream, City, Gender select-dropdown */}
       <div className="flex flex-col my-2 md:flex-row justify-between">
-        <div className="mb-3 flex items-center gap-1">
+        <div className="mb-3 flex items-center gap-1 ">
           <label className={`${labelBaseStyle}`}>الفرع</label>
           <SelectDropdown
             title="الفرع"
@@ -115,13 +107,32 @@ export default function StudentSettingsForm() {
         </div>
       </div>
 
+      {/* Password and repeat password */}
+      <SingleFormInputContainer error={null}>
+        <label className={`${labelBaseStyle}`}>كلمة السر</label>
+        <input
+          className={`${inputBaseStyle}`}
+          type="password"
+          placeholder="كلمة السر"
+        />
+      </SingleFormInputContainer>
+
+      <SingleFormInputContainer error={null}>
+        <label className={`${labelBaseStyle}`}>تأكيد كلمة السر</label>
+        <input
+          className={`${inputBaseStyle}`}
+          type="password"
+          placeholder="تأكيد كلمة السر"
+        />
+      </SingleFormInputContainer>
+
       <Button
         variant="contained"
-        sx={{ borderRadius: "0px" }}
+        sx={{ borderRadius: "0px", fontSize : "1rem" }}
         fullWidth
         disableElevation
       >
-        حفظ التغييرات
+        تسجيل
       </Button>
     </form>
   );

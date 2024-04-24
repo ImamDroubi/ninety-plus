@@ -15,6 +15,9 @@ import TeacherCreateCoursePage from "./components/views/teacherPageViews/Teacher
 import TeacherEarningsPage from "./components/views/teacherPageViews/TeacherEarningsPage";
 import TeacherMessagesPage from "./components/views/teacherPageViews/TeacherMessagesPage";
 import TeacherSettingsPage from "./components/views/teacherPageViews/TeacherSettingsPage";
+import VerifyEmailPage from "./components/views/VerifyEmailPage";
+import ForgotPasswordEmailPage from "./components/views/ForgotPasswordEmailPage";
+import ForgotPasswordPage from "./components/views/ForgotPasswordPage";
 function App() {
   return (
     <>
@@ -22,6 +25,8 @@ function App() {
         <Route path="/" element={<MainLayout />}>
           <Route index element={<HomePage />} />
           <Route path="/not-found" element={<NotFoundPage />} />
+          <Route path="/verify-email" element={<VerifyEmailPage />} />
+          <Route path="/forgot-password-email" element={<ForgotPasswordEmailPage />} />
           <Route path="course-page/:id" element={<CourseContentPage />} />
           <Route path="courses" element={<CoursesPage />} />
           <Route path="course/:id" element={<CourseInfoPage />} />
@@ -37,6 +42,7 @@ function App() {
         </Route>
         <Route path="/sign-in" element={<SignInPage />} />
         <Route path="/sign-up" element={<SignUpPage />} />
+        <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         <Route path="/*" element={<MainLayout />}>
           <Route path="*" element={<NotFoundPage />} />
         </Route>
