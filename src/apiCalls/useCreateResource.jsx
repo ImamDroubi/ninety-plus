@@ -1,11 +1,13 @@
 import { useMutation } from "@tanstack/react-query";
 import { API_BASE_URL } from "./index";
 import axios from "axios";
-
-export default function useDeleteResource(resourceName, resourceId) {
+export default function useUpdateResource(resourceName, resourceId, payload) {
   const mutation = useMutation({
     mutationFn: () => {
-      return axios.delete(`${API_BASE_URL}/${resourceName}/${resourceId}`);
+      return axios.post(
+        `${API_BASE_URL}/${resourceName}/${resourceId}`,
+        payload
+      );
     },
     mutationKey: [`${resourceName}`, `${resourceId}`],
   });
