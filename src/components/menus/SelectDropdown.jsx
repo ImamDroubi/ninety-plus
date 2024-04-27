@@ -30,7 +30,7 @@ export default function SelectDropdown({
         {list.map((menuItem, key) => {
           return (
             <MenuItem key={key} value={menuItem}>
-              {menuItem}
+              {menuItem.name}
             </MenuItem>
           );
         })}
