@@ -11,8 +11,10 @@ import { TeacherIcon } from "../icons/icons";
 import Box from "@mui/material/Box";
 import MessagesMenu from "./MessagesMenu";
 import NotificationsMenu from "./NotificationsMenu";
+import { useAuth } from "../../contexts/AuthContext";
 
 export default function AccountAvatarMenu() {
+  const {currentUser} = useAuth();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -47,7 +49,7 @@ export default function AccountAvatarMenu() {
             aria-haspopup="true"
             aria-expanded={open ? "true" : undefined}
           >
-            <Avatar sx={{ width: 40, height: 40 }}>M</Avatar>
+            <Avatar alt={currentUser.username} sx={{ width: 40, height: 40 }} src={currentUser.profile_picture}/>
           </IconButton>
         </Tooltip>
       </Box>
