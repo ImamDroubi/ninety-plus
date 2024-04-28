@@ -23,6 +23,10 @@ export default function AccountAvatarMenu() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  React.useEffect(()=>{
+
+  },[currentUser])
+  if(currentUser == undefined)return null;
   return (
     <React.Fragment>
       <Box
@@ -49,7 +53,7 @@ export default function AccountAvatarMenu() {
             aria-haspopup="true"
             aria-expanded={open ? "true" : undefined}
           >
-            <Avatar alt={currentUser.username} sx={{ width: 40, height: 40 }} src={currentUser.profile_picture}/>
+            <Avatar alt={currentUser.first_name} sx={{ width: 40, height: 40 }} src={currentUser.profile_picture}/>
           </IconButton>
         </Tooltip>
       </Box>

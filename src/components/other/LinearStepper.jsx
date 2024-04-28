@@ -12,7 +12,8 @@ import Typography from "@mui/material/Typography";
 //   "Create an ad",
 // ];
 
-export default function LinearStepper({ children = [], steps = [] }) {
+export default function LinearStepper({ children = [], steps = [], formRef}) {
+  
   const [activeStep, setActiveStep] = React.useState(0);
 
   const handleNext = () => {

@@ -1,12 +1,32 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SingleFormInputContainer from "../../containers/SingleFormInputContainer";
 import { subjectsList } from "../../data/subjectsList";
+import { weeklyLecturesList } from "../../data/weeklyLecturesList";
 import SelectDropdown from "../../menus/SelectDropdown";
-import DoubleFormInputContainer from "../../containers/DoubleFormInputContainer";
+
+import { useCreateCourseContext } from "../../../contexts/CreateCourseContext";
 
 export default function CreateCourseFormBasic() {
-  const [currentSubject, setCurrentSubject] = useState();
-  const [currentLecturesPerWeek, SetCurrentLecturesPerWeek] = useState();
+  const {
+    register,
+    errors,
+    setSubject,
+    setWeeklyLectures,
+    subject,
+    weekly_lectures,
+  } = useCreateCourseContext();
+
+  const [currentSubject, setCurrentSubject] = useState(subject);
+  const [currentLecturesPerWeek, SetCurrentLecturesPerWeek] =
+    useState(weekly_lectures);
+
+  // These change the value in the context according to the value in the page
+  useEffect(() => {
+    setSubject(currentSubject);
+  }, [currentSubject]);
+  useEffect(() => {
+    setWeeklyLectures(currentLecturesPerWeek);
+  }, [currentLecturesPerWeek]);
 
   const labelBaseStyle = "mb-2 text-sm block font-semibold";
   const inputBaseStyle =
@@ -17,27 +37,30 @@ export default function CreateCourseFormBasic() {
       <div className="p-3  border-gray-100 my-4 border-b-[2px]">
         <h3 className="font-bold text-lg">المعلومات الأساسية</h3>
       </div>
-      <form className="text-gray-900 text-sm space-y-5" action="">
-        <SingleFormInputContainer error={null}>
+      <form className="text-gray-900 text-sm space-y-5">
+        {/* Title */}
+        <SingleFormInputContainer error={errors?.title?.message}>
           <label className={`${labelBaseStyle}`}>العنوان</label>
           <input
             className={`${inputBaseStyle}`}
             type="text"
             placeholder="عنوان الدورة"
-            name=""
-            id=""
+            {...register("title")}
           />
         </SingleFormInputContainer>
-        <SingleFormInputContainer error={null}>
+
+        {/* Coverage */}
+        <SingleFormInputContainer error={errors?.coverage?.message}>
           <label className={`${labelBaseStyle}`}>المادة المشمولة</label>
           <input
             className={`${inputBaseStyle}`}
             type="text"
             placeholder="الفصل الأول، الفصل الثاني، المادة كاملة، ...الخ"
-            name=""
-            id=""
+            {...register("coverage")}
           />
         </SingleFormInputContainer>
+
+        {/* Subject and Weekly Lectures */}
         <div className="flex justify-between">
           <SingleFormInputContainer error={null}>
             <div className="mb-3 flex items-center gap-1">
@@ -46,6 +69,7 @@ export default function CreateCourseFormBasic() {
                 title="المادة"
                 list={subjectsList}
                 stateChanger={setCurrentSubject}
+                defaultState={subject}
               />
             </div>
           </SingleFormInputContainer>
@@ -54,8 +78,9 @@ export default function CreateCourseFormBasic() {
               <label className={`${labelBaseStyle}`}>عدد الحصص الأسبوعية</label>
               <SelectDropdown
                 title="الحصص"
-                list={[1, 2, 3, 4, 5]}
+                list={weeklyLecturesList}
                 stateChanger={SetCurrentLecturesPerWeek}
+                defaultState={weekly_lectures}
               />
             </div>
           </SingleFormInputContainer>

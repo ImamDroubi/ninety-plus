@@ -8,8 +8,9 @@ export default function SelectDropdown({
   title = "اختيار",
   list = [],
   stateChanger,
+  defaultState = null
 }) {
-  const [item, setItem] = React.useState("");
+  const [item, setItem] = React.useState(defaultState);
 
   const handleChange = (event) => {
     setItem(event.target.value);
