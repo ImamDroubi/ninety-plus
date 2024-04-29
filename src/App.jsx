@@ -19,6 +19,7 @@ import VerifyEmailPage from "./components/views/VerifyEmailPage";
 import ForgotPasswordEmailPage from "./components/views/ForgotPasswordEmailPage";
 import ForgotPasswordPage from "./components/views/ForgotPasswordPage";
 import ResetPasswordPage from "./components/views/ResetPasswordPage";
+import { CreateCourseContextProvider } from "./contexts/CreateCourseContext";
 function App() {
   return (
     <>
@@ -27,7 +28,10 @@ function App() {
           <Route index element={<HomePage />} />
           <Route path="/not-found" element={<NotFoundPage />} />
           <Route path="/verify-email" element={<VerifyEmailPage />} />
-          <Route path="/forgot-password-email" element={<ForgotPasswordEmailPage />} />
+          <Route
+            path="/forgot-password-email"
+            element={<ForgotPasswordEmailPage />}
+          />
           <Route path="course-page/:id" element={<CourseContentPage />} />
           <Route path="courses" element={<CoursesPage />} />
           <Route path="course/:id" element={<CourseInfoPage />} />
@@ -36,7 +40,11 @@ function App() {
         <Route path="/teacher/:id/" element={<TeacherPageLayout />}>
           <Route path="dashboard" element={<TeacherDashboardPage />} />
           <Route path="courses" element={<TeacherCoursesPage />} />
-          <Route path="create-course" element={<TeacherCreateCoursePage />} />
+          <Route path="create-course" element={
+          <CreateCourseContextProvider>
+            <TeacherCreateCoursePage />
+          </CreateCourseContextProvider>
+          }/>
           <Route path="earnings" element={<TeacherEarningsPage />} />
           <Route path="messages" element={<TeacherMessagesPage />} />
           <Route path="settings" element={<TeacherSettingsPage />} />

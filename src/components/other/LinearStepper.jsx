@@ -5,18 +5,27 @@ import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
+import { useCreateCourseContext } from "../../contexts/CreateCourseContext";
 
-// const steps = [
-//   "Select campaign settings",
-//   "Create an ad group",
-//   "Create an ad",
-// ];
+
 
 export default function LinearStepper({ children = [], steps = [], formRef}) {
   
+  const {isValid, isSubmitting} = useCreateCourseContext();
+  
   const [activeStep, setActiveStep] = React.useState(0);
 
+
   const handleNext = () => {
+    if(activeStep === steps.length - 1){
+      if(!isValid)return;
+      formRef.current.dispatchEvent(new Event('submit' , {
+        cancelable : true,
+        bubbles : true
+      }));
+      
+    }
+    
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
 
@@ -49,7 +58,7 @@ export default function LinearStepper({ children = [], steps = [], formRef}) {
           </Typography>
           <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
             <Box sx={{ flex: "1 1 auto" }} />
-            <Button onClick={handleReset}>Reset</Button>
+            <Button onClick={handleReset}>رجوع للبداية</Button>
           </Box>
         </React.Fragment>
       ) : (
@@ -73,8 +82,9 @@ export default function LinearStepper({ children = [], steps = [], formRef}) {
               disableElevation
               sx={{ borderRadius: "0" }}
               onClick={handleNext}
+              disabled={activeStep === steps.length -1 && (!isValid || isSubmitting) }
             >
-              {activeStep === steps.length - 1 ? "نشر" : "التالي"}
+              {activeStep !== steps.length - 1 ? "التالي" : isSubmitting ?  "جاري المعالجة..." : "نشر"}
             </Button>
           </Box>
         </React.Fragment>

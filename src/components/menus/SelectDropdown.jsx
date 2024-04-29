@@ -8,7 +8,7 @@ export default function SelectDropdown({
   title = "اختيار",
   list = [],
   stateChanger,
-  defaultState = null
+  defaultState = undefined
 }) {
   const [item, setItem] = React.useState(defaultState);
 

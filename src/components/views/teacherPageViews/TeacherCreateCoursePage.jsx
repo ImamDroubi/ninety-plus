@@ -13,20 +13,22 @@ const steps = [
   "نشر الدورة",
 ];
 export default function TeacherCreateCoursePage() {
-  const formRef= useRef();
-  
+  const {handleSubmit, onSubmit, setFormRef} = useCreateCourseContext();
+  const formRef = useRef();
+  useEffect(()=>{
+    setFormRef(formRef);
+  },[formRef])
+
   return (
     <>
-      <form ref={formRef}></form>
+      <form ref={formRef} onSubmit={handleSubmit(onSubmit)}></form>
       <section className="my-4 flex justify-between gap-1 w-[90%] m-auto bg-gray-white p-3 ">
-        <CreateCourseContextProvider>
-          <LinearStepper steps={steps} formRef={formRef}>
+          <LinearStepper steps={steps} id="gg" formRef={formRef} >
             <CreateCourseFormBasic />
             <CreateCourseFormAdvanced />
             <CreateCourseFormCurriculum />
             <CreateCourseFormPublish />
           </LinearStepper>
-        </CreateCourseContextProvider>
       </section>
     </>
   );
