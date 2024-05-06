@@ -6,6 +6,8 @@ import StepLabel from "@mui/material/StepLabel";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { useCreateCourseContext } from "../../contexts/CreateCourseContext";
+import CreateCourseFormResult from "../forms/create-course-forms/CreateCourseFormResult";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 
 
@@ -15,6 +17,20 @@ export default function LinearStepper({ children = [], steps = [], formRef}) {
   
   const [activeStep, setActiveStep] = React.useState(0);
 
+  const [searchParams,setSearchParams] = useSearchParams();
+
+  React.useEffect(()=>{
+    setSearchParams({tab : steps[0].param});
+  },[])
+
+  React.useEffect(()=>{
+    let param = searchParams.get("tab");
+    steps.map((item,key)=>{
+      if(item.param == param){
+        setActiveStep(key);
+      }
+    })
+  },[searchParams])
 
   const handleNext = () => {
     if(activeStep === steps.length - 1){
@@ -23,17 +39,18 @@ export default function LinearStepper({ children = [], steps = [], formRef}) {
         cancelable : true,
         bubbles : true
       }));
-      
     }
-    
+    setSearchParams({tab : steps[activeStep+1].param});
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
 
   const handleBack = () => {
+    setSearchParams({tab : steps[activeStep-1].param});
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
   const handleReset = () => {
+    setSearchParams({tab : steps[0].param});
     setActiveStep(0);
   };
 
@@ -44,22 +61,21 @@ export default function LinearStepper({ children = [], steps = [], formRef}) {
           const stepProps = {};
           const labelProps = {};
           return (
-            <Step key={label} {...stepProps}>
-              <StepLabel {...labelProps}>{label}</StepLabel>
+            <Step key={label.name} {...stepProps}>
+              <StepLabel {...labelProps}>{label.name}</StepLabel>
             </Step>
           );
         })}
       </Stepper>
       {activeStep === steps.length ? (
         <React.Fragment>
-          <Typography sx={{ mt: 2, mb: 1 }}>
-            تم تقديم الدورة للمراجعة... <br />
-            سوف تصلك رسالة بالقبول أو الرفض.
-          </Typography>
-          <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
+
+          <CreateCourseFormResult handleReset={handleReset}/>
+
+          {/* <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
             <Box sx={{ flex: "1 1 auto" }} />
             <Button onClick={handleReset}>رجوع للبداية</Button>
-          </Box>
+          </Box> */}
         </React.Fragment>
       ) : (
         <React.Fragment>

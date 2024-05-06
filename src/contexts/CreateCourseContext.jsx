@@ -30,7 +30,7 @@ export function CreateCourseContextProvider({ children }) {
   const [subject, setSubject] = useState();
   const [weekly_lectures, setWeeklyLectures] = useState();
   const [chapters, setChapters] = useState([]);
-
+  const [responseErrors,setResponseErrors] = useState();
 
 
   // React hook form attributes
@@ -46,8 +46,16 @@ export function CreateCourseContextProvider({ children }) {
 
   // ===================================== HANDLE SUBMISSION FUNCTION ========================================================
   const onSubmit = async (data) => {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    
     // Send to backend
+    // setResponseError
+    setResponseErrors(null);
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 5000));
+      // throw new Error();
+    } catch (error) {
+      setResponseErrors({name : "This is an error Object"})
+    }
     console.log(data);
   };
 
@@ -82,6 +90,8 @@ export function CreateCourseContextProvider({ children }) {
     formRef,
     setFormRef,
     isValid,
+    responseErrors,
+    setResponseErrors
   };
   return (
     <CreateCourseContext.Provider value={value}>

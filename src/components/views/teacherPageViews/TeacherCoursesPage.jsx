@@ -43,6 +43,7 @@ export default function TeacherCoursesPage() {
           <div className="dropdowns flex gap-4">
             <div className="flex flex-col gap-1  ">
               <p className="text-gray-600">ترتيب حسب:</p>
+              {/* TODO : MODIFY THE LIST  */}
               <SelectDropdown
                 title="ترتيب"
                 list={[

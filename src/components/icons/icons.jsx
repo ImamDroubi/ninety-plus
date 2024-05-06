@@ -25,7 +25,8 @@ import {
   faLayerGroup,
   faCrown,
   faCreditCard,
-  faWallet
+  faWallet,
+  faCircleXmark 
 
 } from "@fortawesome/free-solid-svg-icons";
 import { faHeart } from "@fortawesome/free-regular-svg-icons";
@@ -123,3 +124,7 @@ export function CreditCardIcon(props) {
 export function CrownIcon(props) {
   return <FontAwesomeIcon {...props} icon={faCrown} />;
 }
+export function XMarkIcon(props) {
+  return <FontAwesomeIcon {...props} icon={faCircleXmark} />;
+}
+
