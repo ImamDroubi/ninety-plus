@@ -5,14 +5,20 @@ import {
   PlusIcon,
   TrashIcon,
 } from "../../icons/icons";
+import { useState } from "react";
+import AddLecture from "../../popups/AddLecture";
+import PopupLayout from "../../layouts/PopupLayout";
+import ClosePopupButton from "../../buttons/ClosePopupButton";
 export default function CurriculumChapter({
   chapter,
   deleteChapter,
   editChapter,
 }) {
-  const newLecture = {
-    name: "تمت الإضافة",
-  };
+
+  const [editChapterPopupOpen, setEditChapterPopupOpen] = useState(false);
+  const [addLecturePopupOpen, setAddLecturePopupOpen] = useState(false);
+
+
   const newChapter = {
     name: "تم التعديل",
   };
@@ -63,7 +69,7 @@ export default function CurriculumChapter({
           <HumburgerIcon className="hidden sm:inline" /> {chapter.name}
         </h3>
         <div className="icons flex  text-gray-600 ">
-          <PlusIcon onClick={()=>addLecture(newLecture)} className="cursor-pointer hover:bg-gray-300 p-1 rounded-full" />
+          <PlusIcon onClick={()=>setAddLecturePopupOpen(true)} className="cursor-pointer hover:bg-gray-300 p-1 rounded-full" />
           <EditIcon
             onClick={() => editChapter(chapter.id, newChapter)}
             className="cursor-pointer hover:bg-gray-300 p-1 rounded-full"
@@ -79,6 +85,16 @@ export default function CurriculumChapter({
           return <CurriculumLecture lecture={lecture} key={index} deleteLecture={deleteLecture} editLecture={editLecture} />;
         })}
       </div>
+
+      {/* POPUP TO ADD LECTURE  */}
+      {addLecturePopupOpen ? (
+        <PopupLayout>
+          <div className="w-5/12 z-10 bg-gray-50 p-4 relative py-5">
+            <ClosePopupButton setOpen={setAddLecturePopupOpen} />
+            <AddLecture callback={addLecture} setOpen={setAddLecturePopupOpen}/>
+          </div>
+        </PopupLayout>
+      ) : null}
     </div>
   );
 }

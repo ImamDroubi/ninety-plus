@@ -6,6 +6,7 @@ import BuyCourse from "../popups/BuyCourse";
 import PopupLayout from "../layouts/PopupLayout";
 import { useState } from "react";
 import CoursePageTabs from "../menus/CoursePageTabs";
+import ClosePopupButton from "../buttons/ClosePopupButton";
 
 export default function CourseContentPage() {
   const teacherImage = user;
@@ -57,9 +58,7 @@ export default function CourseContentPage() {
             buyModalOpen?
             <PopupLayout >
               <div className="relative z-10 w-10/12 pt-2 bg-gray-white">
-                <button onClick={()=>setBuyModalOpen(false)} className="absolute top-[-1rem] right-[-1rem] text-gray-white bg-primary-500 p-2 w-6 h-6 rounded-full flex items-center justify-center text-xl hover:bg-primary-600">
-                  X
-                </button>
+                <ClosePopupButton setOpen={setBuyModalOpen} />
                 <BuyCourse/>
               </div>
             </PopupLayout>

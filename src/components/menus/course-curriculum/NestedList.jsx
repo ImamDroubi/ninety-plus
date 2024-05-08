@@ -1,12 +1,17 @@
 import { Button } from "@mui/material";
-
 import CurriculumChapter from "./CurriculumChapter";
+import { useState } from "react";
+import PopupLayout from "../../layouts/PopupLayout";
+import ClosePopupButton from "../../buttons/ClosePopupButton";
+import AddChapter from "../../popups/AddChapter";
 
-export default function NestedList({ itemsList, setItemsList }) {
+export default function NestedList({ itemsList = [], setItemsList }) {
   const addItem = (newItem) => {
     const newId = itemsList.length + 1;
     setItemsList([...itemsList, { ...newItem, id: newId }]);
   };
+
+  const [addChapterPopupOpen, setAddChapterPopupOpen] = useState(false);
 
   const editItem = (itemId, updatedItem) => {
     const newItemsList = itemsList.map((item) => {
@@ -29,11 +34,8 @@ export default function NestedList({ itemsList, setItemsList }) {
     });
     setItemsList(newItemsList);
   };
-  const newChapter = {
-    id: 1,
-    name: "تمت الإضافة",
-    lectures: [],
-  };
+
+
   return (
     <>
       {itemsList.map((chapter, index) => {
@@ -55,10 +57,18 @@ export default function NestedList({ itemsList, setItemsList }) {
         sx={{ width: "100%", opacity: "0.8" }}
         variant="contained"
         disableElevation
-        onClick={() => addItem(newChapter)}
+        onClick={() => setAddChapterPopupOpen(true)}
       >
         إضافة وحدة جديدة
       </Button>
+      {addChapterPopupOpen ? (
+        <PopupLayout>
+          <div className="w-5/12 z-10 bg-gray-50 p-4 relative py-5">
+            <ClosePopupButton setOpen={setAddChapterPopupOpen} />
+            <AddChapter callback={addItem} setOpen={setAddChapterPopupOpen}/>
+          </div>
+        </PopupLayout>
+      ) : null}
     </>
   );
 }

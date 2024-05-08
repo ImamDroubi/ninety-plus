@@ -20,6 +20,7 @@ import ForgotPasswordEmailPage from "./components/views/ForgotPasswordEmailPage"
 import ForgotPasswordPage from "./components/views/ForgotPasswordPage";
 import ResetPasswordPage from "./components/views/ResetPasswordPage";
 import { CreateCourseContextProvider } from "./contexts/CreateCourseContext";
+import TeacherEditCoursePage from "./components/views/teacherPageViews/TeacherEditCoursePage";
 function App() {
   return (
     <>
@@ -40,6 +41,7 @@ function App() {
         <Route path="/teacher/:id/" element={<TeacherPageLayout />}>
           <Route path="dashboard" element={<TeacherDashboardPage />} />
           <Route path="courses" element={<TeacherCoursesPage />} />
+          <Route path="courses/:id/" element={<TeacherEditCoursePage />} />
           <Route path="create-course" element={
           <CreateCourseContextProvider>
             <TeacherCreateCoursePage />

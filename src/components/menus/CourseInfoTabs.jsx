@@ -6,6 +6,7 @@ import Button from "@mui/material/Button";
 import PopupLayout from "../layouts/PopupLayout";
 import AddComent from "../popups/AddComent";
 import SlidingTabs from "./SlidingTabs";
+import ClosePopupButton from "../buttons/ClosePopupButton";
 
 function Description() {
   return (
@@ -118,12 +119,7 @@ function StudentsFeedback() {
       {addCommentPopupOpen ? (
         <PopupLayout>
           <div className="relative z-10 w-10/12 max-w-[40rem] pt-6 pb-2 px-3 bg-gray-white">
-            <button
-              onClick={() => setAddCommentPopupOpen(false)}
-              className="absolute top-[-1rem] right-[-1rem] text-gray-white bg-primary-500 p-2 w-6 h-6 rounded-full flex items-center justify-center text-xl hover:bg-primary-600"
-            >
-              X
-            </button>
+            <ClosePopupButton setOpen={setAddCommentPopupOpen} />
             <AddComent />
             <div className="flex justify-between buttons">
               <Button
