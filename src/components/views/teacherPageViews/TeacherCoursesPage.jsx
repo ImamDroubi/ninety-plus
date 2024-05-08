@@ -3,9 +3,11 @@ import SearchInput from "../../other/SearchInput";
 import CourseCard from "../../cards/CourseCard";
 import SelectDropdown from "../../menus/SelectDropdown";
 import BasicPagination from "../../other/BasicPagination";
-
+import { courseFiltersList } from "../../data/courseFiltersList";
+import { courseRatingFiltersList } from "../../data/courseRatingFiltersList";
 const NUMBER_OF_COURSES_IN_THE_PAGE = 8;
 const NUMBER_OF_DATA = 16;
+
 export default function TeacherCoursesPage() {
   const [pagination, setPagination] = useState({
     count: NUMBER_OF_DATA,
@@ -44,21 +46,13 @@ export default function TeacherCoursesPage() {
             <div className="flex flex-col gap-1  ">
               <p className="text-gray-600">ترتيب حسب:</p>
               {/* TODO : MODIFY THE LIST  */}
-              <SelectDropdown
-                title="ترتيب"
-                list={[
-                  "بدءاً من الأحدث",
-                  "بدءاً من الأقدم",
-                  "الأعلى تقييماً",
-                  "الأقل تقييماً",
-                ]}
-              />
+              <SelectDropdown title="ترتيب" list={courseFiltersList} />
             </div>
             <div className="flex flex-col gap-1 ">
               <p className="text-gray-600">التقييم:</p>
               <SelectDropdown
                 title="التقييم"
-                list={["فوق 4 نجوم", "فوق 3 نجوم", "فوق نجمتين", "فوق نجمة"]}
+                list={courseRatingFiltersList}
               />
             </div>
           </div>
