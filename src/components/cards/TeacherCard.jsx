@@ -18,7 +18,7 @@ export default function TeacherCard({
   studentsNo = teacherSample.studentsNo,
 }) {
   return (
-    <div className="group max-w-[16rem] min-h-[15rem] bg-gray-white  flex flex-col cursor-pointer  border-2 border-gray-100">
+    <div className="group w-full max-w-[16rem] min-h-[15rem] bg-gray-white  flex flex-col cursor-pointer  border-2 border-gray-100">
       <div className="preview w-full object-cover h-[16rem] relative">
         <div className="absolute hidden w-full h-full overlay bg-gray-white opacity-30 group-hover:block"></div>
         <img src={preview} alt="teacher" className="w-full h-full" />
