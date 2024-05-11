@@ -6,6 +6,7 @@ import SelectDropdown from "../menus/SelectDropdown";
 import { streamsList } from "../data/streamsList";
 import { citiesList } from "../data/citiesList";
 import { gendersList } from "../data/gendersList";
+import { rolesList } from "../data/rolesList";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -63,6 +64,7 @@ export default function RegisterStudentForm() {
   // Select inputs states
   const [currentStream, setCurrentStream] = useState();
   const [currentCity, setCurrentCity] = useState();
+  const [currentRole, setCurrentRole] = useState(rolesList[0]); // rolesList[0] should be student 
   const [currentGender, setCurrentGender] = useState();
   const [selectInputsErrors, setSelectInputsErrors] = useState();
 
@@ -71,7 +73,8 @@ export default function RegisterStudentForm() {
     let streamError = selectInputsErrors?.stream;
     let cityError = selectInputsErrors?.city;
     let genderError = selectInputsErrors?.gender;
-    if (currentStream == null) {
+    let roleError = selectInputsErrors?.role
+    if (currentStream == null && currentRole == rolesList[0]) { // if there is no stream and the role is student 
       streamError = "يرجى اختيار أحد الفروع";
       isValid = false;
     }
@@ -83,10 +86,15 @@ export default function RegisterStudentForm() {
       genderError = "يرجى اختيار الجنس";
       isValid = false;
     }
+    if (currentRole == null) {
+      roleError = "يرجى اختيار نوع الحساب";
+      isValid = false;
+    }
     setSelectInputsErrors({
       stream: streamError,
       city: cityError,
       gender: genderError,
+      role : roleError
     });
     return isValid;
   };
@@ -96,6 +104,7 @@ export default function RegisterStudentForm() {
     let streamError = selectInputsErrors?.stream;
     let cityError = selectInputsErrors?.city;
     let genderError = selectInputsErrors?.gender;
+    let roleError = selectInputsErrors?.role
     if (currentStream != null) {
       streamError = null;
     }
@@ -105,21 +114,25 @@ export default function RegisterStudentForm() {
     if (currentGender != null) {
       genderError = null;
     }
+    if (currentRole != null) {
+      roleError = null;
+    }
     setSelectInputsErrors({
       stream: streamError,
       city: cityError,
       gender: genderError,
+      role : roleError
     });
-  }, [currentStream, currentCity, currentGender]);
+  }, [currentStream, currentCity, currentGender, currentRole]);
 
   // ===================================== HANDLE SUBMISSION FUNCTION ========================================================
   const onSubmit = async (data) => {
     if (!validateSelectInputs()) return;
     await new Promise((resolve) => setTimeout(resolve, 1000));
     const userInformation = {
-      role_id: 1,
+      role_id: currentRole.id,
       city_id: currentCity.id,
-      branch_id: currentStream.id,
+      branch_id: currentStream?.id,
       gender: currentGender.id,
       ...data,
     };
@@ -210,9 +223,24 @@ export default function RegisterStudentForm() {
           </SingleFormInputContainer>
         </DoubleFormInputContainer>
 
+        {/* Role */}
+        <SingleFormInputContainer error={selectInputsErrors?.stream}>
+          <div className="mb-3 flex items-center gap-1 ">
+            <label className={`${labelBaseStyle}`}>نوع الحساب</label>
+            <SelectDropdown
+              title="الحساب"
+              list={rolesList}
+              stateChanger={setCurrentRole}
+              defaultState = {currentRole}
+            />
+          </div>
+        </SingleFormInputContainer>
+
         {/* Stream, City, Gender select-dropdown */}
         <div className="flex flex-col my-2 md:flex-row justify-between">
-          <SingleFormInputContainer error={selectInputsErrors?.stream}>
+          {
+            currentRole == rolesList[0] && 
+            <SingleFormInputContainer error={selectInputsErrors?.stream}>
             <div className="mb-3 flex items-center gap-1 ">
               <label className={`${labelBaseStyle}`}>الفرع</label>
               <SelectDropdown
@@ -222,6 +250,7 @@ export default function RegisterStudentForm() {
               />
             </div>
           </SingleFormInputContainer>
+          }
           <SingleFormInputContainer error={selectInputsErrors?.city}>
             <div className="mb-3 flex items-center gap-1">
               <label className={`${labelBaseStyle}`}>المحافظة</label>
