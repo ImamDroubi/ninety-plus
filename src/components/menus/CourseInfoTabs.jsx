@@ -4,7 +4,7 @@ import user from "../../assets/images/user.jpg";
 import { useState } from "react";
 import Button from "@mui/material/Button";
 import PopupLayout from "../layouts/PopupLayout";
-import AddComent from "../popups/AddComent";
+import AddComent from "../popups/AddComment";
 import SlidingTabs from "./SlidingTabs";
 import ClosePopupButton from "../buttons/ClosePopupButton";
 
@@ -103,7 +103,7 @@ function StudentsFeedback() {
         </h3>
         <Button
           disableElevation
-          sx={{borderRadius : "0px"}}
+          sx={{ borderRadius: "0px" }}
           onClick={() => setAddCommentPopupOpen(true)}
           variant="contained"
         >
@@ -120,30 +120,7 @@ function StudentsFeedback() {
         <PopupLayout>
           <div className="relative z-10 w-10/12 max-w-[40rem] pt-6 pb-2 px-3 bg-gray-white">
             <ClosePopupButton setOpen={setAddCommentPopupOpen} />
-            <AddComent />
-            <div className="flex justify-between buttons">
-              <Button
-                disableElevation
-                variant="contained"
-                sx={{
-                  color: "rgb(29 32 38)",
-                  backgroundColor: "rgb(245 247 250)",
-                  "&:hover": { backgroundColor: "rgb(206 209 217)" },
-                  borderRadius: "0px"
-                }}
-              >
-                إلغاء
-              </Button>
-              <Button disableElevation sx={{borderRadius : "0px"}} variant="contained" >
-                <div
-                  onClick={() => setAddCommentPopupOpen(true)}
-                  className="flex items-center gap-1"
-                >
-                  <p>تعليق</p>
-                  <FontAwesomeIcon icon={faComment} />
-                </div>
-              </Button>
-            </div>
+            <AddComent callback={()=>{}} setOpen={setAddCommentPopupOpen} />
           </div>
         </PopupLayout>
       ) : null}

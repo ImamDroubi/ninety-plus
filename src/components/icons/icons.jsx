@@ -29,6 +29,9 @@ import {
   faCircleXmark,
   faXmark,
   faCloudArrowUp,
+  faVideo,
+  faTriangleExclamation,
+  faComment
 } from "@fortawesome/free-solid-svg-icons";
 import { faHeart } from "@fortawesome/free-regular-svg-icons";
 
@@ -134,3 +137,13 @@ export function CloseIcon(props) {
 export function CloudIcon(props) {
   return <FontAwesomeIcon {...props} icon={faCloudArrowUp} />;
 }
+export function VideoIcon(props) {
+  return <FontAwesomeIcon {...props} icon={faVideo} />;
+}
+export function WarningIcon(props) {
+  return <FontAwesomeIcon {...props} icon={faTriangleExclamation} />;
+}
+export function ChatIcon(props) {
+  return <FontAwesomeIcon {...props} icon={faComment} />;
+}
+

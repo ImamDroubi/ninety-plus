@@ -1,20 +1,20 @@
 import { useState } from "react";
-import SingleFormInputContainer from "../containers/SingleFormInputContainer";
+import SingleFormInputContainer from "../../containers/SingleFormInputContainer";
 import { Button } from "@mui/material";
 
-export default function AddChapter({ callback = () => {},setOpen } ) {
+export default function AddChapter({ callback = () => {}, setOpen }) {
   const [chapterName, setChapterName] = useState();
   const [error, setError] = useState();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if(!chapterName || chapterName == ""){
-      setError("لا يمكن أن يكون اسم الوحدة فارغاً")
-      return ;
+    if (!chapterName || chapterName == "") {
+      setError("لا يمكن أن يكون اسم الوحدة فارغاً");
+      return;
     }
     callback({
-      name : chapterName, 
-      lectures : []
+      name: chapterName,
+      lectures: [],
     });
     setOpen(false);
   };
@@ -23,7 +23,13 @@ export default function AddChapter({ callback = () => {},setOpen } ) {
   const inputBaseStyle =
     "border-[2px] border-gray-100 p-2 w-full focus:border-primary-500 outline-none duration-200";
   return (
-    <form className="flex flex-col gap-2" onInput={()=>{setError(null)}} onSubmit={handleSubmit}>
+    <form
+      className="flex flex-col gap-2"
+      onInput={() => {
+        setError(null);
+      }}
+      onSubmit={handleSubmit}
+    >
       <SingleFormInputContainer error={error}>
         <label className={`${labelBaseStyle}`}>اسم الوحدة</label>
         <input

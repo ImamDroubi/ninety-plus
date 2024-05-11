@@ -1,25 +1,28 @@
 import { useState } from "react";
-import SingleFormInputContainer from "../containers/SingleFormInputContainer";
+import SingleFormInputContainer from "../../containers/SingleFormInputContainer";
 import { Button } from "@mui/material";
-import UploadFileHandler from "../forms/UploadFileHandler";
+import UploadFileHandler from "../../forms/UploadFileHandler";
 
-export default function AddLecture({ callback = () => {},setOpen } ) {
-  const [lectureName, setLectureName] = useState();
-  const [lectureDescription, setLectureDescription] = useState();
-  const [videoLink,setVideoLink] = useState();
-  const [videoFile,setVideoFile] = useState();
+export default function EditLecture({
+  callback = () => {},
+  setOpen,
+  lecture = {},
+}) {
+  const [lectureName, setLectureName] = useState(lecture.name);
+  const [lectureDescription, setLectureDescription] = useState(
+    lecture.description
+  );
   const [error, setError] = useState();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if(!lectureName || lectureName == ""){
-      setError("لا يمكن أن يكون اسم الحصة فارغاً")
-      return; 
+    if (!lectureName || lectureName == "") {
+      setError("لا يمكن أن يكون اسم الحصة فارغاً");
+      return;
     }
-    callback({
-      name : lectureName, 
-      description : lectureDescription,
-      link : videoLink
+    callback(lecture.id, {
+      name: lectureName,
+      description: lectureDescription,
     });
     setOpen(false);
   };
@@ -28,7 +31,13 @@ export default function AddLecture({ callback = () => {},setOpen } ) {
   const inputBaseStyle =
     "border-[2px] border-gray-100 p-2 w-full focus:border-primary-500 outline-none duration-200 text-sm";
   return (
-    <form className="flex flex-col gap-2" onInput={()=>{setError(null)}} onSubmit={handleSubmit}>
+    <form
+      className="flex flex-col gap-2"
+      onInput={() => {
+        setError(null);
+      }}
+      onSubmit={handleSubmit}
+    >
       <SingleFormInputContainer error={error}>
         <label className={`${labelBaseStyle}`}>اسم الحصة</label>
         <input
@@ -49,11 +58,6 @@ export default function AddLecture({ callback = () => {},setOpen } ) {
           placeholder="اشرح عن محتوى الحصة..."
         />
       </SingleFormInputContainer>
-      <SingleFormInputContainer error={null}>
-        <label className={`${labelBaseStyle}`}>مقطع الفيديو</label>
-        <UploadFileHandler />
-      </SingleFormInputContainer>
-      
 
       <Button
         variant="contained"
@@ -61,10 +65,8 @@ export default function AddLecture({ callback = () => {},setOpen } ) {
         sx={{ borderRadius: "0px" }}
         type="submit"
       >
-        إضافة حصة
+        تعديل الحصة
       </Button>
-      
     </form>
-    
   );
 }

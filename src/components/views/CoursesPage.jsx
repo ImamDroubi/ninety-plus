@@ -6,8 +6,10 @@ import Container90 from "../containers/Container90";
 import CourseCard from "../cards/CourseCard";
 import { streamsList } from "../data/streamsList";
 import BasicPagination from "../other/BasicPagination";
+
 const NUMBER_OF_COURSES_IN_THE_PAGE = 7;
 const NUMBER_OF_DATA = 12;
+
 export default function CoursesPage() {
   const searchRef = useRef();
   const [currentStream, setCurrentStream] = useState();

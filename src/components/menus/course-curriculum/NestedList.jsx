@@ -3,7 +3,7 @@ import CurriculumChapter from "./CurriculumChapter";
 import { useState } from "react";
 import PopupLayout from "../../layouts/PopupLayout";
 import ClosePopupButton from "../../buttons/ClosePopupButton";
-import AddChapter from "../../popups/AddChapter";
+import AddChapter from "../../popups/CurriculumPopups/AddChapter";
 
 export default function NestedList({ itemsList = [], setItemsList }) {
   const addItem = (newItem) => {
@@ -35,7 +35,6 @@ export default function NestedList({ itemsList = [], setItemsList }) {
     setItemsList(newItemsList);
   };
 
-
   return (
     <>
       {itemsList.map((chapter, index) => {
@@ -61,11 +60,13 @@ export default function NestedList({ itemsList = [], setItemsList }) {
       >
         إضافة وحدة جديدة
       </Button>
+
+      {/* POPUP TO ADD CHAPTER */}
       {addChapterPopupOpen ? (
         <PopupLayout>
-          <div className="w-5/12 z-10 bg-gray-50 p-4 relative py-5">
+          <div className="w-9/12  md:w-5/12 z-10 bg-gray-50 p-4 relative py-5">
             <ClosePopupButton setOpen={setAddChapterPopupOpen} />
-            <AddChapter callback={addItem} setOpen={setAddChapterPopupOpen}/>
+            <AddChapter callback={addItem} setOpen={setAddChapterPopupOpen} />
           </div>
         </PopupLayout>
       ) : null}

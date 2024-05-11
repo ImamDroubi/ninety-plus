@@ -3,9 +3,11 @@ import { faComment } from "@fortawesome/free-solid-svg-icons";
 import user from "../../assets/images/user.jpg";
 import { useState } from "react";
 import { Button } from "@mui/material";
-import AddComent from "../popups/AddComent";
+
 import PopupLayout from "../layouts/PopupLayout";
 import SlidingTabs from "./SlidingTabs";
+import AddComment from "../popups/AddComment";
+import ClosePopupButton from "../buttons/ClosePopupButton";
 
 function Description() {
   return (
@@ -99,6 +101,8 @@ function StudentsFeedback() {
         <Button
           onClick={() => setAddCommentPopupOpen(true)}
           variant="contained"
+          disableElevation
+          sx={{ borderRadius: "0px" }}
         >
           <div className="flex items-center gap-1">
             <p>تعليق</p>
@@ -112,34 +116,8 @@ function StudentsFeedback() {
       {addCommentPopupOpen ? (
         <PopupLayout>
           <div className="relative z-10 w-10/12 max-w-[40rem] pt-6 pb-2 px-3 bg-gray-white">
-            <button
-              onClick={() => setAddCommentPopupOpen(false)}
-              className="absolute top-[-1rem] right-[-1rem] text-gray-white bg-primary-500 p-2 w-6 h-6 rounded-full flex items-center justify-center text-xl hover:bg-primary-600"
-            >
-              X
-            </button>
-            <AddComent />
-            <div className="flex justify-between buttons">
-              <Button
-                variant="contained"
-                sx={{
-                  color: "rgb(29 32 38)",
-                  backgroundColor: "rgb(245 247 250)",
-                  "&:hover": { backgroundColor: "rgb(206 209 217)" },
-                }}
-              >
-                إلغاء
-              </Button>
-              <Button variant="contained">
-                <div
-                  onClick={() => setAddCommentPopupOpen(true)}
-                  className="flex items-center gap-1"
-                >
-                  <p>تعليق</p>
-                  <FontAwesomeIcon icon={faComment} />
-                </div>
-              </Button>
-            </div>
+            <ClosePopupButton setOpen={setAddCommentPopupOpen} />
+            <AddComment callback={() => {}} setOpen={setAddCommentPopupOpen} />
           </div>
         </PopupLayout>
       ) : null}
