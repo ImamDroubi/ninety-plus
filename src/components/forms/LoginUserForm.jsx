@@ -6,7 +6,7 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
-import SuccessAlert from "../alerts/SuccessAlert";
+import TopAlert from "../alerts/TopAlert";
 
 const loginSchema = z.object({
   email: z.string().email({ message: "الرجاء إدخال بريد إلكتروني صالح" }),
@@ -51,7 +51,7 @@ const alertToggle = () => {
 
   return (
     <>
-    {showAlert && <SuccessAlert message="تم الدخول" />}
+    {showAlert && <TopAlert message="تم الدخول" />}
     <form className="text-gray-900  w-9/12" onSubmit={handleSubmit(onSubmit)}>
       {/* Email */}
       <SingleFormInputContainer error={errors.email?.message}>

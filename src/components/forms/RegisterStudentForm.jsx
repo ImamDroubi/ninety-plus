@@ -8,49 +8,17 @@ import { citiesList } from "../data/citiesList";
 import { gendersList } from "../data/gendersList";
 import { rolesList } from "../data/rolesList";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import SuccessAlert from "../alerts/SuccessAlert";
-
-const PHONE_NUMBER_REGEX = /^((\+970)|(\+972)|0)?5[0-9]{8}$/;
-
-const registerSchema = z
-  .object({
-    first_name: z
-      .string()
-      .min(2, { message: "الاسم قصير" })
-      .max(10, { message: "الاسم طويل" }),
-    last_name: z
-      .string()
-      .min(2, { message: "الاسم قصير" })
-      .max(10, { message: "الاسم طويل" }),
-    email: z.string().email({ message: "الرجاء إدخال بريد إلكتروني صالح" }),
-    password: z
-      .string()
-      .min(8, { message: "كلمة السر قصيرة جداً" })
-      .max(30, { message: "كلمة السر طويلة جداً" }),
-    birth_date: z.string().date("تاريخ الميلاد غير صالح"),
-    password_confirmation: z
-      .string()
-      .min(8, { message: "كلمة السر قصيرة جداً" })
-      .max(30, { message: "كلمة السر طويلة جداً" }),
-    phone: z
-      .string()
-      .regex(PHONE_NUMBER_REGEX, { message: "رقم الجوال غير صالح" }),
-  })
-  .refine(
-    (data) => {
-      return data.password === data.password_confirmation;
-    },
-    {
-      message: "يجب أن تتطابق كلمتا السر",
-      path: ["password_confirmation"],
-    }
-  );
-
+import useRegister from "../../apiCalls/useRegister";
+import { useAlert } from "../../hooks/useAlert";
+import { useRegistrationMenus } from "../../hooks/useRegistrationMenus";
+import registerSchema from "./schemas/registerSchema";
+import TopAlert from "../alerts/TopAlert";
+import { useNavigate } from "react-router-dom";
 export default function RegisterStudentForm() {
-  const [showAlert, setShowAlert] = useState(false);
-
+  const navigate = useNavigate();
+  // const menus = useRegistrationMenus();
+  const alertController = useAlert();
   // React hook form attributes
   const {
     register,
@@ -64,7 +32,7 @@ export default function RegisterStudentForm() {
   // Select inputs states
   const [currentStream, setCurrentStream] = useState();
   const [currentCity, setCurrentCity] = useState();
-  const [currentRole, setCurrentRole] = useState(rolesList[0]); // rolesList[0] should be student 
+  const [currentRole, setCurrentRole] = useState(rolesList[0]); // rolesList[0] should be student
   const [currentGender, setCurrentGender] = useState();
   const [selectInputsErrors, setSelectInputsErrors] = useState();
 
@@ -73,8 +41,9 @@ export default function RegisterStudentForm() {
     let streamError = selectInputsErrors?.stream;
     let cityError = selectInputsErrors?.city;
     let genderError = selectInputsErrors?.gender;
-    let roleError = selectInputsErrors?.role
-    if (currentStream == null && currentRole == rolesList[0]) { // if there is no stream and the role is student 
+    let roleError = selectInputsErrors?.role;
+    if (currentStream == null && currentRole == rolesList[0]) {
+      // if there is no stream and the role is student
       streamError = "يرجى اختيار أحد الفروع";
       isValid = false;
     }
@@ -94,7 +63,7 @@ export default function RegisterStudentForm() {
       stream: streamError,
       city: cityError,
       gender: genderError,
-      role : roleError
+      role: roleError,
     });
     return isValid;
   };
@@ -104,7 +73,7 @@ export default function RegisterStudentForm() {
     let streamError = selectInputsErrors?.stream;
     let cityError = selectInputsErrors?.city;
     let genderError = selectInputsErrors?.gender;
-    let roleError = selectInputsErrors?.role
+    let roleError = selectInputsErrors?.role;
     if (currentStream != null) {
       streamError = null;
     }
@@ -121,32 +90,44 @@ export default function RegisterStudentForm() {
       stream: streamError,
       city: cityError,
       gender: genderError,
-      role : roleError
+      role: roleError,
     });
   }, [currentStream, currentCity, currentGender, currentRole]);
+
+  const mutation = useRegister();
 
   // ===================================== HANDLE SUBMISSION FUNCTION ========================================================
   const onSubmit = async (data) => {
     if (!validateSelectInputs()) return;
-    await new Promise((resolve) => setTimeout(resolve, 1000));
     const userInformation = {
-      role_id: currentRole.id,
-      city_id: currentCity.id,
-      branch_id: currentStream?.id,
-      gender: currentGender.id,
+      // This is the right one, remove the comments
+      // role_id: currentRole.id,
+      // role_name: "student",
+      // city_id: currentCity.id,
+      // branch_id: currentStream?.id,
+      // gender: currentGender.id,
       ...data,
+      // this is for testing, REMOVE ---
+      role_id: 4,
+      city_id: 1,
+      branch_id: 1,
+      gender: 1,
     };
-    // this is the final object that would be sent to the backend
-    console.log(userInformation);
 
-    // After sucess
-    alertToggle();
+    try {
+      await mutation.mutateAsync(userInformation);
+      alertController.alertSuccessToggle("تم إنشاء الحساب بنجاح!");
+      await new Promise((resolve) => setTimeout(resolve, 300));
+      navigate("/verify-email");
+    } catch (error) {
+      alertController.alertErrorToggle("يرجى التحقق من البيانات المرسلة!");
+    }
   };
 
-  const alertToggle = () => {
-    setShowAlert(true);
-    setTimeout(() => setShowAlert(false), 6000);
-  };
+  useEffect(() => {
+    if (mutation.error) {
+    }
+  }, [mutation.isError]);
 
   const labelBaseStyle = "mb-2 text-base block font-semibold";
   const inputBaseStyle =
@@ -154,7 +135,15 @@ export default function RegisterStudentForm() {
 
   return (
     <>
-      {showAlert && <SuccessAlert message="تم إنشاء الحساب بنجاح" />}
+      {alertController.showSuccessAlert && (
+        <TopAlert
+          message={alertController.successAlertMessage}
+          type="success"
+        />
+      )}
+      {alertController.showErrorAlert && (
+        <TopAlert message={alertController.errorAlertMessage} type="error" />
+      )}
       <form className="text-gray-900  w-9/12" onSubmit={handleSubmit(onSubmit)}>
         {/* First Name and Last Name  */}
         <SingleFormInputContainer>
@@ -231,26 +220,25 @@ export default function RegisterStudentForm() {
               title="الحساب"
               list={rolesList}
               stateChanger={setCurrentRole}
-              defaultState = {currentRole}
+              defaultState={currentRole}
             />
           </div>
         </SingleFormInputContainer>
 
         {/* Stream, City, Gender select-dropdown */}
         <div className="flex flex-col my-2 md:flex-row justify-between">
-          {
-            currentRole == rolesList[0] && 
+          {currentRole == rolesList[0] && (
             <SingleFormInputContainer error={selectInputsErrors?.stream}>
-            <div className="mb-3 flex items-center gap-1 ">
-              <label className={`${labelBaseStyle}`}>الفرع</label>
-              <SelectDropdown
-                title="الفرع"
-                list={streamsList}
-                stateChanger={setCurrentStream}
-              />
-            </div>
-          </SingleFormInputContainer>
-          }
+              <div className="mb-3 flex items-center gap-1 ">
+                <label className={`${labelBaseStyle}`}>الفرع</label>
+                <SelectDropdown
+                  title="الفرع"
+                  list={streamsList}
+                  stateChanger={setCurrentStream}
+                />
+              </div>
+            </SingleFormInputContainer>
+          )}
           <SingleFormInputContainer error={selectInputsErrors?.city}>
             <div className="mb-3 flex items-center gap-1">
               <label className={`${labelBaseStyle}`}>المحافظة</label>
