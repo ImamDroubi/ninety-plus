@@ -7,16 +7,15 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import TopAlert from "../alerts/TopAlert";
-
-const loginSchema = z.object({
-  email: z.string().email({ message: "الرجاء إدخال بريد إلكتروني صالح" }),
-  password: z.string(),
-});
-
-
+import loginSchema from "./schemas/loginSchema";
+import { useAlert } from "../../hooks/useAlert";
+import useLogin from "../../apiCalls/useLogin";
+import { useNavigate } from "react-router-dom";
+import {useAuth} from "../../contexts/AuthContext"
 export default function LoginUserForm() {
-  const [showAlert, setShowAlert] = useState(false);
-
+  const navigate = useNavigate();
+  const alertController = useAlert();
+  const {login,setAccessToken} = useAuth();
   // React hook form attributes
   const {
     register,
@@ -27,23 +26,29 @@ export default function LoginUserForm() {
     resolver: zodResolver(loginSchema),
   });
 
-// ===================================== HANDLE SUBMISSION FUNCTION ========================================================
-const onSubmit = async (data) => {
-  await new Promise((resolve) => setTimeout(resolve, 1000));
+  // ===================================== HANDLE SUBMISSION FUNCTION ========================================================
+  const mutation = useLogin();
+  const onSubmit = async (data) => {
+    await new Promise((resolve) => setTimeout(resolve, 1000));
 
-  // Send to backend 
-  console.log(data);
-
-  // After sucess
-  alertToggle();
-};
-
-const alertToggle = () => {
-  setShowAlert(true);
-  setTimeout(() => setShowAlert(false), 6000);
-};
-
-
+    // Send to backend
+    try {
+      const response = await mutation.mutateAsync(data);
+      const user = response.data.data.user; 
+      const token = response.data.data.access_token;
+      login(user);
+      setAccessToken(token);
+      alertController.alertSuccessToggle("تم تسجيل الدخول!");
+      await new Promise((resolve) => setTimeout(resolve, 500));
+      if(!user.email_verified){
+        navigate("/verify-email");
+      }else{
+        navigate("/");
+      }
+    } catch (error) {
+      alertController.alertErrorToggle("البيانات غير صحيحة!");
+    }
+  };
 
   const labelBaseStyle = "mb-2 text-base block font-semibold";
   const inputBaseStyle =
@@ -51,48 +56,56 @@ const alertToggle = () => {
 
   return (
     <>
-    {showAlert && <TopAlert message="تم الدخول" />}
-    <form className="text-gray-900  w-9/12" onSubmit={handleSubmit(onSubmit)}>
-      {/* Email */}
-      <SingleFormInputContainer error={errors.email?.message}>
-        <label className={`${labelBaseStyle}`}>البريد الإلكتروني</label>
-        <input
-          className={`${inputBaseStyle}`}
-          type="email"
-          placeholder="example@example.com"
-          {...register("email")}
+      {alertController.showSuccessAlert && (
+        <TopAlert
+          message={alertController.successAlertMessage}
+          type="success"
         />
-      </SingleFormInputContainer>
+      )}
+      {alertController.showErrorAlert && (
+        <TopAlert message={alertController.errorAlertMessage} type="error" />
+      )}
+      <form className="text-gray-900  w-9/12" onSubmit={handleSubmit(onSubmit)}>
+        {/* Email */}
+        <SingleFormInputContainer error={errors.email?.message}>
+          <label className={`${labelBaseStyle}`}>البريد الإلكتروني</label>
+          <input
+            className={`${inputBaseStyle}`}
+            type="email"
+            placeholder="example@example.com"
+            {...register("email")}
+          />
+        </SingleFormInputContainer>
 
-      {/* Password */}
-      <SingleFormInputContainer error={errors.password?.message}>
-        <label className={`${labelBaseStyle}`}>كلمة السر</label>
-        <input
-          className={`${inputBaseStyle}`}
-          type="password"
-          placeholder="كلمة السر"
-          {...register("password")}
-        />
-      </SingleFormInputContainer>
+        {/* Password */}
+        <SingleFormInputContainer error={errors.password?.message}>
+          <label className={`${labelBaseStyle}`}>كلمة السر</label>
+          <input
+            className={`${inputBaseStyle}`}
+            type="password"
+            placeholder="كلمة السر"
+            {...register("password")}
+          />
+        </SingleFormInputContainer>
 
-      <Button
-        variant="contained"
-        sx={{ borderRadius: "0px", fontSize: "1rem" }}
-        fullWidth
-        disableElevation
-        type="submit"
-        disabled={isSubmitting}
-      >
-        {isSubmitting? "جاري التسجيل" : "تسجيل الدخول"}
-      </Button>
+        <Button
+          variant="contained"
+          sx={{ borderRadius: "0px", fontSize: "1rem" }}
+          fullWidth
+          disableElevation
+          type="submit"
+          disabled={isSubmitting}
+        >
+          {isSubmitting ? "جاري التسجيل" : "تسجيل الدخول"}
+        </Button>
 
-      <Link to={"/forgot-password"}>
-        <p className="text-secondary-800 my-2 hover:underline hover:text-secondary-500">
-          {" "}
-          نسيت كلمة السر؟{" "}
-        </p>
-      </Link>
-    </form>
+        <Link to={"/forgot-password"}>
+          <p className="text-secondary-800 my-2 hover:underline hover:text-secondary-500">
+            {" "}
+            نسيت كلمة السر؟{" "}
+          </p>
+        </Link>
+      </form>
     </>
   );
 }

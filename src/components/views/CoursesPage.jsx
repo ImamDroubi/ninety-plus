@@ -1,19 +1,24 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import SelectDropdown from "../menus/SelectDropdown";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Container90 from "../containers/Container90";
 import CourseCard from "../cards/CourseCard";
 import { streamsList } from "../data/streamsList";
 import BasicPagination from "../other/BasicPagination";
-
+import useGetResources from "../../apiCalls/useGetResources";
 const NUMBER_OF_COURSES_IN_THE_PAGE = 7;
 const NUMBER_OF_DATA = 12;
 
 export default function CoursesPage() {
   const searchRef = useRef();
   const [currentStream, setCurrentStream] = useState();
+  const {data} = useGetResources("modules/1/courses");
+  const [coursesList, setCoursesList] = useState([]);
 
+  useEffect(()=>{
+    if(data)setCoursesList(data);
+  },[data])
   const [pagination, setPagination] = useState({
     count: NUMBER_OF_DATA,
     from: 0,
@@ -33,7 +38,6 @@ export default function CoursesPage() {
     <CourseCard />,
     <CourseCard />,
   ];
-
   return (
     <Container90>
       <div>
@@ -63,7 +67,7 @@ export default function CoursesPage() {
           </div>
         </div>
         <div className="grid justify-center grid-flow-row gap-4 mb-2 courses sm:justify-normal">
-          {courses.slice(pagination.from, pagination.to).map((course) => {
+          {coursesList.slice(pagination.from, pagination.to).map((course) => {
             return course;
           })}
         </div>

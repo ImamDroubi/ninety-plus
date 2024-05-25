@@ -117,7 +117,7 @@ export default function RegisterStudentForm() {
     try {
       await mutation.mutateAsync(userInformation);
       alertController.alertSuccessToggle("تم إنشاء الحساب بنجاح!");
-      await new Promise((resolve) => setTimeout(resolve, 300));
+      await new Promise((resolve) => setTimeout(resolve, 500));
       navigate("/verify-email");
     } catch (error) {
       alertController.alertErrorToggle("يرجى التحقق من البيانات المرسلة!");

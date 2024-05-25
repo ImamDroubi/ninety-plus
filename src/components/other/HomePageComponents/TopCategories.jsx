@@ -12,7 +12,7 @@ export default function TopCategories() {
           <h2 className="text-gray-900 font-semibold text-3xl my-5">
             التصنيفات الأكثر شهرة
           </h2>
-          <div className="w-full justify-center  grid grid-cols-4 gap-3">
+          <div className="w-11/12 justify-center  grid grid-cols-4 gap-3">
             {categoriesList.map((category, key) => {
               return (
                 <div className="col-span-1 flex items-center justify-center" key={category.id}>
