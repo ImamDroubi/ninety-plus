@@ -21,6 +21,8 @@ import ForgotPasswordPage from "./components/views/ForgotPasswordPage";
 import ResetPasswordPage from "./components/views/ResetPasswordPage";
 import { CreateCourseContextProvider } from "./contexts/CreateCourseContext";
 import TeacherEditCoursePage from "./components/views/teacherPageViews/TeacherEditCoursePage";
+import GuestLayout from "./components/layouts/GuestLayout";
+import NotVerifiedLayout from "./components/layouts/NotVerifiedLayout";
 function App() {
   return (
     <>
@@ -28,11 +30,7 @@ function App() {
         <Route path="/" element={<MainLayout />}>
           <Route index element={<HomePage />} />
           <Route path="/not-found" element={<NotFoundPage />} />
-          <Route path="/verify-email" element={<VerifyEmailPage />} />
-          <Route
-            path="/forgot-password-email"
-            element={<ForgotPasswordEmailPage />}
-          />
+
           <Route path="course-page/:id" element={<CourseContentPage />} />
           <Route path="courses" element={<CoursesPage />} />
           <Route path="course/:id" element={<CourseInfoPage />} />
@@ -42,19 +40,31 @@ function App() {
           <Route path="dashboard" element={<TeacherDashboardPage />} />
           <Route path="courses" element={<TeacherCoursesPage />} />
           <Route path="courses/:id/" element={<TeacherEditCoursePage />} />
-          <Route path="create-course" element={
-          <CreateCourseContextProvider>
-            <TeacherCreateCoursePage />
-          </CreateCourseContextProvider>
-          }/>
+          <Route
+            path="create-course"
+            element={
+              <CreateCourseContextProvider>
+                <TeacherCreateCoursePage />
+              </CreateCourseContextProvider>
+            }
+          />
           <Route path="earnings" element={<TeacherEarningsPage />} />
           <Route path="messages" element={<TeacherMessagesPage />} />
           <Route path="settings" element={<TeacherSettingsPage />} />
         </Route>
-        <Route path="/sign-in" element={<SignInPage />} />
-        <Route path="/sign-up" element={<SignUpPage />} />
-        <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-        <Route path="/reset-password" element={<ResetPasswordPage />} />
+        <Route path="/" element={<GuestLayout />}>
+          <Route path="/sign-in" element={<SignInPage />} />
+          <Route path="/sign-up" element={<SignUpPage />} />
+          <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+          <Route path="/reset-password" element={<ResetPasswordPage />} />
+        </Route>
+        <Route path="/" element={<NotVerifiedLayout />}>
+          <Route path="/verify-email" element={<VerifyEmailPage />} />
+          <Route
+            path="/forgot-password-email"
+            element={<ForgotPasswordEmailPage />}
+          />
+        </Route>
         <Route path="/*" element={<MainLayout />}>
           <Route path="*" element={<NotFoundPage />} />
         </Route>
