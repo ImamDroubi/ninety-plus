@@ -9,33 +9,23 @@ export function useAuth() {
 const cookies = new Cookies(null, { path: "/" });
 
 export function AuthProvider({ children }) {
-  const localStorage = useLocalStorage("current_user");
-  const [currentUser, setCurrentUser] = useState(localStorage.getItem());
+  const localStorage = useLocalStorage();
+  const [currentUser, setCurrentUser] = useState(localStorage.getItem("current_user"));
   const [accessToken, setAccessToken] = useState(cookies.get("access_token"));
 
   useEffect(() => {
     cookies.set("access_token", accessToken);
   }, [accessToken]);
 
-  function login(
-    user = {
-      _id: "abc123",
-      username: "Imam Droubi",
-      email: "imam.droubi@gmail.com",
-      profile_picture:
-        "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=1780&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      followers: 55,
-      role: "student",
-      verified: "false",
-    }
-  ) {
+  function login(user) {
     setCurrentUser(user);
-    localStorage.setItem(user);
+    localStorage.setItem("current_user", user);
   }
 
   function logout() {
     setCurrentUser(undefined);
-    localStorage.removeItem(user);
+    setAccessToken(undefined);
+    localStorage.removeItem("current_user");
   }
 
   const value = {

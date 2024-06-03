@@ -12,9 +12,11 @@ import Box from "@mui/material/Box";
 import MessagesMenu from "./MessagesMenu";
 import NotificationsMenu from "./NotificationsMenu";
 import { useAuth } from "../../contexts/AuthContext";
+import useLogout from "../../apiCalls/authCalls/useLogout";
 
 export default function AccountAvatarMenu() {
-  const {currentUser} = useAuth();
+  const { currentUser, setAccessToken, logout } = useAuth();
+  const logoutController = useLogout();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -23,10 +25,17 @@ export default function AccountAvatarMenu() {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  React.useEffect(()=>{
+  React.useEffect(() => {}, [currentUser]);
+  if (currentUser == undefined) return null;
 
-  },[currentUser])
-  if(currentUser == undefined)return null;
+  const handleLogout = async () => {
+    try {
+      const res = await logoutController.mutateAsync();
+      logout();
+      handleClose();
+    } catch (error) {}
+  };
+
   return (
     <React.Fragment>
       <Box
@@ -39,10 +48,9 @@ export default function AccountAvatarMenu() {
       >
         {/* add other badges here */}
         {/* Prvide a count for the notifications */}
-        <NotificationsMenu/>
+        <NotificationsMenu />
         {/* provide a count for the messages  */}
-        <MessagesMenu  /> 
-
+        <MessagesMenu />
 
         <Tooltip title="Account settings">
           <IconButton
@@ -53,7 +61,11 @@ export default function AccountAvatarMenu() {
             aria-haspopup="true"
             aria-expanded={open ? "true" : undefined}
           >
-            <Avatar alt={currentUser.first_name} sx={{ width: 40, height: 40 }} src={currentUser.profile_picture}/>
+            <Avatar
+              alt={currentUser.first_name}
+              sx={{ width: 40, height: 40 }}
+              src={currentUser.profile_picture}
+            />
           </IconButton>
         </Tooltip>
       </Box>
@@ -110,7 +122,7 @@ export default function AccountAvatarMenu() {
           </ListItemIcon>
           الإعدادات
         </MenuItem>
-        <MenuItem onClick={handleClose}>
+        <MenuItem onClick={handleLogout}>
           <ListItemIcon>
             <Logout fontSize="small" />
           </ListItemIcon>

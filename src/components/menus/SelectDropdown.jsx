@@ -8,15 +8,13 @@ export default function SelectDropdown({
   title = "اختيار",
   list = [],
   stateChanger,
-  defaultState = undefined
 }) {
-  const [item, setItem] = React.useState(defaultState);
-
+  const [item, setItem] = React.useState("");
   const handleChange = (event) => {
     setItem(event.target.value);
     if (stateChanger) stateChanger(event.target.value);
   };
-
+  if (!list) return;
   return (
     <FormControl sx={{ width: 150, backgroundColor: "white" }} size="small">
       <InputLabel id="demo-select-small-label">{title}</InputLabel>

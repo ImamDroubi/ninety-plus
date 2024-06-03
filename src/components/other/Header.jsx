@@ -23,9 +23,8 @@ export default function Header() {
               <Link to="/sign-up">
                 <Button text="تسجيل" type="secondary" />
               </Link>
-              {/* <Link to="/sign-in"> */}
-              <Link>
-                <Button text="دخول" action={login} />
+              <Link to="/sign-in">
+                <Button text="دخول"/>
               </Link>
             </div>
           ) : (

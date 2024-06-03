@@ -1,23 +1,28 @@
-import { Button } from "@mui/material";
+import { Button, CircularProgress } from "@mui/material";
 import DoubleFormInputContainer from "../containers/DoubleFormInputContainer";
 import SingleFormInputContainer from "../containers/SingleFormInputContainer";
 import { useEffect, useState } from "react";
 import SelectDropdown from "../menus/SelectDropdown";
-import { streamsList } from "../data/streamsList";
-import { citiesList } from "../data/citiesList";
-import { gendersList } from "../data/gendersList";
-import { rolesList } from "../data/rolesList";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import useRegister from "../../apiCalls/useRegister";
+import useRegister from "../../apiCalls/authCalls/useRegister";
 import { useAlert } from "../../hooks/useAlert";
 import { useRegistrationMenus } from "../../hooks/useRegistrationMenus";
 import registerSchema from "./schemas/registerSchema";
 import TopAlert from "../alerts/TopAlert";
 import { useNavigate } from "react-router-dom";
 export default function RegisterStudentForm() {
+  const {
+    streamList,
+    cityList,
+    roleList,
+    genderList,
+    menusIsLoading,
+    menusError,
+  } = useRegistrationMenus();
+
   const navigate = useNavigate();
-  // const menus = useRegistrationMenus();
+
   const alertController = useAlert();
   // React hook form attributes
   const {
@@ -30,11 +35,11 @@ export default function RegisterStudentForm() {
   });
 
   // Select inputs states
-  const [currentStream, setCurrentStream] = useState();
-  const [currentCity, setCurrentCity] = useState();
-  const [currentRole, setCurrentRole] = useState(rolesList[0]); // rolesList[0] should be student
-  const [currentGender, setCurrentGender] = useState();
-  const [selectInputsErrors, setSelectInputsErrors] = useState();
+  const [currentStream, setCurrentStream] = useState(null);
+  const [currentCity, setCurrentCity] = useState(null);
+  const [currentRole, setCurrentRole] = useState(null);
+  const [currentGender, setCurrentGender] = useState(null);
+  const [selectInputsErrors, setSelectInputsErrors] = useState([]);
 
   const validateSelectInputs = () => {
     let isValid = true;
@@ -99,6 +104,7 @@ export default function RegisterStudentForm() {
   // ===================================== HANDLE SUBMISSION FUNCTION ========================================================
   const onSubmit = async (data) => {
     if (!validateSelectInputs()) return;
+    // TODO
     const userInformation = {
       // This is the right one, remove the comments
       // role_id: currentRole.id,
@@ -132,7 +138,7 @@ export default function RegisterStudentForm() {
   const labelBaseStyle = "mb-2 text-base block font-semibold";
   const inputBaseStyle =
     "border-[2px] border-gray-100 p-2 w-full focus:border-primary-500 outline-none duration-200";
-
+  if (menusIsLoading) return <CircularProgress />;
   return (
     <>
       {alertController.showSuccessAlert && (
@@ -218,22 +224,22 @@ export default function RegisterStudentForm() {
             <label className={`${labelBaseStyle}`}>نوع الحساب</label>
             <SelectDropdown
               title="الحساب"
-              list={rolesList}
+              list={roleList}
               stateChanger={setCurrentRole}
-              defaultState={currentRole}
+              // defaultState={currentRole}
             />
           </div>
         </SingleFormInputContainer>
 
         {/* Stream, City, Gender select-dropdown */}
         <div className="flex flex-col my-2 md:flex-row justify-between">
-          {currentRole == rolesList[0] && (
+          {currentRole?.name == "طالب" && (
             <SingleFormInputContainer error={selectInputsErrors?.stream}>
               <div className="mb-3 flex items-center gap-1 ">
                 <label className={`${labelBaseStyle}`}>الفرع</label>
                 <SelectDropdown
                   title="الفرع"
-                  list={streamsList}
+                  list={streamList}
                   stateChanger={setCurrentStream}
                 />
               </div>
@@ -244,7 +250,7 @@ export default function RegisterStudentForm() {
               <label className={`${labelBaseStyle}`}>المحافظة</label>
               <SelectDropdown
                 title="المحافظة"
-                list={citiesList}
+                list={cityList}
                 stateChanger={setCurrentCity}
               />
             </div>
@@ -254,7 +260,7 @@ export default function RegisterStudentForm() {
               <label className={`${labelBaseStyle}`}>الجنس</label>
               <SelectDropdown
                 title="الجنس"
-                list={gendersList}
+                list={genderList}
                 stateChanger={setCurrentGender}
               />
             </div>

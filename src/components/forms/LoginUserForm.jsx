@@ -9,7 +9,7 @@ import { useState } from "react";
 import TopAlert from "../alerts/TopAlert";
 import loginSchema from "./schemas/loginSchema";
 import { useAlert } from "../../hooks/useAlert";
-import useLogin from "../../apiCalls/useLogin";
+import useLogin from "../../apiCalls/authCalls/useLogin";
 import { useNavigate } from "react-router-dom";
 import {useAuth} from "../../contexts/AuthContext"
 export default function LoginUserForm() {
