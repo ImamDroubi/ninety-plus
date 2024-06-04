@@ -9,9 +9,8 @@ export default function DropdownMenu({ list, children, small = false }) {
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
-  const handleClose = (callback) => {
+  const handleClose = () => {
     setAnchorEl(null);
-    if (callback) callback();
   };
 
   return (
@@ -39,7 +38,7 @@ export default function DropdownMenu({ list, children, small = false }) {
             <MenuItem
               sx={small ? { fontSize: "14px" } : null}
               key={ind}
-              onClick={() => handleClose(item.callback)}
+              onClick={() => handleClose()}
             >
               {item.text}
             </MenuItem>

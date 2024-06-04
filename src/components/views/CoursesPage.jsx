@@ -7,18 +7,19 @@ import CourseCard from "../cards/CourseCard";
 import { streamsList } from "../data/streamsList";
 import BasicPagination from "../other/BasicPagination";
 import useGetResources from "../../apiCalls/useGetResources";
+import { usePermissions } from "../../hooks/usePermissions";
 const NUMBER_OF_COURSES_IN_THE_PAGE = 7;
 const NUMBER_OF_DATA = 12;
 
 export default function CoursesPage() {
   const searchRef = useRef();
   const [currentStream, setCurrentStream] = useState();
-  const {data} = useGetResources("modules/1/courses");
+  const { data } = useGetResources("modules/1/courses");
   const [coursesList, setCoursesList] = useState([]);
 
-  useEffect(()=>{
-    if(data)setCoursesList(data);
-  },[data])
+  useEffect(() => {
+    if (data) setCoursesList(data);
+  }, [data]);
   const [pagination, setPagination] = useState({
     count: NUMBER_OF_DATA,
     from: 0,
