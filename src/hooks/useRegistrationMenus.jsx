@@ -15,6 +15,7 @@ export const useRegistrationMenus = () => {
       setCityList(lists.countries[0].cites);
       setRoleList(lists.roles);
       setGenderList(lists.genders);
+      
     }
   }, [menus.isSuccess]);
 

@@ -36,13 +36,13 @@ export default function LoginUserForm() {
       const response = await mutation.mutateAsync(data);
       const user = response.data.data.user; 
       const token = response.data.data.access_token;
-      login(user);
-      setAccessToken(token);
       alertController.alertSuccessToggle("تم تسجيل الدخول!");
       await new Promise((resolve) => setTimeout(resolve, 500));
       if(!user.email_verified){
         navigate("/verify-email");
       }else{
+        login(user);
+        setAccessToken(token);
         navigate("/");
       }
     } catch (error) {

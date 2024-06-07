@@ -8,6 +8,7 @@ import { streamsList } from "../data/streamsList";
 import BasicPagination from "../other/BasicPagination";
 import useGetResources from "../../apiCalls/useGetResources";
 import { usePermissions } from "../../hooks/usePermissions";
+import { CircularProgress } from "@mui/material";
 const NUMBER_OF_COURSES_IN_THE_PAGE = 7;
 const NUMBER_OF_DATA = 12;
 
@@ -18,7 +19,10 @@ export default function CoursesPage() {
   const [coursesList, setCoursesList] = useState([]);
 
   useEffect(() => {
-    if (data) setCoursesList(data);
+    if(data){
+      console.log(data.data.data);
+      setCoursesList(data.data.data);
+    }
   }, [data]);
   const [pagination, setPagination] = useState({
     count: NUMBER_OF_DATA,
@@ -68,8 +72,9 @@ export default function CoursesPage() {
           </div>
         </div>
         <div className="grid justify-center grid-flow-row gap-4 mb-2 courses sm:justify-normal">
-          {coursesList.slice(pagination.from, pagination.to).map((course) => {
-            return course;
+          {!data ? <CircularProgress/>
+          :coursesList.slice(pagination.from, pagination.to).map((course) => {
+            return <CourseCard key={course.id} course={course} />;
           })}
         </div>
         <div className="flex items-center justify-center my-4 pagination">

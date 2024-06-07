@@ -107,17 +107,11 @@ export default function RegisterStudentForm() {
     // TODO
     const userInformation = {
       // This is the right one, remove the comments
-      // role_id: currentRole.id,
-      // role_name: "student",
-      // city_id: currentCity.id,
-      // branch_id: currentStream?.id,
-      // gender: currentGender.id,
+      role_id: currentRole.id,
+      city_id: currentCity.id,
+      branch_id: currentStream?.id,
+      gender: currentGender.id,
       ...data,
-      // this is for testing, REMOVE ---
-      role_id: 4,
-      city_id: 1,
-      branch_id: 1,
-      gender: 1,
     };
 
     try {
@@ -126,6 +120,7 @@ export default function RegisterStudentForm() {
       await new Promise((resolve) => setTimeout(resolve, 500));
       navigate("/verify-email");
     } catch (error) {
+      console.log(error);
       alertController.alertErrorToggle("يرجى التحقق من البيانات المرسلة!");
     }
   };
