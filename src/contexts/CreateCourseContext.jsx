@@ -27,26 +27,24 @@ const courseSchema = z.object({
 
 export function CreateCourseContextProvider({ children }) {
   const [formRef, setFormRef] = useState();
-  const [subject, setSubject] = useState();
+  const [module, setModule] = useState();
   const [weekly_lectures, setWeeklyLectures] = useState();
   const [chapters, setChapters] = useState([]);
-  const [responseErrors,setResponseErrors] = useState();
-
+  const [responseErrors, setResponseErrors] = useState();
 
   // React hook form attributes
   const {
     register,
     handleSubmit,
     setError, // This is to set errors after recieving a response from the backend . example : setError("root" , {message :"something went wrong!"})
-    formState: { errors, isSubmitting,isSubmitted, isValid}, // this errors here is the validation errors from the frontend
+    formState: { errors, isSubmitting, isSubmitted, isValid }, // this errors here is the validation errors from the frontend
   } = useForm({
     resolver: zodResolver(courseSchema),
-    mode: "onChange"
+    mode: "onChange",
   });
 
   // ===================================== HANDLE SUBMISSION FUNCTION ========================================================
   const onSubmit = async (data) => {
-    
     // Send to backend
     // setResponseError
     setResponseErrors(null);
@@ -54,7 +52,7 @@ export function CreateCourseContextProvider({ children }) {
       await new Promise((resolve) => setTimeout(resolve, 5000));
       // throw new Error();
     } catch (error) {
-      setResponseErrors({name : "This is an error Object"})
+      setResponseErrors({ name: "This is an error Object" });
     }
     console.log(data);
   };
@@ -81,8 +79,8 @@ export function CreateCourseContextProvider({ children }) {
     errors,
     isSubmitting,
     onSubmit,
-    subject,
-    setSubject,
+    module,
+    setModule,
     weekly_lectures,
     setWeeklyLectures,
     chapters,
@@ -91,7 +89,7 @@ export function CreateCourseContextProvider({ children }) {
     setFormRef,
     isValid,
     responseErrors,
-    setResponseErrors
+    setResponseErrors,
   };
   return (
     <CreateCourseContext.Provider value={value}>

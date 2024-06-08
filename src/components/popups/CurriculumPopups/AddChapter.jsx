@@ -3,7 +3,7 @@ import SingleFormInputContainer from "../../containers/SingleFormInputContainer"
 import { Button } from "@mui/material";
 
 export default function AddChapter({ callback = () => {}, setOpen }) {
-  const [chapterName, setChapterName] = useState();
+  const [chapterName, setChapterName] = useState("");
   const [error, setError] = useState();
 
   const handleSubmit = (e) => {

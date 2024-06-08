@@ -5,25 +5,28 @@ import { weeklyLecturesList } from "../../data/weeklyLecturesList";
 import SelectDropdown from "../../menus/SelectDropdown";
 
 import { useCreateCourseContext } from "../../../contexts/CreateCourseContext";
+import { useModulesList } from "../../../hooks/useModulesList";
+import { CircularProgress } from "@mui/material";
 
 export default function CreateCourseFormBasic() {
   const {
     register,
     errors,
-    setSubject,
+    setModule,
     setWeeklyLectures,
-    subject,
+    module,
     weekly_lectures,
   } = useCreateCourseContext();
 
-  const [currentSubject, setCurrentSubject] = useState(subject);
+  const { modulesList, modulesIsLoading } = useModulesList();
+  const [currentModule, setCurrentModule] = useState(module);
   const [currentLecturesPerWeek, SetCurrentLecturesPerWeek] =
     useState(weekly_lectures);
 
   // These change the value in the context according to the value in the page
   useEffect(() => {
-    setSubject(currentSubject);
-  }, [currentSubject]);
+    setModule(currentModule);
+  }, [currentModule]);
   useEffect(() => {
     setWeeklyLectures(currentLecturesPerWeek);
   }, [currentLecturesPerWeek]);
@@ -31,7 +34,6 @@ export default function CreateCourseFormBasic() {
   const labelBaseStyle = "mb-2 text-sm block font-semibold";
   const inputBaseStyle =
     "border-[2px] border-gray-100 p-2 w-full focus:border-primary-500 outline-none duration-200";
-
   return (
     <>
       <div className="p-3  border-gray-100 my-4 border-b-[2px]">
@@ -60,31 +62,37 @@ export default function CreateCourseFormBasic() {
           />
         </SingleFormInputContainer>
 
-        {/* Subject and Weekly Lectures */}
-        <div className="flex justify-between">
-          <SingleFormInputContainer error={null}>
-            <div className="mb-3 flex items-center gap-1">
-              <label className={`${labelBaseStyle}`}>المادة</label>
-              <SelectDropdown
-                title="المادة"
-                list={subjectsList}
-                stateChanger={setCurrentSubject}
-                defaultState={subject}
-              />
-            </div>
-          </SingleFormInputContainer>
-          <SingleFormInputContainer error={null}>
-            <div className="mb-3 flex items-center gap-1">
-              <label className={`${labelBaseStyle}`}>عدد الحصص الأسبوعية</label>
-              <SelectDropdown
-                title="الحصص"
-                list={weeklyLecturesList}
-                stateChanger={SetCurrentLecturesPerWeek}
-                defaultState={weekly_lectures}
-              />
-            </div>
-          </SingleFormInputContainer>
-        </div>
+        {/* Module and Weekly Lectures */}
+        {modulesIsLoading ? (
+          <CircularProgress />
+        ) : (
+          <div className="flex justify-between">
+            <SingleFormInputContainer error={null}>
+              <div className="mb-3 flex items-center gap-1">
+                <label className={`${labelBaseStyle}`}>المادة</label>
+                <SelectDropdown
+                  title="المادة"
+                  list={modulesList}
+                  stateChanger={setCurrentModule}
+                  defaultState={module}
+                />
+              </div>
+            </SingleFormInputContainer>
+            <SingleFormInputContainer error={null}>
+              <div className="mb-3 flex items-center gap-1">
+                <label className={`${labelBaseStyle}`}>
+                  عدد الحصص الأسبوعية
+                </label>
+                <SelectDropdown
+                  title="الحصص"
+                  list={weeklyLecturesList}
+                  stateChanger={SetCurrentLecturesPerWeek}
+                  defaultState={weekly_lectures}
+                />
+              </div>
+            </SingleFormInputContainer>
+          </div>
+        )}
       </form>
     </>
   );

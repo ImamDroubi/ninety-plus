@@ -4,8 +4,8 @@ import { Button } from "@mui/material";
 import UploadFileHandler from "../../forms/UploadFileHandler";
 
 export default function AddLecture({ callback = () => {}, setOpen }) {
-  const [lectureName, setLectureName] = useState();
-  const [lectureDescription, setLectureDescription] = useState();
+  const [lectureName, setLectureName] = useState("");
+  const [lectureDescription, setLectureDescription] = useState("");
   const [videoLink, setVideoLink] = useState();
   const [videoFile, setVideoFile] = useState();
   const [error, setError] = useState();

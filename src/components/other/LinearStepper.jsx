@@ -39,6 +39,7 @@ export default function LinearStepper({ children = [], steps = [], formRef}) {
         cancelable : true,
         bubbles : true
       }));
+      return;
     }
     setSearchParams({tab : steps[activeStep+1].param});
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
