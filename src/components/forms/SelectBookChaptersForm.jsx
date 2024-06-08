@@ -26,7 +26,6 @@ export default function SelectBookChaptersForm({
       setSelectedOptions(newList);
     }
   };
-  console.log(selectedOptions);
   return (
     <FormGroup>
       {optionsList.map((option) => {

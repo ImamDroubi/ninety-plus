@@ -74,7 +74,7 @@ export default function CreateCourseFormBasic() {
                   title="المادة"
                   list={modulesList}
                   stateChanger={setCurrentModule}
-                  defaultState={module}
+                  defaultState={module || modulesList[0]}
                 />
               </div>
             </SingleFormInputContainer>
@@ -87,7 +87,7 @@ export default function CreateCourseFormBasic() {
                   title="الحصص"
                   list={weeklyLecturesList}
                   stateChanger={SetCurrentLecturesPerWeek}
-                  defaultState={weekly_lectures}
+                  defaultState={weekly_lectures || weeklyLecturesList[0].id}
                 />
               </div>
             </SingleFormInputContainer>

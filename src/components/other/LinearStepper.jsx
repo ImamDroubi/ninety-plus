@@ -19,6 +19,7 @@ export default function LinearStepper({ children = [], steps = [], formRef}) {
 
   const [searchParams,setSearchParams] = useSearchParams();
 
+
   React.useEffect(()=>{
     setSearchParams({tab : steps[0].param});
   },[])
@@ -39,9 +40,8 @@ export default function LinearStepper({ children = [], steps = [], formRef}) {
         cancelable : true,
         bubbles : true
       }));
-      return;
     }
-    setSearchParams({tab : steps[activeStep+1].param});
+    setSearchParams({tab : activeStep == steps.length -1 ? "result" : steps[activeStep+1].param});
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
 

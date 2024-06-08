@@ -47,7 +47,7 @@ export default function RegisterStudentForm() {
     let cityError = selectInputsErrors?.city;
     let genderError = selectInputsErrors?.gender;
     let roleError = selectInputsErrors?.role;
-    if (currentStream == null && currentRole == rolesList[0]) {
+    if (currentStream == null && currentRole?.name == "طالب") {
       // if there is no stream and the role is student
       streamError = "يرجى اختيار أحد الفروع";
       isValid = false;

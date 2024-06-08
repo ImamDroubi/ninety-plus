@@ -1,8 +1,9 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import React, { useContext, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-
+import { useAuth } from "./AuthContext";
+import useCreateResource from "../apiCalls/useCreateResource";
 const CreateCourseContext = React.createContext();
 
 export function useCreateCourseContext() {
@@ -18,45 +19,22 @@ const courseSchema = z.object({
     .string()
     .min(5, { message: "يرجى تزويد معلومات أكثر" })
     .max(150, { message: "أطول من اللازم" }),
-  thumbnail: z.any(),
-  video_intro: z.any(),
   description: z.string().min(10, { message: "قصير جدا" }),
   welcome_message: z.string(),
   ending_message: z.string(),
 });
 
 export function CreateCourseContextProvider({ children }) {
+  const { currentUser } = useAuth();
   const [formRef, setFormRef] = useState();
   const [module, setModule] = useState();
   const [weekly_lectures, setWeeklyLectures] = useState();
   const [chapters, setChapters] = useState([]);
   const [responseErrors, setResponseErrors] = useState();
-
-  // React hook form attributes
-  const {
-    register,
-    handleSubmit,
-    setError, // This is to set errors after recieving a response from the backend . example : setError("root" , {message :"something went wrong!"})
-    formState: { errors, isSubmitting, isSubmitted, isValid }, // this errors here is the validation errors from the frontend
-  } = useForm({
-    resolver: zodResolver(courseSchema),
-    mode: "onChange",
-  });
-
-  // ===================================== HANDLE SUBMISSION FUNCTION ========================================================
-  const onSubmit = async (data) => {
-    // Send to backend
-    // setResponseError
-    setResponseErrors(null);
-    try {
-      await new Promise((resolve) => setTimeout(resolve, 5000));
-      // throw new Error();
-    } catch (error) {
-      setResponseErrors({ name: "This is an error Object" });
-    }
-    console.log(data);
-  };
-
+  const [thumbnailFile, setThumbnailFile] = useState();
+  const [introVideoFile, setIntroVideoFile] = useState();
+  const mutation = useCreateResource(`modules/${module?.id}/courses`);
+  const courseObject = new FormData();
   const [currentCourseObject, setCurrentCourseObject] = useState({
     title: undefined,
     coverage: undefined, // first semester, first chapter, both semesters, etc...
@@ -71,6 +49,64 @@ export function CreateCourseContextProvider({ children }) {
     ending_message: "", // optional
     status: "", // pending, ongoing, finished
   });
+  // React hook form attributes
+  const {
+    register,
+    handleSubmit,
+    setError, // This is to set errors after recieving a response from the backend . example : setError("root" , {message :"something went wrong!"})
+    formState: { errors, isSubmitting, isSubmitted, isValid }, // this errors here is the validation errors from the frontend
+  } = useForm({
+    resolver: zodResolver(courseSchema),
+    mode: "onChange",
+  });
+
+  // ===================================== HANDLE SUBMISSION FUNCTION ========================================================
+  const onSubmit = async (data) => {
+    setResponseErrors(null);
+    //apending everything to form data object
+    handleReactFormData(data);
+    handleMenus();
+    handleFiles();
+    // Send to backend
+
+    try {
+      const response = await mutation.mutateAsync(courseObject);
+      console.log(response);
+    } catch (error) {
+      setResponseErrors({ name: "فشل إنشاء الدورة" });
+      console.log(error);
+    }
+    console.log(courseObject);
+  };
+
+  const handleFiles = () => {
+    if (thumbnailFile) {
+      courseObject.append("cover_image", thumbnailFile);
+    }
+    if (introVideoFile) {
+      courseObject.append("intro_video", introVideoFile);
+    }
+  };
+  const handleMenus = () => {
+    courseObject.append("module_id", module?.id);
+    courseObject.append("weekly_lectures", weekly_lectures.id);
+    if (chapters.indexOf(99) !== -1) {
+      // 99 is the id of select All chapters
+      // and in the backend it is handled in a way that if we need all chapters we should send
+      // and empty array
+      courseObject.append("chapters", JSON.stringify([]));
+    } else {
+      courseObject.append("chapters", JSON.stringify(chapters));
+    }
+  };
+  const handleReactFormData = (data) => {
+    courseObject.append("title", data.title);
+    courseObject.append("instructor_id", currentUser?.user_id);
+    courseObject.append("period", data.coverage);
+    courseObject.append("welcome_message", data.welcome_message);
+    courseObject.append("ending_message", data.ending_message);
+    courseObject.append("description", data.description);
+  };
 
   const value = {
     register,
@@ -90,6 +126,8 @@ export function CreateCourseContextProvider({ children }) {
     isValid,
     responseErrors,
     setResponseErrors,
+    setThumbnailFile,
+    setIntroVideoFile,
   };
   return (
     <CreateCourseContext.Provider value={value}>
