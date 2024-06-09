@@ -7,7 +7,7 @@ const sample = {
   title: "رياضيات توجيهي علمي وصناعي للأستاذ محمد حرزالله",
   category: "علمي",
   price: 400,
-  preview: MathBook,
+  cover_image: MathBook,
   stars: 4.5,
   studentsNo: 120,
 };
@@ -20,13 +20,19 @@ export default function CourseCard({ course }) {
         <OptionsOverlayButton />
         <div className="preview w-full h-[12rem] object-cover overflow-hidden relative">
           <div className="absolute hidden w-full h-full overlay bg-gray-white opacity-30 group-hover:block"></div>
-          <img src={currentCourse.cover_image} alt="math book" className="w-full" />
+          <img
+            src={currentCourse.cover_image}
+            alt="math book"
+            className="w-full"
+          />
         </div>
         <div className="flex items-center justify-between w-full p-2 info">
           <p className="category font-semibold bg-primary-100 p-[0.3rem] text-primary-700">
             {currentCourse.category}
           </p>
-          <p className="font-bold price text-primary-500">{currentCourse.price} ₪</p>
+          <p className="font-bold price text-primary-500">
+            {currentCourse.price} ₪
+          </p>
         </div>
         <h3
           title={currentCourse.title}
@@ -42,7 +48,8 @@ export default function CourseCard({ course }) {
             {currentCourse.stars}
           </p>
           <div className="text-gray-500 students">
-            <span className="text-gray-700">{currentCourse.studentsNo}</span> طالب
+            <span className="text-gray-700">{currentCourse.studentsNo}</span>{" "}
+            طالب
           </div>
         </div>
       </div>

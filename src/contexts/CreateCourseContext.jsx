@@ -1,7 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import React, { useContext, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
+import courseSchema from "../components/forms/schemas/courseSchema";
 import { useAuth } from "./AuthContext";
 import useCreateResource from "../apiCalls/useCreateResource";
 const CreateCourseContext = React.createContext();
@@ -9,20 +9,6 @@ const CreateCourseContext = React.createContext();
 export function useCreateCourseContext() {
   return useContext(CreateCourseContext);
 }
-
-const courseSchema = z.object({
-  title: z
-    .string()
-    .min(10, { message: "العنوان قصير جداً" })
-    .max(150, { message: "العنوان طويل جداً" }),
-  coverage: z
-    .string()
-    .min(5, { message: "يرجى تزويد معلومات أكثر" })
-    .max(150, { message: "أطول من اللازم" }),
-  description: z.string().min(10, { message: "قصير جدا" }),
-  welcome_message: z.string(),
-  ending_message: z.string(),
-});
 
 export function CreateCourseContextProvider({ children }) {
   const { currentUser } = useAuth();
@@ -76,7 +62,6 @@ export function CreateCourseContextProvider({ children }) {
       setResponseErrors({ name: "فشل إنشاء الدورة" });
       console.log(error);
     }
-    console.log(courseObject);
   };
 
   const handleFiles = () => {
@@ -94,18 +79,22 @@ export function CreateCourseContextProvider({ children }) {
       // 99 is the id of select All chapters
       // and in the backend it is handled in a way that if we need all chapters we should send
       // and empty array
-      courseObject.append("chapters", JSON.stringify([]));
+      // courseObject.append("chapters[]", undefined);
     } else {
-      courseObject.append("chapters", JSON.stringify(chapters));
+      chapters.map((chapter) => {
+        courseObject.append("chapters[]", chapter);
+      });
     }
   };
   const handleReactFormData = (data) => {
     courseObject.append("title", data.title);
     courseObject.append("instructor_id", currentUser?.user_id);
-    courseObject.append("period", data.coverage);
+    courseObject.append("period", "first");
     courseObject.append("welcome_message", data.welcome_message);
     courseObject.append("ending_message", data.ending_message);
     courseObject.append("description", data.description);
+    courseObject.append("starts_at", data.starts_at);
+    courseObject.append("ends_at", data.ends_at);
   };
 
   const value = {

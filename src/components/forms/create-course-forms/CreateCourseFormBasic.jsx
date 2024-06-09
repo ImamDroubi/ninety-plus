@@ -62,11 +62,31 @@ export default function CreateCourseFormBasic() {
           />
         </SingleFormInputContainer>
 
+        {/* Start and End dates  */}
+        <div className="flex gap-2 flex-col md:flex-row">
+          <SingleFormInputContainer error={errors?.starts_at?.message}>
+            <label className={`${labelBaseStyle}`}>تاريخ البدء</label>
+            <input
+              className={`${inputBaseStyle}`}
+              type="date"
+              {...register("starts_at")}
+            />
+          </SingleFormInputContainer>
+          <SingleFormInputContainer error={errors?.ends_at?.message}>
+            <label className={`${labelBaseStyle}`}>تاريخ الانتهاء</label>
+            <input
+              className={`${inputBaseStyle}`}
+              type="date"
+              {...register("ends_at")}
+            />
+          </SingleFormInputContainer>
+        </div>
+        
         {/* Module and Weekly Lectures */}
         {modulesIsLoading ? (
           <CircularProgress />
         ) : (
-          <div className="flex justify-between">
+          <div className="flex justify-between flex-col md:flex-row">
             <SingleFormInputContainer error={null}>
               <div className="mb-3 flex items-center gap-1">
                 <label className={`${labelBaseStyle}`}>المادة</label>
@@ -78,6 +98,7 @@ export default function CreateCourseFormBasic() {
                 />
               </div>
             </SingleFormInputContainer>
+
             <SingleFormInputContainer error={null}>
               <div className="mb-3 flex items-center gap-1">
                 <label className={`${labelBaseStyle}`}>
@@ -93,6 +114,8 @@ export default function CreateCourseFormBasic() {
             </SingleFormInputContainer>
           </div>
         )}
+
+        
       </form>
     </>
   );

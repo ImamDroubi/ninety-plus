@@ -19,8 +19,7 @@ export default function CoursesPage() {
   const [coursesList, setCoursesList] = useState([]);
 
   useEffect(() => {
-    if(data){
-      console.log(data.data.data);
+    if (data) {
       setCoursesList(data.data.data);
     }
   }, [data]);
@@ -72,10 +71,13 @@ export default function CoursesPage() {
           </div>
         </div>
         <div className="grid justify-center grid-flow-row gap-4 mb-2 courses sm:justify-normal">
-          {!data ? <CircularProgress/>
-          :coursesList.slice(pagination.from, pagination.to).map((course) => {
-            return <CourseCard key={course.id} course={course} />;
-          })}
+          {!data ? (
+            <CircularProgress />
+          ) : (
+            coursesList.slice(pagination.from, pagination.to).map((course) => {
+              return <CourseCard key={course.id} course={course} />;
+            })
+          )}
         </div>
         <div className="flex items-center justify-center my-4 pagination">
           <BasicPagination
