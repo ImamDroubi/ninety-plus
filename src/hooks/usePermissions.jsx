@@ -14,7 +14,7 @@ export const usePermissions = () => {
       setPermissonsOnCourse(permissions.course);
       setPermissonsOnModule(permissions.module);
     }
-  }, [permissionResponse.isSuccess]);
+  }, [permissionsResponse.isSuccess]);
 
   return {
     permissionsOnCourse,

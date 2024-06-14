@@ -1,8 +1,7 @@
-
-export default function MoneyAmountBlock({
+export default function StatisticsBlock({
   icon,
-  amount = 0,
-  desctiption = "",
+  number = 0,
+  description = "",
   style = "primary",
 }) {
   const primaryStyle = "bg-primary-100 text-primary-500";
@@ -28,8 +27,8 @@ export default function MoneyAmountBlock({
         {icon}
       </div>
       <div className="info">
-        <h4 className="amount font-bold">${amount}</h4>
-        <p className="description text-gray-700 text-base">{desctiption}</p>
+        <h4 className="number font-bold">{number}</h4>
+        <p className="description text-gray-700 text-base">{description}</p>
       </div>
     </div>
   );

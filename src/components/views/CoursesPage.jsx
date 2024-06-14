@@ -15,7 +15,7 @@ const NUMBER_OF_DATA = 12;
 export default function CoursesPage() {
   const searchRef = useRef();
   const [currentStream, setCurrentStream] = useState();
-  const { data } = useGetResources("modules/1/courses");
+  const { data, isLoading } = useGetResources("modules/1/courses");
   const [coursesList, setCoursesList] = useState([]);
 
   useEffect(() => {
@@ -71,7 +71,7 @@ export default function CoursesPage() {
           </div>
         </div>
         <div className="grid justify-center grid-flow-row gap-4 mb-2 courses sm:justify-normal">
-          {!data ? (
+          {isLoading ? (
             <CircularProgress />
           ) : (
             coursesList.slice(pagination.from, pagination.to).map((course) => {

@@ -5,41 +5,41 @@ import {
   StackIcon,
   WalletIcon,
 } from "../../icons/icons";
-import MoneyAmountBlock from "../../other/MoneyAmountBlock";
+import StatisticsBlock from "../../other/StatisticsBlock";
 import PaginatedTable from "../../tables/PaginatedTable";
-
+import { teacherEarningsTableData, teacherEarningsTableHeaders } from "../../data/teacherEarningsTableData";
 export default function TeacherEarningsPage() {
   return (
     <div className="my-4 w-[90%] m-auto">
       <section className="statistics flex flex-wrap justify-between gap-y-2">
-        <MoneyAmountBlock
+        <StatisticsBlock
           icon={<StackIcon />}
-          amount={1200.0}
-          desctiption="الرصيد الكلي"
+          number={`$${1200.0}`}
+          description="الرصيد الكلي"
           style="primary"
         />
-        <MoneyAmountBlock
+        <StatisticsBlock
           icon={<WalletIcon />}
-          amount={500.0}
-          desctiption="الرصيد الحالي"
+          number={`$${500.0}`}
+          description="الرصيد الحالي"
           style="secondary"
         />
-        <MoneyAmountBlock
+        <StatisticsBlock
           icon={<CreditCardIcon />}
-          amount={700.0}
-          desctiption="الرصيد المستلم"
+          number={`$${700.0}`}
+          description="الرصيد المستلم"
           style="error"
         />
-        <MoneyAmountBlock
+        <StatisticsBlock
           icon={<CrownIcon />}
-          amount={200.0}
-          desctiption="أرباح اليوم"
+          number={`$${200.0}`}
+          description="أرباح اليوم"
           style="success"
         />
       </section>
       <div className="withdraw-history bg-gray-white p-4 my-3">
         <h5 className="my-2 text-lg">عمليات السحب</h5>
-        <PaginatedTable/>
+        <PaginatedTable data={teacherEarningsTableData} headers={teacherEarningsTableHeaders} />
       </div>
     </div>
   );

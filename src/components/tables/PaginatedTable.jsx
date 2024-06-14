@@ -86,29 +86,32 @@ TablePaginationActions.propTypes = {
   rowsPerPage: PropTypes.number.isRequired,
 };
 
-function createData(date, paymentMethod, amount, status) {
-  return { date, paymentMethod, amount, status };
-}
+// function createData(date, paymentMethod, amount, status) {
+//   return { date, paymentMethod, amount, status };
+// }
 
-const rows = [
-  createData("21-Sep-2021 at 2:14 PM", "VISA", 150, "قيد المعالجة"),
-  createData("21-Sep-2021 at 2:14 PM", "VISA", 150, "قيد المعالجة"),
-  createData("21-Sep-2021 at 2:14 PM", "VISA", 150, "مكتمل"),
-  createData("21-Sep-2021 at 2:14 PM", "VISA", 150, "مكتمل"),
-  createData("21-Sep-2021 at 2:14 PM", "VISA", 150, "ملغي"),
-  createData("21-Sep-2021 at 2:14 PM", "VISA", 150, "مكتمل"),
-  createData("21-Sep-2021 at 2:14 PM", "VISA", 150, "مكتمل"),
-  createData("21-Sep-2021 at 2:14 PM", "VISA", 150, "مكتمل"),
-  createData("21-Sep-2021 at 2:14 PM", "VISA", 150, "مكتمل"),
-].sort((a, b) => (a.amount < b.amount ? -1 : 1));
+// const rows = [
+//   createData("21-Sep-2021 at 2:14 PM", "VISA", 150, "قيد المعالجة"),
+//   createData("21-Sep-2021 at 2:14 PM", "VISA", 150, "قيد المعالجة"),
+//   createData("21-Sep-2021 at 2:14 PM", "VISA", 150, "مكتمل"),
+//   createData("21-Sep-2021 at 2:14 PM", "VISA", 150, "مكتمل"),
+//   createData("21-Sep-2021 at 2:14 PM", "VISA", 150, "ملغي"),
+//   createData("21-Sep-2021 at 2:14 PM", "VISA", 150, "مكتمل"),
+//   createData("21-Sep-2021 at 2:14 PM", "VISA", 150, "مكتمل"),
+//   createData("21-Sep-2021 at 2:14 PM", "VISA", 150, "مكتمل"),
+//   createData("21-Sep-2021 at 2:14 PM", "VISA", 150, "مكتمل"),
+// ].sort((a, b) => (a.amount < b.amount ? -1 : 1));
 
-export default function PaginatedTable() {
+export default function PaginatedTable({
+  data = [],
+  headers = ["العمود الأول", "العمود الثاني", "العمود الثالث", "العمود الرابع"],
+}) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
+    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - data.length) : 0;
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -124,31 +127,48 @@ export default function PaginatedTable() {
       <Table sx={{ minWidth: 500 }} aria-label="custom pagination table">
         <TableHead>
           <TableRow>
-            <TableCell align="right">التاريخ</TableCell>
-            <TableCell align="right">وسيلة الدفع</TableCell>
-            <TableCell align="right">المبلغ</TableCell>
-            <TableCell align="right">الحالة</TableCell>
+            {headers?.map((header, key) => {
+              return (
+                <TableCell key={key} align="right">
+                  {header}
+                </TableCell>
+              );
+            })}
           </TableRow>
         </TableHead>
         <TableBody>
           {(rowsPerPage > 0
-            ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-            : rows
-          ).map((row) => (
-            <TableRow key={row.name}>
-              <TableCell style={{ maxWidth: 160 }} component="th" scope="row" align="right">
-                {row.date}
-              </TableCell>
-              <TableCell style={{ maxWidth: 160 }} align="right">
-                {row.paymentMethod}
-              </TableCell>
-              <TableCell style={{ maxWidth: 160 }} align="right">
-                {row.amount}
-              </TableCell>
-              <TableCell style={{ maxWidth: 160 }} align="right">
-                {row.status}
-              </TableCell>
+            ? data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+            : data
+          ).map((row, key) => (
+            <TableRow>
+              {row.map((item, key) => {
+                return (
+                  <TableCell key={key} style={{ maxWidth: 160 }} align="right">
+                    {item}
+                  </TableCell>
+                );
+              })}
             </TableRow>
+            // <TableRow key={key}>
+            //   <TableCell
+            //     style={{ maxWidth: 160 }}
+            //     component="th"
+            //     scope="row"
+            //     align="right"
+            //   >
+            //     {row.date}
+            //   </TableCell>
+            //   <TableCell style={{ maxWidth: 160 }} align="right">
+            //     {row.paymentMethod}
+            //   </TableCell>
+            //   <TableCell style={{ maxWidth: 160 }} align="right">
+            //     {row.amount}
+            //   </TableCell>
+            //   <TableCell style={{ maxWidth: 160 }} align="right">
+            //     {row.status}
+            //   </TableCell>
+            // </TableRow>
           ))}
           {emptyRows > 0 && (
             <TableRow style={{ height: 53 * emptyRows }}>
@@ -161,7 +181,7 @@ export default function PaginatedTable() {
             <TablePagination
               rowsPerPageOptions={[5, 10, 25, { label: "الكل", value: -1 }]}
               colSpan={3}
-              count={rows.length}
+              count={data.length}
               rowsPerPage={rowsPerPage}
               labelRowsPerPage={"عدد الصفوف"}
               page={page}
