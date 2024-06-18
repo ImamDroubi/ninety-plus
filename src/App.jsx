@@ -4,9 +4,9 @@ import MainLayout from "./components/layouts/MainLayout";
 import SignInPage from "./components/views/SignInPage";
 import SignUpPage from "./components/views/SignUpPage";
 import NotFoundPage from "./components/views/NotFoundPage";
-import CourseContentPage from "./components/views/CourseContentPage";
-import CoursesPage from "./components/views/CoursesPage";
 import CourseInfoPage from "./components/views/CourseInfoPage";
+import CoursesPage from "./components/views/CoursesPage";
+import CoursePage from "./components/views/CoursePage";
 import StudentPage from "./components/views/StudentPage";
 import TeacherPageLayout from "./components/layouts/TeacherPageLayout";
 import TeacherDashboardPage from "./components/views/teacherPageViews/TeacherDashboardPage";
@@ -23,6 +23,7 @@ import { CreateCourseContextProvider } from "./contexts/CreateCourseContext";
 import TeacherEditCoursePage from "./components/views/teacherPageViews/TeacherEditCoursePage";
 import GuestLayout from "./components/layouts/GuestLayout";
 import NotVerifiedLayout from "./components/layouts/NotVerifiedLayout";
+import LiveStreamPage from "./components/views/LiveStreamPage";
 function App() {
   return (
     <>
@@ -31,9 +32,10 @@ function App() {
           <Route index element={<HomePage />} />
           <Route path="/not-found" element={<NotFoundPage />} />
 
-          <Route path="course-page/:id" element={<CourseContentPage />} />
+          <Route path="course-page/:id" element={<CourseInfoPage />} />
           <Route path="courses" element={<CoursesPage />} />
-          <Route path="course/:id" element={<CourseInfoPage />} />
+          <Route path="courses/:id" element={<CoursePage />} />
+          <Route path="courses/:id/live" element={<LiveStreamPage />} />
           <Route path="student/:id" element={<StudentPage />} />
         </Route>
         <Route path="/teacher/:id/" element={<TeacherPageLayout />}>
