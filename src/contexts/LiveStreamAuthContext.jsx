@@ -1,23 +1,36 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import { useAuth } from "./AuthContext";
-
+import { StreamVideoClient } from "@stream-io/video-react-sdk";
 const LiveStreamAuthContext = React.createContext();
 
 export function useLiveStreamAuth() {
   return useContext(LiveStreamAuthContext);
 }
 
-const API_KEY = "";
-
+const apiKey = "whsuc3edb47g";
+const token =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoidXNlciJ9.tsc9kL-C5RhuDl2Nw2VRUFUQB_58IiWg9P6mi3j41rE";
 export function LiveStreamAuthProvider({ children }) {
-  const localStorage = useLocalStorage();
-  const {currentUser} = useAuth();
-  const [token,setToken] = useState();
-  const [userId, setUserId] = useState();
-  const [callId, setCallId] = useState();
-  
-  const value = {};
+  const [client, setClient] = useState();
+  const [call, setCall] = useState();
+  const createClient = (userId, username, callId) => {
+    if (client) return;
+    const user = {
+      id: userId,
+      name: username,
+    };
+    const newClient = new StreamVideoClient({ apiKey, user, token });
+    const newCall = newClient.call("livestream", callId);
+    setClient(newClient);
+    setCall(newCall);
+  };
+
+  const value = {
+    createClient,
+    client,
+    call,
+  };
   return (
     <LiveStreamAuthContext.Provider value={value}>
       {children}

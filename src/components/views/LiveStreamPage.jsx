@@ -7,22 +7,27 @@ import {
   faChevronLeft,
   faBars,
 } from "@fortawesome/free-solid-svg-icons";
-import { Button } from "@mui/material";
+import { Button, CircularProgress } from "@mui/material";
 import Container90 from "../containers/Container90";
 import video from "../../assets/videos/grass.mp4";
 import CourseInfoTabs from "../menus/CourseInfoTabs";
 import WatchCourseMenu from "../menus/WatchCourseMenu";
 import PopupLayout from "../layouts/PopupLayout";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import WatchMenu from "../popups/watchMenu";
 import ClosePopupButton from "../buttons/ClosePopupButton";
 import LiveStreamCard from "../cards/LiveStreamCard";
 import { ChatIcon } from "../icons/icons";
 import LiveStreamChat from "../chatComponents/LiveStreamChat";
+import LiveStreamComponent from "../other/LiveStreamComponent";
+import { useLiveStreamAuth } from "../../contexts/LiveStreamAuthContext";
+
 
 export default function LiveStreamPage() {
+  const [currentClient, setCurrentClient] = useState();
   const [watchPopupOpen, setWatchPopupOpen] = useState(false);
   const [isLiveStreamOn, setIsLiveStreamOn] = useState(false);
+
   return (
     <>
       <div className="px-1 py-2 to bg-gray-50 sm:px-0">
@@ -50,18 +55,16 @@ export default function LiveStreamPage() {
         <div className="flex flex-col gap-2 px-2 my-3 text-gray-900 lg:flex-row main sm:px-0">
           <div className="lg:basis-3/4 content">
             <div className="video">
-              
-              <video controls src={video} className="max-w-full"></video>
-
+              <LiveStreamComponent />
               <h1 className="my-2 text-2xl font-normal md:font-bold title">
                 1.متوسط التغير
               </h1>
-              <div className="flex justify-between text-sm info md:text-base">
+              {/* <div className="flex justify-between text-sm info md:text-base">
                 <p className="text-gray-600">
                   <span className="text-lg font-bold text-gray-900">523 </span>
                   مشاهد
                 </p>
-                {/* <div className="flex gap-5 statistics">
+                <div className="flex gap-5 statistics">
                   <p className="text-gray-600 date">
                     تاريخ التحميل:{" "}
                     <span className="text-gray-900">Oct/26/2020</span>
@@ -69,8 +72,8 @@ export default function LiveStreamPage() {
                   <p className="text-gray-600 comments">
                     التعليقات: <span className="text-gray-900">154</span>
                   </p>
-                </div> */}
-              </div>
+                </div>
+              </div> */}
             </div>
           </div>
           <div className="nav h-[60rem] hidden lg:block basis-1/4">

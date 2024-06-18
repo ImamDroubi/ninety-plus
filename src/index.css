@@ -1,20 +1,26 @@
+@import url("@stream-io/video-react-sdk/dist/css/styles.css")
+layer(video-default);
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-*{
+* {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-  font-family: 'Cairo' , 'sans-serif';
+  font-family: "Cairo", "sans-serif";
 }
 
-.grid{
+.grid {
   grid-template-columns: repeat(auto-fit, 16rem);
 }
 @media only screen and (max-width: 640px) {
-  .grid{
+  .grid {
     grid-template-columns: repeat(auto-fit, 20rem);
   }
 }
 
+.str-video__generic-menu {
+  color: #ffffff;
+}
