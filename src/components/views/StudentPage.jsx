@@ -17,8 +17,11 @@ import {
   SettingsIcon,
   TeacherIcon,
 } from "../icons/icons";
+import { useAuth } from "../../contexts/AuthContext";
 import HamburgerMenuOpenner from "../other/HamburgerMenuOpenner";
 import MenuDrawer from "../menus/MenuDrawer";
+import { useProfileInfo } from "../../hooks/useProfileInfo";
+import { CircularProgress } from "@mui/material";
 const listItems = [
   {
     text: "نظرة عامة",
@@ -66,6 +69,7 @@ const pagesList = [
   "settings",
 ];
 export default function StudentPage() {
+  const { user } = useProfileInfo();
   const studentInfo = {
     id: 1,
     name: "يعقوب قمر الدين",
@@ -77,6 +81,7 @@ export default function StudentPage() {
     completedCourses: 3,
     coursesInstructors: 3,
   };
+  const { currentUser } = useAuth();
   // ============ This is to put the current page in the parameters  =======================
   const [searchParams, setSearchParams] = useSearchParams();
   const handleTabChange = (index) => {
@@ -101,28 +106,32 @@ export default function StudentPage() {
     <div className="relative lg:pt-[7rem]">
       <div className="background absolute hidden -z-10 w-full top-[0rem] h-[15rem] bg-primary-100  lg:block"></div>
       <div className="w-full m-auto content bg-gray-white shadow-lg mb-6 lg:w-3/4">
-        <header className="flex justify-start p-5">
-          <div className="flex items-center gap-3 personal">
-            <div className="picture w-[7rem] aspect-square object-cover rounded-full">
-              <img
-                src={studentInfo.profilePicture}
-                alt=""
-                className="w-full h-full rounded-full"
-              />
+        {!user ? (
+          <CircularProgress />
+        ) : (
+          <header className="flex justify-start p-5">
+            <div className="flex items-center gap-3 personal">
+              <div className="picture w-[7rem] aspect-square object-cover rounded-full">
+                <img
+                  src={user.profile_picture}
+                  alt=""
+                  className="w-full h-full rounded-full"
+                />
+              </div>
+              <div className="flex flex-col gap-2 info">
+                <h1 className="font-extrabold">{`${user.first_name} ${user.last_name}`}</h1>
+                <p className="text-sm text-gray-600">{user.branch}</p>
+              </div>
             </div>
-            <div className="flex flex-col gap-2 info">
-              <h1 className="font-extrabold">{studentInfo.name}</h1>
-              <p className="text-sm text-gray-600">{studentInfo.stream}</p>
-            </div>
-          </div>
-        </header>
+          </header>
+        )}
         <section className="mobile block md:hidden">
           <SlidingTabs
             handleTabChange={handleTabChange}
             currentIndex={currentIndex}
             showTabes={false}
           >
-            <StudentOverview student={studentInfo} label="نظرة عامة" />
+            <StudentOverview label="نظرة عامة" />
             <StudentCourses label="الدورات" />
             <StudentTeachers label="الأساتذة" />
             <StudentMessages label="الرسائل" />
@@ -144,7 +153,7 @@ export default function StudentPage() {
             currentIndex={currentIndex}
             showTabs={true}
           >
-            <StudentOverview student={studentInfo} label="نظرة عامة" />
+            <StudentOverview label="نظرة عامة" />
             <StudentCourses label="الدورات" />
             <StudentTeachers label="الأساتذة" />
             <StudentMessages label="الرسائل" />

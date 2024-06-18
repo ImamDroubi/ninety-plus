@@ -7,14 +7,17 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import CourseCard from "../cards/CourseCard";
 import MathBook from "../../assets/images/book-covers/math-scientific.jpg";
-import { Button } from "@mui/material";
-export default function StudentOverview({ student }) {
+import { Button, CircularProgress } from "@mui/material";
+import { useProfileInfo } from "../../hooks/useProfileInfo";
+export default function StudentOverview() {
+  const { user } = useProfileInfo();
   const icons = {
     enrolled: <FontAwesomeIcon icon={faVideo} />,
     active: <FontAwesomeIcon icon={faSpinner} />,
     completed: <FontAwesomeIcon icon={faTrophy} />,
     instructors: <FontAwesomeIcon icon={faChalkboardUser} />,
   };
+  if (!user) return <CircularProgress />;
   return (
     <>
       <section className="mb-4">
@@ -25,9 +28,7 @@ export default function StudentOverview({ student }) {
               {icons.enrolled}
             </div>
             <div className="flex flex-col text">
-              <h3 className="text-2xl text-gray-900">
-                {student.enrolledCourses}
-              </h3>
+              <h3 className="text-2xl text-gray-900">{user.courses?.length}</h3>
               <p className="text-sm text-gray-700">دورة مسجلة</p>
             </div>
           </div>
@@ -37,9 +38,7 @@ export default function StudentOverview({ student }) {
               {icons.active}
             </div>
             <div className="flex flex-col text">
-              <h3 className="text-2xl text-gray-900">
-                {student.activeCourses}
-              </h3>
+              <h3 className="text-2xl text-gray-900">{user.activeCourses}</h3>
               <p className="text-sm text-gray-700">دورة حالية</p>
             </div>
           </div>
@@ -50,7 +49,7 @@ export default function StudentOverview({ student }) {
             </div>
             <div className="flex flex-col text">
               <h3 className="text-2xl text-gray-900">
-                {student.completedCourses}
+                {user.completedCourses}
               </h3>
               <p className="text-sm text-gray-700">دورة مكتملة</p>
             </div>
@@ -62,7 +61,7 @@ export default function StudentOverview({ student }) {
             </div>
             <div className="flex flex-col text">
               <h3 className="text-2xl text-gray-900">
-                {student.coursesInstructors}
+                {user.coursesInstructors}
               </h3>
               <p className="text-sm text-gray-700">معلم</p>
             </div>
@@ -71,137 +70,12 @@ export default function StudentOverview({ student }) {
       </section>
       <section>
         <h2 className="mb-3 text-lg font-semibold">
-          أكمل متابعة الدورات, {student.name.split(" ")[0]}
+          أكمل متابعة الدورات, {user.first_name}
         </h2>
         <div className="flex justify-between lectures flex-col gap-2 sm:flex-row flex-wrap">
-          <div className="lecture w-full sm:w-[15rem] h-[20rem] border-2 border-gray-100">
-            <div className="preview w-full h-[12rem] overflow-clip">
-              <img src={MathBook} alt="" className="" />
-            </div>
-            <div className="p-1 border-b-2 info border-b-gray-100">
-              <p className="mb-1 text-sm text-gray-600">
-                رياضيات التوجيهي العلمي والصناعي
-              </p>
-              <h4 className="font-semibold text-gray-900">
-                2. المصفوفات والمحددات
-              </h4>
-            </div>
-            <div className="p-1 click">
-              <Button
-                variant="contained"
-                disableElevation
-                sx={{
-                  backgroundColor: "rgb(255 238 232)",
-                  color: "rgb(255 102 54)",
-                  width: "100%",
-                  borderRadius: "0px",
-                  fontWeight: "bold",
-                  "&:hover": {
-                    backgroundColor: "rgb(255 102 54)",
-                    color: "#fff",
-                  },
-                }}
-              >
-                مشاهدة الحصة
-              </Button>
-            </div>
-          </div>
-          <div className="lecture w-full sm:w-[15rem] h-[20rem] border-2 border-gray-100">
-            <div className="preview w-full h-[12rem] overflow-clip">
-              <img src={MathBook} alt="" className="" />
-            </div>
-            <div className="p-1 border-b-2 info border-b-gray-100">
-              <p className="mb-1 text-sm text-gray-600">
-                رياضيات التوجيهي العلمي والصناعي
-              </p>
-              <h4 className="font-semibold text-gray-900">
-                2. المصفوفات والمحددات
-              </h4>
-            </div>
-            <div className="p-1 click">
-              <Button
-                variant="contained"
-                disableElevation
-                sx={{
-                  backgroundColor: "rgb(255 238 232)",
-                  color: "rgb(255 102 54)",
-                  width: "100%",
-                  borderRadius: "0px",
-                  fontWeight: "bold",
-                  "&:hover": {
-                    backgroundColor: "rgb(255 102 54)",
-                    color: "#fff",
-                  },
-                }}
-              >
-                مشاهدة الحصة
-              </Button>
-            </div>
-          </div>
-          <div className="lecture w-full sm:w-[15rem] h-[20rem] border-2 border-gray-100">
-            <div className="preview w-full h-[12rem] overflow-clip">
-              <img src={MathBook} alt="" className="" />
-            </div>
-            <div className="p-1 border-b-2 info border-b-gray-100">
-              <p className="mb-1 text-sm text-gray-600">
-                رياضيات التوجيهي العلمي والصناعي
-              </p>
-              <h4 className="font-semibold text-gray-900">
-                2. المصفوفات والمحددات
-              </h4>
-            </div>
-            <div className="p-1 click">
-              <Button
-                variant="contained"
-                disableElevation
-                sx={{
-                  backgroundColor: "rgb(255 238 232)",
-                  color: "rgb(255 102 54)",
-                  width: "100%",
-                  borderRadius: "0px",
-                  fontWeight: "bold",
-                  "&:hover": {
-                    backgroundColor: "rgb(255 102 54)",
-                    color: "#fff",
-                  },
-                }}
-              >
-                مشاهدة الحصة
-              </Button>
-            </div>
-          </div>
-          <div className="lecture w-full sm:w-[15rem] h-[20rem] border-2 border-gray-100">
-            <div className="preview w-full h-[12rem] overflow-clip">
-              <img src={MathBook} alt="" className="" />
-            </div>
-            <div className="p-1 border-b-2 info border-b-gray-100">
-              <p className="mb-1 text-sm text-gray-600">
-                رياضيات التوجيهي العلمي والصناعي
-              </p>
-              <h4 className="font-semibold text-gray-900">
-                2. المصفوفات والمحددات
-              </h4>
-            </div>
-            <div className="p-1 click">
-              <Button
-                variant="contained"
-                disableElevation
-                sx={{
-                  backgroundColor: "rgb(255 238 232)",
-                  color: "rgb(255 102 54)",
-                  width: "100%",
-                  borderRadius: "0px",
-                  fontWeight: "bold",
-                  "&:hover": {
-                    backgroundColor: "rgb(255 102 54)",
-                    color: "#fff",
-                  },
-                }}
-              >
-                مشاهدة الحصة
-              </Button>
-            </div>
-          </div>
+          {user.courses?.slice(0, 3).map((course, key) => {
+            return <CourseCard course={course} key={key} />;
+          })}
         </div>
       </section>
     </>
