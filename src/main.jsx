@@ -30,7 +30,7 @@ const queryClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <QueryClientProvider client={queryClient}>
-    <StreamTheme style={{ fontFamily: "sans-serif", color: "white" }}>
+    <StreamTheme>
       <AuthProvider>
         <LiveStreamAuthProvider>
           <BrowserRouter>

@@ -24,6 +24,7 @@ import TeacherEditCoursePage from "./components/views/teacherPageViews/TeacherEd
 import GuestLayout from "./components/layouts/GuestLayout";
 import NotVerifiedLayout from "./components/layouts/NotVerifiedLayout";
 import LiveStreamPage from "./components/views/LiveStreamPage";
+import TeacherCreateLecturePage from "./components/views/teacherPageViews/TeacherCreateLecturePage";
 function App() {
   return (
     <>
@@ -40,6 +41,7 @@ function App() {
         </Route>
         <Route path="/teacher/:id/" element={<TeacherPageLayout />}>
           <Route path="dashboard" element={<TeacherDashboardPage />} />
+          <Route path="create-lecture" element={<TeacherCreateLecturePage />} />
           <Route path="courses" element={<TeacherCoursesPage />} />
           <Route path="courses/:id/" element={<TeacherEditCoursePage />} />
           <Route
