@@ -3,24 +3,23 @@ import React, { useState } from "react";
 import { Outlet } from "react-router-dom";
 import Sidebar from "../menus/Sidebar";
 import AccountAvatarMenu from "../menus/AccountAvatarMenu";
-import { teacherPageList } from "../data/teacherPageList";
 import MenuDrawer from "../menus/MenuDrawer";
 import HamburgerMenuOpenner from "../other/HamburgerMenuOpenner";
-export default function TeacherPageLayout() {
+import { adminPageList } from "../data/adminPageList";
+const AdminDashboard = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const toggleOpenSidebar = () => {
     setSidebarOpen(!sidebarOpen);
   };
-
   return (
     <>
       <div className="flex">
         <div className="sidebar sticky right-[0] top-[0] hidden lg:block w-2/12 bg-gray-900 h-[100vh]">
-          <Sidebar list={teacherPageList} />
+          <Sidebar list={adminPageList} />
         </div>
         <div className="lg:hidden fixed z-10">
           <MenuDrawer
-            listItems={teacherPageList}
+            listItems={adminPageList}
             side="right"
             onClickFunction={toggleOpenSidebar}
           >
@@ -43,4 +42,6 @@ export default function TeacherPageLayout() {
       </div>
     </>
   );
-}
+};
+
+export default AdminDashboard;
