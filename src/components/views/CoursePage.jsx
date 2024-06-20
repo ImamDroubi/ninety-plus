@@ -7,20 +7,35 @@ import {
   faChevronLeft,
   faBars,
 } from "@fortawesome/free-solid-svg-icons";
-import { Button } from "@mui/material";
+import { Button, CircularProgress } from "@mui/material";
 import Container90 from "../containers/Container90";
 import video from "../../assets/videos/grass.mp4";
 import CourseInfoTabs from "../menus/CourseInfoTabs";
 import WatchCourseMenu from "../menus/WatchCourseMenu";
 import PopupLayout from "../layouts/PopupLayout";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import WatchMenu from "../popups/watchMenu";
 import ClosePopupButton from "../buttons/ClosePopupButton";
 import LiveStreamCard from "../cards/LiveStreamCard";
+import { useParams, useSearchParams } from "react-router-dom";
+import { useCourse } from "../../hooks/useCourse";
+import { useLesson } from "../../hooks/useLesson";
 
 export default function CoursePage() {
+  let { id } = useParams();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const { lesson, isLoading: lessonLoading } = useLesson(
+    searchParams.get("lesson")
+  ); // not implemented yet from the backend
+  const { course, isLoading: courseLoading } = useCourse(id);
   const [watchPopupOpen, setWatchPopupOpen] = useState(false);
   const [isLiveStreamOn, setIsLiveStreamOn] = useState(false);
+  useEffect(() => {
+    if (searchParams.get("lesson") == null) {
+      setSearchParams({ lesson: 1 });
+    }
+  }, []);
+  if (!course || courseLoading) return <CircularProgress />;
   return (
     <>
       <div className="px-1 py-2 to bg-gray-50 sm:px-0">
@@ -30,11 +45,9 @@ export default function CoursePage() {
               <button className="flex items-center justify-center w-6 h-6 text-gray-900 rounded-full shadow back shrink-0 bg-gray-white hover:bg-gray-200 focus:bg-gray-200">
                 <FontAwesomeIcon icon={faArrowRight} />
               </button>
-              <div className="info flex flex-col gap-[0.2rem]">
-                <h2 className="font-bold text-gray-900">
-                  رياضيات التوجيهي العلمي أ.محمد حرزالله
-                </h2>
-                <div className="videos flex items-center gap-[3px]">
+              <div className="info flex flex-col justify-center gap-[0.2rem]">
+                <h2 className="font-bold text-gray-900">{course.title}</h2>
+                {/* <div className="videos flex items-center gap-[3px]">
                   <div className="icon text-gray-500 w-[1rem] h-[1rem] text-xs border-gray-500 p-1 justify-center items-center flex border-2 rounded-full">
                     <FontAwesomeIcon
                       className="translate-x-[1px]"
@@ -44,7 +57,7 @@ export default function CoursePage() {
                   <p className="text-xs text-gray-700">
                     <span>77</span> محاضرة
                   </p>
-                </div>
+                </div> */}
               </div>
             </div>
             <div className="items-center hidden gap-2 left lg:flex">
@@ -105,7 +118,10 @@ export default function CoursePage() {
           </div>
           <div className="nav h-[60rem] hidden lg:block basis-1/4">
             {isLiveStreamOn && <LiveStreamCard />}
-            <WatchCourseMenu />
+            <WatchCourseMenu
+              chapters={course.chapters}
+              setSearchParams={setSearchParams}
+            />
           </div>
         </div>
       </Container90>
@@ -114,7 +130,10 @@ export default function CoursePage() {
           <div className="relative z-10 w-10/12 py-6 bg-gray-50">
             <ClosePopupButton setOpen={setWatchPopupOpen} />
             {isLiveStreamOn && <LiveStreamCard />}
-            <WatchMenu />
+            <WatchCourseMenu
+              chapters={course.chapters}
+              setSearchParams={setSearchParams}
+            />
           </div>
         </PopupLayout>
       ) : null}

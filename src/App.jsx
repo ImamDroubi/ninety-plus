@@ -33,7 +33,7 @@ function App() {
           <Route index element={<HomePage />} />
           <Route path="/not-found" element={<NotFoundPage />} />
 
-          <Route path="course-page/:id" element={<CourseInfoPage />} />
+          <Route path="course-info/:id" element={<CourseInfoPage />} />
           <Route path="courses" element={<CoursesPage />} />
           <Route path="courses/:id" element={<CoursePage />} />
           <Route path="courses/:id/live" element={<LiveStreamPage />} />

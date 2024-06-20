@@ -3,6 +3,7 @@ import { faStar } from "@fortawesome/free-solid-svg-icons";
 import MathBook from "../../assets/images/book-covers/math-scientific.jpg";
 import OptionsOverlayButton from "../overlays/OptionsOverlayButton";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 const sample = {
   title: "رياضيات توجيهي علمي وصناعي للأستاذ محمد حرزالله",
   category: "علمي",
@@ -13,10 +14,17 @@ const sample = {
 };
 export default function CourseCard({ course }) {
   const [currentCourse, setCurrentCourse] = useState({ ...sample, ...course });
+  const navigate = useNavigate();
 
+  const handleNavigate = () => {
+    navigate(`/course-info/${course.id}`);
+  };
   return (
     <>
-      <div className="relative group w-[20rem] sm:w-[16rem] min-h-[20rem] bg-gray-white  flex flex-col cursor-pointer border-2 border-gray-100">
+      <div
+        onClick={handleNavigate}
+        className="relative group w-[20rem] sm:w-[16rem] min-h-[20rem] bg-gray-white  flex flex-col cursor-pointer border-2 border-gray-100"
+      >
         <OptionsOverlayButton />
         <div className="preview w-full h-[12rem] object-cover overflow-hidden relative">
           <div className="absolute hidden w-full h-full overlay bg-gray-white opacity-30 group-hover:block"></div>

@@ -102,10 +102,11 @@ const courseChapters = [
 
 // List Component
 
-export function SelectedListItem({ chapter }) {
+export function SelectedListItem({ chapter, setSearchParams }) {
   const [selectedIndex, setSelectedIndex] = React.useState(1);
 
   const handleListItemClick = (event, index) => {
+    setSearchParams({ lesson: index + 1 });
     setSelectedIndex(index);
   };
 
@@ -131,7 +132,7 @@ export function SelectedListItem({ chapter }) {
   );
 }
 
-export function CustomizedAccordions() {
+export function CustomizedAccordions({ chapters = [], setSearchParams }) {
   const [expanded, setExpanded] = React.useState();
 
   const handleChange = (panel) => (event, newExpanded) => {
@@ -140,7 +141,7 @@ export function CustomizedAccordions() {
 
   return (
     <div>
-      {courseChapters.map((chapter, key) => {
+      {chapters.map((chapter, key) => {
         return (
           <Accordion
             key={key}
@@ -159,7 +160,10 @@ export function CustomizedAccordions() {
               <Typography>{chapter.name}</Typography>
             </AccordionSummary>
             <AccordionDetails sx={{ padding: "0" }}>
-              <SelectedListItem chapter={chapter} />
+              <SelectedListItem
+                chapter={chapter}
+                setSearchParams={setSearchParams}
+              />
             </AccordionDetails>
           </Accordion>
         );
@@ -168,6 +172,8 @@ export function CustomizedAccordions() {
   );
 }
 
-export default function WatchCourseMenu() {
-  return <CustomizedAccordions />;
+export default function WatchCourseMenu({ chapters, setSearchParams }) {
+  return (
+    <CustomizedAccordions list={chapters} setSearchParams={setSearchParams} />
+  );
 }

@@ -6,6 +6,7 @@ export const useProfileInfo = () => {
   const [user, setUser] = useState();
   useEffect(() => {
     if (data) {
+      console.log(data);
       setUser(data.data.data);
     }
   }, [isSuccess]);
