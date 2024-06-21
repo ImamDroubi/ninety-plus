@@ -14,13 +14,13 @@ import ClosePopupButton from "../buttons/ClosePopupButton";
 import { useParams } from "react-router-dom";
 import { useCourse } from "../../hooks/useCourse";
 import { CircularProgress } from "@mui/material";
-import { useUserInfo } from "../../hooks/userUserInfo";
+import { useUserInfo } from "../../hooks/useUserInfo";
 
 export default function CourseInfoPage() {
   let { id } = useParams();
   const { course, isLoading: courseLoading } = useCourse(id);
   const { userInfo: instructor, isLoading: instructorLoading } = useUserInfo(
-    course?.instructor.id,
+    course?.instructor?.id,
     course // this is the enable object for the dependent query
     // the query to get the instructo deosn't run until the course is present
   );

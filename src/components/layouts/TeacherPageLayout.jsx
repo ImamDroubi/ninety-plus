@@ -5,6 +5,7 @@ import AccountAvatarMenu from "../menus/AccountAvatarMenu";
 import { teacherPageList } from "../data/teacherPageList";
 import MenuDrawer from "../menus/MenuDrawer";
 import HamburgerMenuOpenner from "../other/HamburgerMenuOpenner";
+import { TeacherProfileProvider } from "../../contexts/TeacherProfileContext";
 export default function TeacherPageLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const toggleOpenSidebar = () => {
@@ -37,7 +38,9 @@ export default function TeacherPageLayout() {
               </div>
             </section>
           </div>
-          <Outlet />
+          <TeacherProfileProvider>
+            <Outlet />
+          </TeacherProfileProvider>
         </div>
       </div>
     </>

@@ -9,7 +9,7 @@ import SlidingTabs from "./SlidingTabs";
 import AddComment from "../popups/AddComment";
 import ClosePopupButton from "../buttons/ClosePopupButton";
 import { useComments } from "../../hooks/useComments";
-import { useUserInfo } from "../../hooks/userUserInfo";
+import { useUserInfo } from "../../hooks/useUserInfo";
 
 function Description({ text }) {
   return (

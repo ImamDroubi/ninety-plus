@@ -12,10 +12,9 @@ export const useRegistrationMenus = () => {
     if (menus.data?.data?.data) {
       const lists = menus.data.data.data;
       setStreamList(lists.branches);
-      setCityList(lists.countries[0].cites);
+      setCityList(lists.countries[0].cities);
       setRoleList(lists.roles);
       setGenderList(lists.genders);
-      
     }
   }, [menus.isSuccess]);
 

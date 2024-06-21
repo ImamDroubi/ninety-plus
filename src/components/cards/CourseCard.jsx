@@ -12,7 +12,7 @@ const sample = {
   stars: 4.5,
   studentsNo: 120,
 };
-export default function CourseCard({ course }) {
+export default function CourseCard({ course, showOptions = false }) {
   const [currentCourse, setCurrentCourse] = useState({ ...sample, ...course });
   const navigate = useNavigate();
 
@@ -25,7 +25,7 @@ export default function CourseCard({ course }) {
         onClick={handleNavigate}
         className="relative group w-[20rem] sm:w-[16rem] min-h-[20rem] bg-gray-white  flex flex-col cursor-pointer border-2 border-gray-100"
       >
-        <OptionsOverlayButton />
+        {showOptions && <OptionsOverlayButton />}
         <div className="preview w-full h-[12rem] object-cover overflow-hidden relative">
           <div className="absolute hidden w-full h-full overlay bg-gray-white opacity-30 group-hover:block"></div>
           <img
