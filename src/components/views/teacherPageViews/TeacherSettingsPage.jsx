@@ -1,19 +1,18 @@
+import { CircularProgress } from "@mui/material";
+import { useAuth } from "../../../contexts/AuthContext";
 import ChangePasswordForm from "../../forms/ChangePasswordForm";
 import StudentSettingsForm from "../../forms/StudentSettingsForm";
-import TeacherSettingsForm from "../../forms/teacherSettingsForm";
+import TeacherSettingsForm from "../../forms/TeacherSettingsForm";
 import UploadPhotoOverlayButton from "../../overlays/uploadPhotoOverlayButton";
+import { useUploadMedia } from "../../../hooks/useUploadMedia";
 
 export default function TeacherSettingsPage() {
-  const user = {
-    photoUrl:
-      "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=1780&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    firstName: "يعقوب",
-    lantName: "قمر الدين",
-    userName: "يعقوب قمر الدين",
-    email: "imam.droubi@gmail.com",
-    stream: "العلمي",
+  const { currentUser } = useAuth();
+  const {file, fileRef, uploading, preview, handleFileChange} = useUploadMedia(currentUser?.profile_image);
+  const handleUploadButtonClick = () => {
+    fileRef.current.click();
   };
-
+  if (!currentUser) return <CircularProgress />;
   return (
     <section className="my-2 w-[90%] m-auto bg-gray-white p-2">
       <h2 className="mb-3 text-lg text-gray-900 font-semibold">
@@ -21,20 +20,33 @@ export default function TeacherSettingsPage() {
       </h2>
       <div className="flex flex-col items-center xl:items-start xl:flex-row gap-4">
         <div className="right w-fit xl:w-1/4 p-3 h-fit border-[1px] border-gray-100 bg-gray-50">
-          <div className="preview relative max-w-[15rem] max-h-[15rem] ">
-            <img
-              className="object-cover"
-              src={user.photoUrl}
-              alt={user.userName}
+          <div className="preview relative max-w-[15rem] h-[15rem] max-h-[15rem]">
+            {uploading ? (
+              <CircularProgress />
+            ) : (
+              <img
+                className="object-cover"
+                src={preview}
+                alt={currentUser.first_name}
+              />
+            )}
+            <input
+              type="file"
+              hidden
+              ref={fileRef}
+              accept="image/*"
+              onChange={handleFileChange}
             />
-            <UploadPhotoOverlayButton />
+            <UploadPhotoOverlayButton
+              onClickFunction={handleUploadButtonClick}
+            />
           </div>
           <p className="instructions text-gray-600 text-center text-sm mt-1">
             حجم الصورة لا يجب أن يتجاوز 1 ميجابايت
           </p>
         </div>
         <div className="left w-full xl:w-3/4">
-          <TeacherSettingsForm />
+          <TeacherSettingsForm profilePicture={file} />
           <div className="change-password mt-5 border-t-[1px] border-gray-100 py-4">
             <h3 className="mb-3 text-lg text-center text-gray-900 font-semibold">
               تغيير كلمة السر

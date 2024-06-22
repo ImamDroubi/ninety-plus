@@ -47,8 +47,8 @@ export default function CourseInfoPage() {
                 <div className="flex items-center gap-1 teacher">
                   <div className="object-cover w-5 h-5 rounded-full img">
                     <img
-                      src={instructor.profile_picture}
-                      alt="محمد حرزالله"
+                      src={instructor.profile_image}
+                      alt={instructor.first_name}
                       className="w-full h-full rounded-full"
                     />
                   </div>

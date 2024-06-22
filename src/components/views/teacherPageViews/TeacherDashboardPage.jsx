@@ -18,13 +18,12 @@ import BarsChart from "../../charts/BarsChart";
 import PaginatedTable from "../../tables/PaginatedTable";
 import { useTeacherProfile } from "../../../contexts/TeacherProfileContext";
 import { CircularProgress } from "@mui/material";
+import { countCourses } from "../../../utils/coursesFunctions";
 export default function TeacherDashboardPage() {
   const { profileInfo, isLoading } = useTeacherProfile();
   if (isLoading || !profileInfo) return <CircularProgress />;
-  const totalCourses =
-    (profileInfo.courses.draft?.length || 0) +
-    (profileInfo.courses.active?.length || 0) +
-    (profileInfo.courses.over?.length || 0);
+  const totalCourses = countCourses(profileInfo.courses);
+
   return (
     <div className="my-4 w-[90%] m-auto">
       <section className="statistics flex flex-wrap justify-between gap-y-2">

@@ -26,7 +26,7 @@ function Teacher({ instructor }) {
       <div className="flex flex-col gap-3 teacher">
         <div className="object-cover w-full img">
           <img
-            src={instructor.profile_picture}
+            src={instructor.profile_image}
             alt=""
             className="w-full h-full"
           />

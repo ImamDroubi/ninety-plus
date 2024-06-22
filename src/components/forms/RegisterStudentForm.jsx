@@ -125,10 +125,6 @@ export default function RegisterStudentForm() {
     }
   };
 
-  useEffect(() => {
-    if (mutation.error) {
-    }
-  }, [mutation.isError]);
 
   const labelBaseStyle = "mb-2 text-base block font-semibold";
   const inputBaseStyle =
