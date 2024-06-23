@@ -45,7 +45,7 @@ export default function CourseInfoPage() {
   if (courseLoading || instructorLoading) return <CircularProgress />;
   if (courseError || instructorError) navigate("/not-found");
   if (!course || !instructor) return <CircularProgress />;
-
+  console.log(course);
   return (
     <>
       <div className="absolute hidden lg:block bg-gray-50 top-[7rem] h-[25rem] -z-10 w-full"></div>
@@ -78,7 +78,7 @@ export default function CourseInfoPage() {
                   </Button>
                   <div className="stars text-warning-500">{starImage}</div>
                   <p className="text-gray-900 number">
-                    {instructor.rate}{" "}
+                    {course.rate}{" "}
                     {/* <span className="text-sm text-gray-600">(3200 طالب)</span> */}
                   </p>
                 </div>

@@ -4,7 +4,6 @@ import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import { useEffect, useState } from "react";
-import { redirect } from "react-router-dom";
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;

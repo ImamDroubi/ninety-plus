@@ -5,6 +5,7 @@ import { useFavouriteList } from "../../hooks/useFavouriteList";
 import useDeleteResource from "../../apiCalls/useDeleteResource";
 import { useAlert } from "../../hooks/useAlert";
 import TopAlert from "../alerts/TopAlert";
+import usePurchaseCourse from "../../apiCalls/usePurchaseCourse";
 
 export default function StudentFavourite() {
   const { favouriteList, isLoading, isError } = useFavouriteList();
@@ -34,15 +35,6 @@ export default function StudentFavourite() {
 }
 
 export function CourseCardInFavourite({ course }) {
-  // const course = {
-  //   photoUrl:
-  //     "https://images.unsplash.com/photo-1501504905252-473c47e087f8?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  //   title: " دورة شاملة في مادة الرياضيات للتوجيهي العلمي",
-  //   instructor: "أ.محمد حرزالله",
-  //   rating: 4.6,
-  //   reviewsCount: 250,
-  //   price: 200,
-  // };
   const removeFromFavouriteMutation = useDeleteResource(`favorites/course`);
   const alertController = useAlert();
   const handleRemoveFromFavourite = async () => {
@@ -56,6 +48,16 @@ export function CourseCardInFavourite({ course }) {
     } catch (error) {
       console.log(error);
       alertController.alertErrorToggle("حدث خطأ ما!");
+    }
+  };
+  const purchaseMutation = usePurchaseCourse();
+  const handlePurchaseCourse = async () => {
+    try {
+      const response = await purchaseMutation.mutateAsync(course?.id);
+      const redirectUrl = response.data.data.approval_url;
+      window.location.href = redirectUrl;
+    } catch (error) {
+      console.log(error);
     }
   };
   if (!course) return <CircularProgress />;
@@ -106,8 +108,10 @@ export function CourseCardInFavourite({ course }) {
             disableElevation
             fullWidth
             sx={{ borderRadius: 0 }}
+            onClick={handlePurchaseCourse}
+            disabled={purchaseMutation.isPending}
           >
-            اشتر الآن
+            {purchaseMutation.isPending ? "جاري المعالجة..." : "اشتر الآن"}
           </Button>
           <Button
             variant="outlined"

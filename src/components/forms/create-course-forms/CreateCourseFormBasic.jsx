@@ -81,7 +81,7 @@ export default function CreateCourseFormBasic() {
             />
           </SingleFormInputContainer>
         </div>
-        
+
         {/* Module and Weekly Lectures */}
         {modulesIsLoading ? (
           <CircularProgress />
@@ -115,7 +115,16 @@ export default function CreateCourseFormBasic() {
           </div>
         )}
 
-        
+        {/* Price */}
+        <SingleFormInputContainer error={errors?.price?.message}>
+          <label className={`${labelBaseStyle}`}>السعر</label>
+          <input
+            className={`${inputBaseStyle}`}
+            type="number"
+            placeholder="السعر"
+            {...register("price")}
+          />
+        </SingleFormInputContainer>
       </form>
     </>
   );

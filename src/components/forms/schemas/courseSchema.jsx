@@ -14,5 +14,6 @@ const courseSchema = z.object({
   ends_at: z.string().date("تاريخ الانتهاء غير صالح"),
   welcome_message: z.string(),
   ending_message: z.string(),
+  price: z.number()
 });
 export default courseSchema;

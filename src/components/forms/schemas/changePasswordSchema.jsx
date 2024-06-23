@@ -2,7 +2,7 @@ import { z } from "zod";
 
 const changePasswordSchema = z
   .object({
-    old_password: z
+    current_password: z
       .string()
       .min(8, { message: "كلمة السر قصيرة جداً" })
       .max(30, { message: "كلمة السر طويلة جداً" }),

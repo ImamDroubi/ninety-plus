@@ -10,12 +10,13 @@ import useCreateResource from "../../apiCalls/useCreateResource";
 import { useAlert } from "../../hooks/useAlert";
 import TopAlert from "../alerts/TopAlert";
 import useDeleteResource from "../../apiCalls/useDeleteResource";
-
+import usePurchaseCourse from "../../apiCalls/usePurchaseCourse";
 export default function BuyCourse({ course }) {
   const { currentUser } = useAuth();
   const addToFavouriteMutation = useCreateResource(
     `favorites/course/${course?.id}`
   );
+  const purchaseMutation = usePurchaseCourse();
   const removeFromFavouriteMutation = useDeleteResource(`favorites/course`);
   const price = 14.0;
   const discount = 0.56;
@@ -62,6 +63,15 @@ export default function BuyCourse({ course }) {
       alertController.alertErrorToggle("حدث خطأ ما");
     }
   };
+  const handlePurchaseCourse = async () => {
+    try {
+      const response = await purchaseMutation.mutateAsync(course?.id);
+      const redirectUrl = response.data.data.approval_url;
+      window.location.href = redirectUrl;
+    } catch (error) {
+      console.log(error);
+    }
+  };
   if (!currentUser) return <CircularProgress />;
   return (
     <>
@@ -104,8 +114,12 @@ export default function BuyCourse({ course }) {
           })}
         </div>
         <hr className="my-4" />
-        <button className="w-full py-2 mb-2 text-lg font-semibold duration-200 bg-primary-500 text-gray-white hover:bg-primary-600">
-          اشتر الآن
+        <button
+          onClick={handlePurchaseCourse}
+          disabled={purchaseMutation.isPending}
+          className="w-full py-2 mb-2 text-lg font-semibold duration-200 bg-primary-500 text-gray-white hover:bg-primary-600 disabled:cursor-default disabled:bg-gray-100 disabled:text-gray-500"
+        >
+          {purchaseMutation.isPending ? "جاري المعالجة..." : "اشتر الآن"}
         </button>
         {course.is_favorite ? (
           <button

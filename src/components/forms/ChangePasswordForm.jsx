@@ -19,9 +19,7 @@ export default function ChangePasswordForm() {
   const alertController = useAlert();
   const onSubmit = async (data) => {
     try {
-      const response = await updatePasswordMutation.mutateAsync(
-        data
-      );
+      const response = await updatePasswordMutation.mutateAsync(data);
       alertController.alertSuccessToggle("تم تعديل البيانات بنجاح!");
       console.log(response);
     } catch (error) {
@@ -45,13 +43,13 @@ export default function ChangePasswordForm() {
         <TopAlert message={alertController.errorAlertMessage} type="error" />
       )}
       <form className="text-gray-900 text-sm" onSubmit={handleSubmit(onSubmit)}>
-        <SingleFormInputContainer error={errors.old_password?.message}>
+        <SingleFormInputContainer error={errors.current_password?.message}>
           <label className={`${labelBaseStyle}`}>كلمة السر الحالية</label>
           <input
             className={`${inputBaseStyle}`}
             type="password"
             placeholder="كلمة السر الحالية"
-            {...register("old_password")}
+            {...register("current_password")}
           />
         </SingleFormInputContainer>
 

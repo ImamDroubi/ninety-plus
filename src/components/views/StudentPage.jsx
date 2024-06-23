@@ -63,7 +63,7 @@ const listItems = [
 const pagesList = [
   "overview",
   "courses",
-  "teachers",
+  // "teachers",
   "messages",
   "favourite",
   "purchases",
