@@ -4,7 +4,7 @@ import SingleFormInputContainer from "../containers/SingleFormInputContainer";
 import { useRef, useState } from "react";
 import SelectDropdown from "../menus/SelectDropdown";
 import { subjectsList } from "../data/subjectsList";
-import { useTeacherProfile } from "../../contexts/TeacherProfileContext";
+import { useUserProfile } from "../../contexts/UserProfileContext";
 import { useRegistrationMenus } from "../../hooks/useRegistrationMenus";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -17,7 +17,7 @@ import { useUpdateProfile } from "../../apiCalls/useUpdateProfile";
 
 export default function TeacherSettingsForm(props) {
   const { currentUser, login } = useAuth();
-  const { profileInfo, isLoading } = useTeacherProfile();
+  const { profileInfo, isLoading } = useUserProfile();
   const [bio, setBio] = useState(profileInfo?.about || "");
   const {
     register,

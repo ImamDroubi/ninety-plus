@@ -12,6 +12,7 @@ import { useAlert } from "../../hooks/useAlert";
 import PopupLayout from "../layouts/PopupLayout";
 import ClosePopupButton from "../buttons/ClosePopupButton";
 const sample = {
+  id: 1,
   title: "رياضيات توجيهي علمي وصناعي للأستاذ محمد حرزالله",
   category: "علمي",
   price: 400,
@@ -19,9 +20,10 @@ const sample = {
   stars: 4.5,
   studentsNo: 120,
 };
-export default function CourseCard({ course, showOptions = false }) {
+export default function CourseCard({ course = sample, showOptions = false }) {
+  // remove the = sample
   const [currentCourse, setCurrentCourse] = useState({ ...sample, ...course });
-  const deleteMutation = useDeleteResource("courses", course.id);
+  const deleteMutation = useDeleteResource("courses");
   const [deleteCoursePopupOpen, setDeleteCoursePopupOpen] = useState(false);
   const navigate = useNavigate();
   const alertController = useAlert();
@@ -52,7 +54,7 @@ export default function CourseCard({ course, showOptions = false }) {
 
   const handleDeleteCourse = async () => {
     try {
-      await deleteMutation.mutateAsync();
+      await deleteMutation.mutateAsync(course?.id);
       alertController.alertSuccessToggle("تم حذف الدورة بنجاح!");
       await new Promise((resolve) => setTimeout(resolve, 500));
       window.location.reload();

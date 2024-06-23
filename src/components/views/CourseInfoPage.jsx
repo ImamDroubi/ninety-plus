@@ -11,15 +11,25 @@ import PopupLayout from "../layouts/PopupLayout";
 import { useState } from "react";
 import CoursePageTabs from "../menus/CoursePageTabs";
 import ClosePopupButton from "../buttons/ClosePopupButton";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useCourse } from "../../hooks/useCourse";
 import { CircularProgress } from "@mui/material";
 import { useUserInfo } from "../../hooks/useUserInfo";
 
 export default function CourseInfoPage() {
   let { id } = useParams();
-  const { course, isLoading: courseLoading } = useCourse(id);
-  const { userInfo: instructor, isLoading: instructorLoading } = useUserInfo(
+  const navigate = useNavigate();
+  const {
+    course,
+    isLoading: courseLoading,
+    isError: courseError,
+  } = useCourse(id);
+
+  const {
+    userInfo: instructor,
+    isLoading: instructorLoading,
+    isError: instructorError,
+  } = useUserInfo(
     course?.instructor?.id,
     course // this is the enable object for the dependent query
     // the query to get the instructo deosn't run until the course is present
@@ -29,7 +39,10 @@ export default function CourseInfoPage() {
   const booksImgae =
     "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?q=80&w=1973&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
   const [buyModalOpen, setBuyModalOpen] = useState(0);
+  if (courseLoading || instructorLoading) return <CircularProgress />;
+  if (courseError || instructorError) navigate("/not-found");
   if (!course || !instructor) return <CircularProgress />;
+
   return (
     <>
       <div className="absolute hidden lg:block bg-gray-50 top-[7rem] h-[25rem] -z-10 w-full"></div>

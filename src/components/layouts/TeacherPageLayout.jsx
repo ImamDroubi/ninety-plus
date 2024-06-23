@@ -1,17 +1,28 @@
-import React, { useState } from "react";
-import { Outlet } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Outlet, useNavigate } from "react-router-dom";
 import Sidebar from "../menus/Sidebar";
 import AccountAvatarMenu from "../menus/AccountAvatarMenu";
 import { teacherPageList } from "../data/teacherPageList";
 import MenuDrawer from "../menus/MenuDrawer";
 import HamburgerMenuOpenner from "../other/HamburgerMenuOpenner";
-import { TeacherProfileProvider } from "../../contexts/TeacherProfileContext";
+import { useAuth } from "../../contexts/AuthContext";
+import { CircularProgress } from "@mui/material";
+import { UserProfileProvider } from "../../contexts/UserProfileContext";
 export default function TeacherPageLayout() {
+  const { currentUser } = useAuth();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const toggleOpenSidebar = () => {
     setSidebarOpen(!sidebarOpen);
   };
-
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (currentUser) {
+      if (currentUser.roles.indexOf("instructor") == -1) {
+        navigate("/");
+      }
+    }
+  }, [currentUser]);
+  if (!currentUser) return <CircularProgress />;
   return (
     <>
       <div className="flex">
@@ -38,9 +49,9 @@ export default function TeacherPageLayout() {
               </div>
             </section>
           </div>
-          <TeacherProfileProvider>
+          <UserProfileProvider>
             <Outlet />
-          </TeacherProfileProvider>
+          </UserProfileProvider>
         </div>
       </div>
     </>

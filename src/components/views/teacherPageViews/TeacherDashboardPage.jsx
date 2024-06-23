@@ -16,11 +16,11 @@ import {
 import ChartComponent from "../../charts/ChartComponent";
 import BarsChart from "../../charts/BarsChart";
 import PaginatedTable from "../../tables/PaginatedTable";
-import { useTeacherProfile } from "../../../contexts/TeacherProfileContext";
 import { CircularProgress } from "@mui/material";
 import { countCourses } from "../../../utils/coursesFunctions";
+import { useUserProfile } from "../../../contexts/UserProfileContext";
 export default function TeacherDashboardPage() {
-  const { profileInfo, isLoading } = useTeacherProfile();
+  const { profileInfo, isLoading } = useUserProfile();
   if (isLoading || !profileInfo) return <CircularProgress />;
   const totalCourses = countCourses(profileInfo.courses);
 
@@ -35,7 +35,7 @@ export default function TeacherDashboardPage() {
         />
         <StatisticsBlock
           icon={<WalletIcon />}
-          number={profileInfo.courses.length || 0}
+          number={profileInfo.courses.active?.length || 0}
           description="الدورات الحالية"
           style="secondary"
         />

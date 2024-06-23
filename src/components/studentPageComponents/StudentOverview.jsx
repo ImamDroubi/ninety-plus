@@ -4,20 +4,30 @@ import {
   faSpinner,
   faTrophy,
   faChalkboardUser,
+  faClock,
 } from "@fortawesome/free-solid-svg-icons";
 import CourseCard from "../cards/CourseCard";
 import MathBook from "../../assets/images/book-covers/math-scientific.jpg";
 import { Button, CircularProgress } from "@mui/material";
 import { useProfileInfo } from "../../hooks/useProfileInfo";
+import { useEffect, useState } from "react";
+import { combineCourses } from "../../utils/coursesFunctions";
+import { useUserProfile } from "../../contexts/UserProfileContext";
 export default function StudentOverview() {
-  const { user } = useProfileInfo();
+  const { profileInfo, isLoading } = useUserProfile();
+  const [courses, setCourses] = useState();
+  useEffect(() => {
+    if (profileInfo) {
+      setCourses(combineCourses(profileInfo.courses));
+    }
+  }, [profileInfo]);
   const icons = {
     enrolled: <FontAwesomeIcon icon={faVideo} />,
     active: <FontAwesomeIcon icon={faSpinner} />,
     completed: <FontAwesomeIcon icon={faTrophy} />,
-    instructors: <FontAwesomeIcon icon={faChalkboardUser} />,
+    draft: <FontAwesomeIcon icon={faClock} />,
   };
-  if (!user) return <CircularProgress />;
+  if (isLoading || !profileInfo || !courses) return <CircularProgress />;
   return (
     <>
       <section className="mb-4">
@@ -28,7 +38,7 @@ export default function StudentOverview() {
               {icons.enrolled}
             </div>
             <div className="flex flex-col text">
-              <h3 className="text-2xl text-gray-900">{user.courses?.length}</h3>
+              <h3 className="text-2xl text-gray-900">{courses.length || 0}</h3>
               <p className="text-sm text-gray-700">دورة مسجلة</p>
             </div>
           </div>
@@ -38,7 +48,9 @@ export default function StudentOverview() {
               {icons.active}
             </div>
             <div className="flex flex-col text">
-              <h3 className="text-2xl text-gray-900">{user.activeCourses}</h3>
+              <h3 className="text-2xl text-gray-900">
+                {profileInfo.courses.active?.length || 0}
+              </h3>
               <p className="text-sm text-gray-700">دورة حالية</p>
             </div>
           </div>
@@ -49,7 +61,7 @@ export default function StudentOverview() {
             </div>
             <div className="flex flex-col text">
               <h3 className="text-2xl text-gray-900">
-                {user.completedCourses}
+                {profileInfo.courses.over?.length || 0}
               </h3>
               <p className="text-sm text-gray-700">دورة مكتملة</p>
             </div>
@@ -57,23 +69,23 @@ export default function StudentOverview() {
 
           <div className="box bg-warning-100 p-2 flex w-full sm:w-[15rem] items-center gap-3">
             <div className="flex items-center justify-center w-6 h-6 text-xl logo bg-gray-white text-warning-500">
-              {icons.instructors}
+              {icons.draft}
             </div>
             <div className="flex flex-col text">
               <h3 className="text-2xl text-gray-900">
-                {user.coursesInstructors}
+                {profileInfo.courses.draft?.length || 0}
               </h3>
-              <p className="text-sm text-gray-700">معلم</p>
+              <p className="text-sm text-gray-700">دورة لم تبدأ</p>
             </div>
           </div>
         </div>
       </section>
       <section>
         <h2 className="mb-3 text-lg font-semibold">
-          أكمل متابعة الدورات, {user.first_name}
+          أكمل متابعة الدورات, {profileInfo.first_name}
         </h2>
         <div className="flex justify-between lectures flex-col gap-2 sm:flex-row flex-wrap">
-          {user.courses?.slice(0, 3).map((course, key) => {
+          {courses.slice(0, 3).map((course, key) => {
             return <CourseCard course={course} key={key} />;
           })}
         </div>

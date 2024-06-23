@@ -5,14 +5,15 @@ import SelectDropdown from "../../menus/SelectDropdown";
 import BasicPagination from "../../other/BasicPagination";
 import { courseFiltersList } from "../../data/courseFiltersList";
 import { courseRatingFiltersList } from "../../data/courseRatingFiltersList";
-import { useTeacherProfile } from "../../../contexts/TeacherProfileContext";
+
 import { CircularProgress } from "@mui/material";
 import { combineCourses } from "../../../utils/coursesFunctions";
+import { useUserProfile } from "../../../contexts/UserProfileContext";
 const NUMBER_OF_COURSES_IN_THE_PAGE = 8;
 const NUMBER_OF_DATA = 16;
 
 export default function TeacherCoursesPage() {
-  const { profileInfo, isLoading } = useTeacherProfile();
+  const { profileInfo, isLoading } = useUserProfile();
 
   const [courses, setCourses] = useState();
   useEffect(() => {

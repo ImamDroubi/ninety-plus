@@ -1,9 +1,11 @@
 import { CircularProgress, Pagination } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import mathBook from "../../assets/images/book-covers/math-scientific.jpg";
 import Button from "@mui/material/Button";
 import { useProfileInfo } from "../../hooks/useProfileInfo";
 import CourseCard from "../cards/CourseCard";
+import { combineCourses } from "../../utils/coursesFunctions";
+import { useUserProfile } from "../../contexts/UserProfileContext";
 const NUMBER_OF_COURSES_IN_THE_PAGE = 8;
 const NUMBER_OF_DATA = 10;
 
@@ -42,35 +44,28 @@ function Lecture() {
   );
 }
 export default function StudentCourses() {
-  const { user } = useProfileInfo();
+  const { profileInfo, isLoading } = useUserProfile();
+  const [courses, setCourses] = useState();
+  useEffect(() => {
+    if (profileInfo) {
+      setCourses(combineCourses(profileInfo.courses));
+    }
+  }, [profileInfo]);
   const [pagination, setPagination] = useState({
-    count: NUMBER_OF_DATA,
+    count: courses?.length || 0,
     from: 0,
     to: NUMBER_OF_COURSES_IN_THE_PAGE,
   });
-  const courses = [
-    <Lecture />,
-    <Lecture />,
-    <Lecture />,
-    <Lecture />,
-    <Lecture />,
-    <Lecture />,
-    <Lecture />,
-    <Lecture />,
-    <Lecture />,
-    <Lecture />,
-  ];
-  if (!user) return <CircularProgress />;
+  if (isLoading || !profileInfo || !courses) return <CircularProgress />;
+
   return (
     <>
       <section className="mb-4">
         <h2 className="mb-3 text-lg font-semibold">الدورات</h2>
         <div className="grid justify-center grid-flow-row gap-3 mb-2 courses sm:justify-center">
-          {user.courses
-            ?.slice(pagination.from, pagination.to)
-            .map((course, key) => {
-              return <CourseCard key={key} course={course} />;
-            })}
+          {courses?.slice(pagination.from, pagination.to).map((course, key) => {
+            return <CourseCard key={key} course={course} />;
+          })}
         </div>
         <div className="flex items-center justify-center my-4 pagination">
           <BasicPagination

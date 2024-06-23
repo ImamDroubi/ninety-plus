@@ -2,23 +2,23 @@ import React, { useContext, useEffect, useState } from "react";
 import { useAuth } from "./AuthContext";
 import { useProfile } from "../hooks/useProfile";
 
-const TeacherProfileContext = React.createContext();
+const UserProfileContext = React.createContext();
 
-export function useTeacherProfile() {
-  return useContext(TeacherProfileContext);
+export function useUserProfile() {
+  return useContext(UserProfileContext);
 }
 
-export function TeacherProfileProvider({ children }) {
+export function UserProfileProvider({ children }) {
   const { currentUser } = useAuth();
   const { profileInfo, isLoading } = useProfile(currentUser);
 
   const value = {
     profileInfo,
-    isLoading
+    isLoading,
   };
   return (
-    <TeacherProfileContext.Provider value={value}>
+    <UserProfileContext.Provider value={value}>
       {children}
-    </TeacherProfileContext.Provider>
+    </UserProfileContext.Provider>
   );
 }

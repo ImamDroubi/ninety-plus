@@ -7,11 +7,13 @@ import FooterInfo from "../other/FooterInfo";
 export default function MainLayout() {
   return (
     <>
-      <TopBar/>
-      <Header/>
-      <Outlet />
-      
-      <Footer/>
+      <TopBar />
+      <Header />
+      <div className="min-h-[50rem]">
+        <Outlet />
+      </div>
+
+      <Footer />
     </>
-  )
+  );
 }

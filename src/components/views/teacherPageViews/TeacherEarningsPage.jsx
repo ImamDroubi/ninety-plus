@@ -11,10 +11,10 @@ import {
   teacherEarningsTableData,
   teacherEarningsTableHeaders,
 } from "../../data/teacherEarningsTableData";
-import { useTeacherProfile } from "../../../contexts/TeacherProfileContext";
 import { CircularProgress } from "@mui/material";
+import { useUserProfile } from "../../../contexts/UserProfileContext";
 export default function TeacherEarningsPage() {
-  const { profileInfo, isLoading } = useTeacherProfile();
+  const { profileInfo, isLoading } = useUserProfile();
   if (isLoading || !profileInfo) return <CircularProgress />;
   console.log(profileInfo);
   return (
