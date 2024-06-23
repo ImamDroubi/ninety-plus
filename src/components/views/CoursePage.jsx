@@ -10,7 +10,7 @@ import {
 import { Button, CircularProgress } from "@mui/material";
 import Container90 from "../containers/Container90";
 import video from "../../assets/videos/grass.mp4";
-import CourseInfoTabs from "../menus/CourseInfoTabs";
+import CoursePageTabs from "../menus/CoursePageTabs";
 import WatchCourseMenu from "../menus/WatchCourseMenu";
 import PopupLayout from "../layouts/PopupLayout";
 import { useEffect, useState } from "react";
@@ -114,7 +114,7 @@ export default function CoursePage() {
               </div>
             </div>
             <hr className="my-2 " />
-            <CourseInfoTabs />
+            <CoursePageTabs />
           </div>
           <div className="nav h-[60rem] hidden lg:block basis-1/4">
             {isLiveStreamOn && <LiveStreamCard />}

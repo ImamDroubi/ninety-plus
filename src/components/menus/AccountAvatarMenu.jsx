@@ -13,11 +13,13 @@ import MessagesMenu from "./MessagesMenu";
 import NotificationsMenu from "./NotificationsMenu";
 import { useAuth } from "../../contexts/AuthContext";
 import useLogout from "../../apiCalls/authCalls/useLogout";
+import { useNavigate } from "react-router-dom";
 
 export default function AccountAvatarMenu() {
   const { currentUser, setAccessToken, logout } = useAuth();
   const logoutController = useLogout();
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const navigate = useNavigate();
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -34,6 +36,26 @@ export default function AccountAvatarMenu() {
       logout();
       handleClose();
     } catch (error) {}
+  };
+
+  const handleVisitProfile = () => {
+    if (currentUser.roles.indexOf("student") != -1) {
+      navigate(`/student/${currentUser.user_id}?tab=overview`);
+    } else if (currentUser.roles.indexOf("instructor") != -1) {
+      navigate(`/teacher/${currentUser.user_id}/courses`);
+    } else {
+      navigate(`/not-found`);
+    }
+  };
+
+  const handleVisitSettings = () => {
+    if (currentUser.roles.indexOf("student") != -1) {
+      navigate(`/student/${currentUser.user_id}?tab=settings`);
+    } else if (currentUser.roles.indexOf("instructor") != -1) {
+      navigate(`/teacher/${currentUser.user_id}/settings`);
+    } else {
+      navigate(`/not-found`);
+    }
   };
 
   return (
@@ -110,13 +132,13 @@ export default function AccountAvatarMenu() {
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
         {/* All menu items here  */}
-        <MenuItem onClick={handleClose}>
+        <MenuItem onClick={handleVisitProfile}>
           <ListItemIcon>
             <TeacherIcon />
           </ListItemIcon>
           الملف الشخصي
         </MenuItem>
-        <MenuItem onClick={handleClose}>
+        <MenuItem onClick={handleVisitSettings}>
           <ListItemIcon>
             <Settings fontSize="small" />
           </ListItemIcon>

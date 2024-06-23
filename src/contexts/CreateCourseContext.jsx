@@ -45,7 +45,7 @@ export function CreateCourseContextProvider({ children }) {
     resolver: zodResolver(courseSchema),
     mode: "onChange",
   });
-
+  
   // ===================================== HANDLE SUBMISSION FUNCTION ========================================================
   const onSubmit = async (data) => {
     setResponseErrors(null);

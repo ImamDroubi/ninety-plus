@@ -9,12 +9,14 @@ import Container90 from "../containers/Container90";
 import BuyCourse from "../popups/BuyCourse";
 import PopupLayout from "../layouts/PopupLayout";
 import { useState } from "react";
-import CoursePageTabs from "../menus/CoursePageTabs";
+import CourseInfoTabs from "../menus/CourseInfoTabs";
 import ClosePopupButton from "../buttons/ClosePopupButton";
 import { useNavigate, useParams } from "react-router-dom";
 import { useCourse } from "../../hooks/useCourse";
-import { CircularProgress } from "@mui/material";
+import { Button, CircularProgress } from "@mui/material";
 import { useUserInfo } from "../../hooks/useUserInfo";
+import AddRating from "../popups/AddRating";
+import AddComment from "../popups/AddComment";
 
 export default function CourseInfoPage() {
   let { id } = useParams();
@@ -39,6 +41,7 @@ export default function CourseInfoPage() {
   const booksImgae =
     "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?q=80&w=1973&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
   const [buyModalOpen, setBuyModalOpen] = useState(0);
+  const [rateCoursePopupOpen, setRateCoursePopupOpen] = useState(false);
   if (courseLoading || instructorLoading) return <CircularProgress />;
   if (courseError || instructorError) navigate("/not-found");
   if (!course || !instructor) return <CircularProgress />;
@@ -70,6 +73,9 @@ export default function CourseInfoPage() {
                   </p>
                 </div>
                 <div className="flex items-center gap-1 rating">
+                  <Button onClick={() => setRateCoursePopupOpen(true)}>
+                    قيم الدورة
+                  </Button>
                   <div className="stars text-warning-500">{starImage}</div>
                   <p className="text-gray-900 number">
                     {instructor.rate}{" "}
@@ -82,7 +88,7 @@ export default function CourseInfoPage() {
               <img src={booksImgae} alt="" className="w-full h-full" />
             </div>
             <div className="information">
-              <CoursePageTabs course={course} instructor={instructor} />
+              <CourseInfoTabs course={course} instructor={instructor} />
             </div>
           </div>
           <div className="sticky hidden w-1/2 shadow-md widget xl:flex bg-gray-white h-fit top-2">
@@ -99,6 +105,17 @@ export default function CourseInfoPage() {
               <div className="relative z-10 w-10/12 pt-2 bg-gray-white">
                 <ClosePopupButton setOpen={setBuyModalOpen} />
                 <BuyCourse course={course} />
+              </div>
+            </PopupLayout>
+          ) : null}
+          {rateCoursePopupOpen ? (
+            <PopupLayout>
+              <div className="relative z-10 w-5/12 pt-2 bg-gray-white">
+                <ClosePopupButton setOpen={setRateCoursePopupOpen} />
+                <AddRating
+                  setOpen={setRateCoursePopupOpen}
+                  courseId={course.id}
+                />
               </div>
             </PopupLayout>
           ) : null}
