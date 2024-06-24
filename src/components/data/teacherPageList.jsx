@@ -2,6 +2,7 @@ import {
   AddIcon,
   BookIcon,
   DashboardIcon,
+  LectureIcon,
   LogoutIcon,
   MessageIcon,
   MoneyIcon,
@@ -12,6 +13,11 @@ export const teacherPageList = [
     text: "لوحة التحكم",
     icon: <DashboardIcon />,
     url: "dashboard",
+  },
+  {
+    text: "إضافة حصة جديدة",
+    icon: <LectureIcon />,
+    url: "create-lecture",
   },
   {
     text: "إنشاء دورة جديدة",

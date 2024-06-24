@@ -16,32 +16,38 @@ import {
 import ChartComponent from "../../charts/ChartComponent";
 import BarsChart from "../../charts/BarsChart";
 import PaginatedTable from "../../tables/PaginatedTable";
-
+import { CircularProgress } from "@mui/material";
+import { countCourses } from "../../../utils/coursesFunctions";
+import { useUserProfile } from "../../../contexts/UserProfileContext";
 export default function TeacherDashboardPage() {
+  const { profileInfo, isLoading } = useUserProfile();
+  if (isLoading || !profileInfo) return <CircularProgress />;
+  const totalCourses = countCourses(profileInfo.courses);
+
   return (
     <div className="my-4 w-[90%] m-auto">
       <section className="statistics flex flex-wrap justify-between gap-y-2">
         <StatisticsBlock
           icon={<StackIcon />}
-          number={7}
+          number={totalCourses}
           description="الدورات الكلية"
           style="primary"
         />
         <StatisticsBlock
           icon={<WalletIcon />}
-          number={3}
+          number={profileInfo.courses.active?.length || 0}
           description="الدورات الحالية"
           style="secondary"
         />
         <StatisticsBlock
           icon={<CreditCardIcon />}
-          number={1000}
+          number={profileInfo.total_earnings || 0}
           description="مجموع الأرباح"
           style="error"
         />
         <StatisticsBlock
           icon={<CrownIcon />}
-          number={1045}
+          number={profileInfo.number_of_sales || 0}
           description="عدد المبيعات"
           style="success"
         />

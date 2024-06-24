@@ -141,7 +141,7 @@ export default function PaginatedTable({
             ? data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
             : data
           ).map((row, key) => (
-            <TableRow>
+            <TableRow key={key}>
               {row.map((item, key) => {
                 return (
                   <TableCell key={key} style={{ maxWidth: 160 }} align="right">
@@ -185,7 +185,7 @@ export default function PaginatedTable({
               rowsPerPage={rowsPerPage}
               labelRowsPerPage={"عدد الصفوف"}
               page={page}
-              slotProps={{
+              slotprops={{
                 select: {
                   inputProps: {
                     "aria-label": "rows per page",

@@ -1,12 +1,11 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faComment } from "@fortawesome/free-solid-svg-icons";
+import { faFile, faComment } from "@fortawesome/free-solid-svg-icons";
 import user from "../../assets/images/user.jpg";
 import { useState } from "react";
-import { Button } from "@mui/material";
-
+import Button from "@mui/material/Button";
 import PopupLayout from "../layouts/PopupLayout";
+import AddComent from "../popups/AddComment";
 import SlidingTabs from "./SlidingTabs";
-import AddComment from "../popups/AddComment";
 import ClosePopupButton from "../buttons/ClosePopupButton";
 
 function Description() {
@@ -22,20 +21,24 @@ function Description() {
     </>
   );
 }
-function Teacher() {
+function AttachedFiles() {
   return (
     <>
-      <h3 className="mb-3 text-xl font-bold text-gray-900 title">الأستاذ</h3>
-      <div className="flex flex-col gap-3 teacher">
-        <div className="object-cover w-full img">
-          <img src={user} alt="" className="w-full h-full" />
+      <div className="flex items-center justify-between p-2 file bg-gray-50">
+        <div className="flex items-center gap-3 info">
+          <div className="text-4xl icon text-primary-500">
+            <FontAwesomeIcon icon={faFile} />
+          </div>
+          <div className="flex flex-col name">
+            <a className="text-lg font-bold text-gray-900 cursor-pointer hover:underline">
+              نموذج امتحان.pdf
+            </a>
+            <p className="text-sm text-gray-600">2.4 MB</p>
+          </div>
         </div>
-        <p className="text-gray-700">
-          <span className="font-bold text-gray-900">أ.محمد حرزالله </span>
-          خبرة 30 عاماً في تدريس التوجيهي، خريج جامعة كذا كذا خبرة 30 عاماً في
-          تدريس التوجيهي، خريج جامعة كذا كذا خبرة 30 عاماً في تدريس التوجيهي،
-          خريج جامعة كذا كذا
-        </p>
+        <Button variant="contained" sx={{ borderRadius: 0 }}>
+          تحميل الملف
+        </Button>
       </div>
     </>
   );
@@ -99,10 +102,10 @@ function StudentsFeedback() {
           تعليقات الطلاب
         </h3>
         <Button
-          onClick={() => setAddCommentPopupOpen(true)}
-          variant="contained"
           disableElevation
           sx={{ borderRadius: "0px" }}
+          onClick={() => setAddCommentPopupOpen(true)}
+          variant="contained"
         >
           <div className="flex items-center gap-1">
             <p>تعليق</p>
@@ -117,18 +120,19 @@ function StudentsFeedback() {
         <PopupLayout>
           <div className="relative z-10 w-10/12 max-w-[40rem] pt-6 pb-2 px-3 bg-gray-white">
             <ClosePopupButton setOpen={setAddCommentPopupOpen} />
-            <AddComment callback={() => {}} setOpen={setAddCommentPopupOpen} />
+            <AddComent setOpen={setAddCommentPopupOpen} />
           </div>
         </PopupLayout>
       ) : null}
     </>
   );
 }
-export default function CoursePageTabs() {
+
+export default function CourseInfoTabs() {
   return (
     <SlidingTabs showTabs={true}>
       <Description label="الوصف" />
-      <Teacher label="المعلم" />
+      <AttachedFiles label="الملفات المرفقة" />
       <StudentsFeedback label="تعليقات الطلاب" />
     </SlidingTabs>
   );

@@ -3,14 +3,23 @@ import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 
+// list item should have a name and a callback
+// like this list = [{name : "text" , callback = ()=>{} }]
 export default function DropdownMenu({ list, children, small = false }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
+    event.stopPropagation();
     setAnchorEl(event.currentTarget);
   };
-  const handleClose = () => {
+  const handleClose = (event) => {
+    event.stopPropagation();
     setAnchorEl(null);
+  };
+
+  const handleItemClick = (event, index) => {
+    list[index].callback();
+    handleClose(event);
   };
 
   return (
@@ -38,7 +47,7 @@ export default function DropdownMenu({ list, children, small = false }) {
             <MenuItem
               sx={small ? { fontSize: "14px" } : null}
               key={ind}
-              onClick={() => handleClose()}
+              onClick={(e) => handleItemClick(e, ind)}
             >
               {item.text}
             </MenuItem>

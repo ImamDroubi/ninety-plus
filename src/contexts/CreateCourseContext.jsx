@@ -88,6 +88,7 @@ export function CreateCourseContextProvider({ children }) {
   };
   const handleReactFormData = (data) => {
     courseObject.append("title", data.title);
+    courseObject.append("price", data.price);
     courseObject.append("instructor_id", currentUser?.user_id);
     courseObject.append("period", "first");
     courseObject.append("welcome_message", data.welcome_message);

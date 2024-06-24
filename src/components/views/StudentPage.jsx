@@ -7,7 +7,7 @@ import StudentOverview from "../studentPageComponents/StudentOverview";
 import StudentPurchaseHistory from "../studentPageComponents/StudentPurchaseHistory";
 import StudentSettings from "../studentPageComponents/StudentSettings";
 import StudentTeachers from "../studentPageComponents/StudentTeachers";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import {
   BookIcon,
   EyeIcon,
@@ -17,8 +17,12 @@ import {
   SettingsIcon,
   TeacherIcon,
 } from "../icons/icons";
+import { useAuth } from "../../contexts/AuthContext";
 import HamburgerMenuOpenner from "../other/HamburgerMenuOpenner";
 import MenuDrawer from "../menus/MenuDrawer";
+import { useProfileInfo } from "../../hooks/useProfileInfo";
+import { CircularProgress } from "@mui/material";
+import { UserProfileProvider } from "../../contexts/UserProfileContext";
 const listItems = [
   {
     text: "نظرة عامة",
@@ -30,11 +34,11 @@ const listItems = [
     icon: <BookIcon />,
     url: "?tab=courses",
   },
-  {
-    text: "الأساتذة",
-    icon: <TeacherIcon />,
-    url: "?tab=teachers",
-  },
+  // {
+  //   text: "الأساتذة",
+  //   icon: <TeacherIcon />,
+  //   url: "?tab=teachers",
+  // },
   {
     text: "الرسائل",
     icon: <MessageIcon />,
@@ -59,13 +63,14 @@ const listItems = [
 const pagesList = [
   "overview",
   "courses",
-  "teachers",
+  // "teachers",
   "messages",
   "favourite",
   "purchases",
   "settings",
 ];
 export default function StudentPage() {
+  const { user } = useProfileInfo();
   const studentInfo = {
     id: 1,
     name: "يعقوب قمر الدين",
@@ -77,6 +82,7 @@ export default function StudentPage() {
     completedCourses: 3,
     coursesInstructors: 3,
   };
+  const { currentUser } = useAuth();
   // ============ This is to put the current page in the parameters  =======================
   const [searchParams, setSearchParams] = useSearchParams();
   const handleTabChange = (index) => {
@@ -97,62 +103,75 @@ export default function StudentPage() {
     setSidebarOpen(!sidebarOpen);
   };
 
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (currentUser) {
+      if (currentUser.roles.indexOf("student") == -1) {
+        navigate("/");
+      }
+    }
+  }, [currentUser]);
+  if (!currentUser) return <CircularProgress />;
   return (
     <div className="relative lg:pt-[7rem]">
       <div className="background absolute hidden -z-10 w-full top-[0rem] h-[15rem] bg-primary-100  lg:block"></div>
       <div className="w-full m-auto content bg-gray-white shadow-lg mb-6 lg:w-3/4">
         <header className="flex justify-start p-5">
           <div className="flex items-center gap-3 personal">
-            <div className="picture w-[7rem] aspect-square object-cover rounded-full">
+            <div className="picture w-[7rem] h-[7rem] object-fill rounded-full">
               <img
-                src={studentInfo.profilePicture}
+                src={currentUser.profile_image}
                 alt=""
                 className="w-full h-full rounded-full"
               />
             </div>
             <div className="flex flex-col gap-2 info">
-              <h1 className="font-extrabold">{studentInfo.name}</h1>
-              <p className="text-sm text-gray-600">{studentInfo.stream}</p>
+              <h1 className="font-extrabold">{`${currentUser.first_name} ${currentUser.last_name}`}</h1>
+              <p className="text-sm text-gray-600">
+                {currentUser.branch?.name || "علمي"}
+              </p>
             </div>
           </div>
         </header>
-        <section className="mobile block md:hidden">
-          <SlidingTabs
-            handleTabChange={handleTabChange}
-            currentIndex={currentIndex}
-            showTabes={false}
-          >
-            <StudentOverview student={studentInfo} label="نظرة عامة" />
-            <StudentCourses label="الدورات" />
-            <StudentTeachers label="الأساتذة" />
-            <StudentMessages label="الرسائل" />
-            <StudentFavourite label="المفضلة" />
-            <StudentPurchaseHistory label="عمليات الشراء" />
-            <StudentSettings label="الإعدادات" />
-          </SlidingTabs>
-          <MenuDrawer
-            listItems={listItems}
-            side="right"
-            onClickFunction={toggleOpenSidebar}
-          >
-            {!sidebarOpen && <HamburgerMenuOpenner />}
-          </MenuDrawer>
-        </section>
-        <section className="desktop hidden md:block">
-          <SlidingTabs
-            handleTabChange={handleTabChange}
-            currentIndex={currentIndex}
-            showTabs={true}
-          >
-            <StudentOverview student={studentInfo} label="نظرة عامة" />
-            <StudentCourses label="الدورات" />
-            <StudentTeachers label="الأساتذة" />
-            <StudentMessages label="الرسائل" />
-            <StudentFavourite label="المفضلة" />
-            <StudentPurchaseHistory label="عمليات الشراء" />
-            <StudentSettings label="الإعدادات" />
-          </SlidingTabs>
-        </section>
+        <UserProfileProvider>
+          <section className="mobile block md:hidden">
+            <SlidingTabs
+              handleTabChange={handleTabChange}
+              currentIndex={currentIndex}
+              showTabes={false}
+            >
+              <StudentOverview label="نظرة عامة" />
+              <StudentCourses label="الدورات" />
+              {/* <StudentTeachers label="الأساتذة" /> */}
+              <StudentMessages label="الرسائل" />
+              <StudentFavourite label="المفضلة" />
+              <StudentPurchaseHistory label="عمليات الشراء" />
+              <StudentSettings label="الإعدادات" />
+            </SlidingTabs>
+            <MenuDrawer
+              listItems={listItems}
+              side="right"
+              onClickFunction={toggleOpenSidebar}
+            >
+              {!sidebarOpen && <HamburgerMenuOpenner />}
+            </MenuDrawer>
+          </section>
+          <section className="desktop hidden md:block">
+            <SlidingTabs
+              handleTabChange={handleTabChange}
+              currentIndex={currentIndex}
+              showTabs={true}
+            >
+              <StudentOverview label="نظرة عامة" />
+              <StudentCourses label="الدورات" />
+              {/* <StudentTeachers label="الأساتذة" /> */}
+              <StudentMessages label="الرسائل" />
+              <StudentFavourite label="المفضلة" />
+              <StudentPurchaseHistory label="عمليات الشراء" />
+              <StudentSettings label="الإعدادات" />
+            </SlidingTabs>
+          </section>
+        </UserProfileProvider>
       </div>
     </div>
   );

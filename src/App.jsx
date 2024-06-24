@@ -4,9 +4,9 @@ import MainLayout from "./components/layouts/MainLayout";
 import SignInPage from "./components/views/SignInPage";
 import SignUpPage from "./components/views/SignUpPage";
 import NotFoundPage from "./components/views/NotFoundPage";
-import CourseContentPage from "./components/views/CourseContentPage";
-import CoursesPage from "./components/views/CoursesPage";
 import CourseInfoPage from "./components/views/CourseInfoPage";
+import CoursesPage from "./components/views/CoursesPage";
+import CoursePage from "./components/views/CoursePage";
 import StudentPage from "./components/views/StudentPage";
 import TeacherPageLayout from "./components/layouts/TeacherPageLayout";
 import TeacherDashboardPage from "./components/views/teacherPageViews/TeacherDashboardPage";
@@ -23,6 +23,7 @@ import { CreateCourseContextProvider } from "./contexts/CreateCourseContext";
 import TeacherEditCoursePage from "./components/views/teacherPageViews/TeacherEditCoursePage";
 import GuestLayout from "./components/layouts/GuestLayout";
 import NotVerifiedLayout from "./components/layouts/NotVerifiedLayout";
+
 import AdminDashboard from "./components/layouts/AdminDashboard";
 import TeachersSection from "./components/views/adminPageViews/TeachersSection";
 import StudentsSection from "./components/views/adminPageViews/StudentsSection";
@@ -31,6 +32,10 @@ import CoursesSection from "./components/views/adminPageViews/coursesSection";
 import WithdrawSection from "./components/views/adminPageViews/WithdrawSection";
 import AddCourseSection from "./components/views/adminPageViews/AddCourseSection";
 import GeneralAddingSection from "./components/views/adminPageViews/GeneralAddingSection";
+
+import LiveStreamPage from "./components/views/LiveStreamPage";
+import TeacherCreateLecturePage from "./components/views/teacherPageViews/TeacherCreateLecturePage";
+
 function App() {
   return (
     <>
@@ -39,13 +44,15 @@ function App() {
           <Route index element={<HomePage />} />
           <Route path="/not-found" element={<NotFoundPage />} />
 
-          <Route path="course-page/:id" element={<CourseContentPage />} />
+          <Route path="course-info/:id" element={<CourseInfoPage />} />
           <Route path="courses" element={<CoursesPage />} />
-          <Route path="course/:id" element={<CourseInfoPage />} />
+          <Route path="courses/:id" element={<CoursePage />} />
+          <Route path="courses/:id/live" element={<LiveStreamPage />} />
           <Route path="student/:id" element={<StudentPage />} />
         </Route>
         <Route path="/teacher/:id/" element={<TeacherPageLayout />}>
           <Route path="dashboard" element={<TeacherDashboardPage />} />
+          <Route path="create-lecture" element={<TeacherCreateLecturePage />} />
           <Route path="courses" element={<TeacherCoursesPage />} />
           <Route path="courses/:id/" element={<TeacherEditCoursePage />} />
           <Route

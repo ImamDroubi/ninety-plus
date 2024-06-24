@@ -7,39 +7,50 @@ import {
 } from "../../icons/icons";
 import StatisticsBlock from "../../other/StatisticsBlock";
 import PaginatedTable from "../../tables/PaginatedTable";
-import { teacherEarningsTableData, teacherEarningsTableHeaders } from "../../data/teacherEarningsTableData";
+import {
+  teacherEarningsTableData,
+  teacherEarningsTableHeaders,
+} from "../../data/teacherEarningsTableData";
+import { CircularProgress } from "@mui/material";
+import { useUserProfile } from "../../../contexts/UserProfileContext";
 export default function TeacherEarningsPage() {
+  const { profileInfo, isLoading } = useUserProfile();
+  if (isLoading || !profileInfo) return <CircularProgress />;
+  console.log(profileInfo);
   return (
     <div className="my-4 w-[90%] m-auto">
       <section className="statistics flex flex-wrap justify-between gap-y-2">
         <StatisticsBlock
           icon={<StackIcon />}
-          number={`$${1200.0}`}
+          number={`$${profileInfo.total_earnings}`}
           description="الرصيد الكلي"
           style="primary"
         />
         <StatisticsBlock
           icon={<WalletIcon />}
-          number={`$${500.0}`}
+          number={`$${profileInfo.balance}`}
           description="الرصيد الحالي"
           style="secondary"
         />
         <StatisticsBlock
           icon={<CreditCardIcon />}
-          number={`$${700.0}`}
+          number={`$${profileInfo.withdraw_balance}`}
           description="الرصيد المستلم"
           style="error"
         />
         <StatisticsBlock
           icon={<CrownIcon />}
-          number={`$${200.0}`}
+          number={`$${profileInfo.today_earnings}`}
           description="أرباح اليوم"
           style="success"
         />
       </section>
       <div className="withdraw-history bg-gray-white p-4 my-3">
         <h5 className="my-2 text-lg">عمليات السحب</h5>
-        <PaginatedTable data={teacherEarningsTableData} headers={teacherEarningsTableHeaders} />
+        <PaginatedTable
+          data={teacherEarningsTableData}
+          headers={teacherEarningsTableHeaders}
+        />
       </div>
     </div>
   );

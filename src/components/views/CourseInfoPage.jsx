@@ -1,119 +1,117 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faArrowRight,
-  faPlay,
-  faComment,
-  faArrowLeft,
-  faChevronLeft,
-  faBars,
+  faStar,
+  faCartShopping,
+  faXmark,
 } from "@fortawesome/free-solid-svg-icons";
-import { Button } from "@mui/material";
+import user from "../../assets/images/user.jpg";
 import Container90 from "../containers/Container90";
-import video from "../../assets/videos/grass.mp4";
-import CourseInfoTabs from "../menus/CourseInfoTabs";
-import WatchCourseMenu from "../menus/WatchCourseMenu";
+import BuyCourse from "../popups/BuyCourse";
 import PopupLayout from "../layouts/PopupLayout";
 import { useState } from "react";
-import WatchMenu from "../popups/watchMenu";
+import CourseInfoTabs from "../menus/CourseInfoTabs";
 import ClosePopupButton from "../buttons/ClosePopupButton";
+import { useNavigate, useParams } from "react-router-dom";
+import { useCourse } from "../../hooks/useCourse";
+import { Button, CircularProgress } from "@mui/material";
+import { useUserInfo } from "../../hooks/useUserInfo";
+import AddRating from "../popups/AddRating";
+import AddComment from "../popups/AddComment";
+
 export default function CourseInfoPage() {
-  const [watchPopupOpen, setWatchPopupOpen] = useState(false);
+  let { id } = useParams();
+  const navigate = useNavigate();
+  const {
+    course,
+    isLoading: courseLoading,
+    isError: courseError,
+  } = useCourse(id);
+
+  const teacherImage = user;
+  const starImage = <FontAwesomeIcon icon={faStar} />;
+  const booksImgae =
+    "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?q=80&w=1973&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
+  const [buyModalOpen, setBuyModalOpen] = useState(0);
+  const [rateCoursePopupOpen, setRateCoursePopupOpen] = useState(false);
+  if (courseLoading ) return <CircularProgress />;
+  if (courseError  ) navigate("/not-found");
+  if (!course ) return <CircularProgress />;
 
   return (
     <>
-      <div className="px-1 py-2 to bg-gray-50 sm:px-0">
-        <Container90>
-          <div className="flex justify-between content">
-            <div className="flex gap-2 right">
-              <button className="flex items-center justify-center w-6 h-6 text-gray-900 rounded-full shadow back shrink-0 bg-gray-white hover:bg-gray-200 focus:bg-gray-200">
-                <FontAwesomeIcon icon={faArrowRight} />
-              </button>
-              <div className="info flex flex-col gap-[0.2rem]">
-                <h2 className="font-bold text-gray-900">
-                  رياضيات التوجيهي العلمي أ.محمد حرزالله
-                </h2>
-                <div className="videos flex items-center gap-[3px]">
-                  <div className="icon text-gray-500 w-[1rem] h-[1rem] text-xs border-gray-500 p-1 justify-center items-center flex border-2 rounded-full">
-                    <FontAwesomeIcon
-                      className="translate-x-[1px]"
-                      icon={faPlay}
+      <div className="absolute hidden lg:block bg-gray-50 top-[7rem] h-[25rem] -z-10 w-full"></div>
+      <Container90>
+        <div className="flex justify-between gap-4 p-1 mt-2 page">
+          <div className="content">
+            <div className="header">
+              <h2 className="mb-2 text-2xl font-bold text-gray-900 title">
+                {course.title}
+              </h2>
+              {/* <p className="mb-2 text-gray-700 description">
+                بثوث مباشرة وحلول أسئلة الكتاب ونماذج سابقة من امتحانات التوجيهي
+              </p> */}
+              <div className="flex justify-between mb-2 info">
+                <div className="flex items-center gap-1 teacher">
+                  <div className="object-cover w-5 h-5 rounded-full img">
+                    <img
+                      src={course.instructor.profile_image}
+                      alt={course.instructor.name}
+                      className="w-full h-full rounded-full"
                     />
                   </div>
-                  <p className="text-xs text-gray-700">
-                    <span>77</span> محاضرة
+                  <p className="text-gray-900 name">
+                    {course.instructor.name}
+                  </p>
+                </div>
+                <div className="flex items-center gap-1 rating">
+                  <Button onClick={() => setRateCoursePopupOpen(true)}>
+                    قيم الدورة
+                  </Button>
+                  <div className="stars text-warning-500">{starImage}</div>
+                  <p className="text-gray-900 number">
+                    {course.rate}{" "}
+                    {/* <span className="text-sm text-gray-600">(3200 طالب)</span> */}
                   </p>
                 </div>
               </div>
             </div>
-            <div className="items-center hidden gap-2 left lg:flex">
-              {/* <Button variant="outlined" disableElevation sx={{borderRadius:0}}>اترك تعليقاً </Button> */}
-              <Button
-                variant="contained"
-                disableElevation
-                sx={{ borderRadius: 0 }}
-              >
-                <div className="flex items-center gap-1">
-                  <p>المحاضرة التالية</p>
-                  <div className="flex items-center icon">
-                    <FontAwesomeIcon icon={faChevronLeft} />
-                  </div>
-                </div>
-              </Button>
+            <div className="object-cover preview">
+              <img src={course.intro_video || course.cover_image} alt="" className="w-full h-full" />
             </div>
-            <div className="flex items-center gap-1 left lg:hidden ">
-              <button
-                onClick={() => setWatchPopupOpen(true)}
-                className="flex items-center justify-center w-6 h-6 text-xl bg-gray-100 rounded-full text-primary-500 hover:bg-gray-200"
-              >
-                <FontAwesomeIcon icon={faBars} />
-              </button>
-              <button className="flex items-center justify-center w-6 h-6 text-xl rounded-full text-gray-white bg-primary-500 hover:bg-primary-700">
-                <FontAwesomeIcon icon={faArrowLeft} />
-              </button>
+            <div className="information">
+              <CourseInfoTabs course={course} instructor={course.instructor} />
             </div>
           </div>
-        </Container90>
-      </div>
-      <Container90>
-        <div className="flex flex-col gap-2 px-2 my-3 text-gray-900 lg:flex-row main sm:px-0">
-          <div className="lg:basis-3/4 content">
-            <div className="video">
-              <video controls src={video} className="max-w-full"></video>
-              <h1 className="my-2 text-2xl font-normal md:font-bold title">
-                1.متوسط التغير
-              </h1>
-              <div className="flex justify-between text-sm info md:text-base">
-                <p className="text-gray-600">
-                  <span className="text-lg font-bold text-gray-900">523 </span>
-                  مشاهد
-                </p>
-                <div className="flex gap-5 statistics">
-                  <p className="text-gray-600 date">
-                    تاريخ التحميل:{" "}
-                    <span className="text-gray-900">Oct/26/2020</span>
-                  </p>
-                  <p className="text-gray-600 comments">
-                    التعليقات: <span className="text-gray-900">154</span>
-                  </p>
-                </div>
+          <div className="sticky hidden w-1/2 shadow-md widget xl:flex bg-gray-white h-fit top-2">
+            <BuyCourse course={course} />
+          </div>
+          <button
+            onClick={() => setBuyModalOpen(!buyModalOpen)}
+            className="w-[4rem] h-[4rem] rounded-full bg-primary-500 text-gray-white fixed bottom-3 left-1 hover:bg-primary-600 duration-100 xl:hidden "
+          >
+            <FontAwesomeIcon icon={faCartShopping} />
+          </button>
+          {buyModalOpen ? (
+            <PopupLayout>
+              <div className="relative z-10 w-10/12 pt-2 bg-gray-white">
+                <ClosePopupButton setOpen={setBuyModalOpen} />
+                <BuyCourse course={course} />
               </div>
-            </div>
-            <hr className="my-2 " />
-            <CourseInfoTabs />
-          </div>
-          <div className="nav h-[60rem] hidden lg:block basis-1/4">
-            <WatchCourseMenu />
-          </div>
+            </PopupLayout>
+          ) : null}
+          {rateCoursePopupOpen ? (
+            <PopupLayout>
+              <div className="relative z-10 w-5/12 pt-2 bg-gray-white">
+                <ClosePopupButton setOpen={setRateCoursePopupOpen} />
+                <AddRating
+                  setOpen={setRateCoursePopupOpen}
+                  courseId={course.id}
+                />
+              </div>
+            </PopupLayout>
+          ) : null}
         </div>
       </Container90>
-      {watchPopupOpen ? (
-        <PopupLayout>
-          <div className="relative z-10 w-10/12 py-6 bg-gray-50">
-            <ClosePopupButton setOpen={setWatchPopupOpen} />
-            <WatchMenu />
-          </div>
-        </PopupLayout>
-      ) : null}
     </>
   );
 }

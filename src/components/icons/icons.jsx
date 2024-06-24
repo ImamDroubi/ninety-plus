@@ -31,7 +31,9 @@ import {
   faCloudArrowUp,
   faVideo,
   faTriangleExclamation,
-  faComment
+  faComment,
+  faCircleDot,
+  faPersonChalkboard,
 } from "@fortawesome/free-solid-svg-icons";
 import { faHeart } from "@fortawesome/free-regular-svg-icons";
 
@@ -147,3 +149,9 @@ export function ChatIcon(props) {
   return <FontAwesomeIcon {...props} icon={faComment} />;
 }
 
+export function LiveStreamIcon(props) {
+  return <FontAwesomeIcon {...props} icon={faCircleDot} />;
+}
+export function LectureIcon(props) {
+  return <FontAwesomeIcon {...props} icon={faPersonChalkboard} />;
+}
