@@ -33,9 +33,9 @@ export default function CourseInfoPage() {
     "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?q=80&w=1973&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
   const [buyModalOpen, setBuyModalOpen] = useState(0);
   const [rateCoursePopupOpen, setRateCoursePopupOpen] = useState(false);
-  if (courseLoading ) return <CircularProgress />;
-  if (courseError  ) navigate("/not-found");
-  if (!course ) return <CircularProgress />;
+  if (courseLoading) return <CircularProgress />;
+  if (courseError) navigate("/not-found");
+  if (!course) return <CircularProgress />;
 
   return (
     <>
@@ -59,9 +59,7 @@ export default function CourseInfoPage() {
                       className="w-full h-full rounded-full"
                     />
                   </div>
-                  <p className="text-gray-900 name">
-                    {course.instructor.name}
-                  </p>
+                  <p className="text-gray-900 name">{course.instructor.name}</p>
                 </div>
                 <div className="flex items-center gap-1 rating">
                   <Button onClick={() => setRateCoursePopupOpen(true)}>
@@ -76,7 +74,11 @@ export default function CourseInfoPage() {
               </div>
             </div>
             <div className="object-cover preview">
-              <img src={course.intro_video || course.cover_image} alt="" className="w-full h-full" />
+              <img
+                src={course.intro_video || course.cover_image || booksImgae}
+                alt=""
+                className="w-full h-full"
+              />
             </div>
             <div className="information">
               <CourseInfoTabs course={course} instructor={course.instructor} />

@@ -1,28 +1,45 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import SingleFormInputContainer from "../../containers/SingleFormInputContainer";
-import { Button } from "@mui/material";
+import { Button, CircularProgress } from "@mui/material";
 import { UploadArrowIcon } from "../../icons/icons";
 import { useCreateCourseContext } from "../../../contexts/CreateCourseContext";
 import DoubleFormInputContainer from "../../containers/DoubleFormInputContainer";
+import { useUploadMedia } from "../../../hooks/useUploadMedia";
 export default function CreateCourseFormAdvanced() {
-  const thumbnailRef = useRef();
-  const introVideoRef = useRef();
-
   const { register, errors, setThumbnailFile, setIntroVideoFile } =
     useCreateCourseContext();
+  const {
+    file: imageFile,
+    fileRef: imageFileRef,
+    uploading: imageUploading,
+    preview: imagePreview,
+    handleFileChange: imageHandeFileChange,
+  } = useUploadMedia();
+  const {
+    file: videoFile,
+    fileRef: videoFileRef,
+    uploading: videoUploading,
+    preview: videoPreview,
+    handleFileChange: videoHandleFileChange,
+  } = useUploadMedia();
+  const handleImageUploadButtonClick = () => {
+    imageFileRef.current.click();
+  };
+  const handleVideoUploadButtonClick = () => {
+    videoFileRef.current.click();
+  };
+
+  useEffect(() => {
+    setThumbnailFile(imageFile);
+  }, [imageFile]);
+  useEffect(() => {
+    setIntroVideoFile(videoFile);
+  }, [videoFile]);
 
   const labelBaseStyle = "mb-2 text-sm block font-semibold";
   const inputBaseStyle =
     "border-[2px] border-gray-100 p-2 w-full focus:border-primary-500 outline-none duration-200";
 
-  const handleThumbChange = () => {
-    const thumbnail = thumbnailRef.current.files[0];
-    setThumbnailFile(thumbnail);
-  };
-  const handleVideChange = () => {
-    const video = introVideoRef.current.files[0];
-    setIntroVideoFile(video);
-  };
   return (
     <>
       <div className="p-2  border-gray-100 mt-4 border-b-[2px]">
@@ -37,7 +54,11 @@ export default function CreateCourseFormAdvanced() {
                 <h4 className="font-semibold text-base mb-2">صورة العرض</h4>
                 <div className="thmbnail flex gap-2">
                   <div className="image w-3/5 aspect-[3/2] object-cover bg-error-400">
-                    <img className="w-full h-full" src="" alt="" />
+                    {imageUploading ? (
+                      <CircularProgress />
+                    ) : (
+                      <img className="w-full h-full" src={imagePreview} />
+                    )}
                   </div>
                   <div className="info flex flex-col justify-between items-start">
                     <p className="text-gray-600">
@@ -47,15 +68,15 @@ export default function CreateCourseFormAdvanced() {
                     <input
                       type="file"
                       accept="image/*"
-                      ref={thumbnailRef}
-                      onChange={handleThumbChange}
+                      ref={imageFileRef}
+                      onChange={imageHandeFileChange}
                       hidden
                     />
                     <Button
                       sx={{ display: "flex", gap: "0.5rem" }}
                       variant="outlined"
                       disableElevation
-                      onClick={() => thumbnailRef.current.click()}
+                      onClick={handleImageUploadButtonClick}
                     >
                       <UploadArrowIcon />
                       تحميل صورة
@@ -70,7 +91,11 @@ export default function CreateCourseFormAdvanced() {
                 <h4 className="font-semibold text-base mb-2">فيديو تعريفي</h4>
                 <div className="video flex gap-2">
                   <div className="video w-3/5 aspect-[3/2] object-cover bg-error-400">
-                    <img className="w-full h-full" src="" alt="" />
+                    {videoUploading ? (
+                      <CircularProgress />
+                    ) : (
+                      <video className="w-full h-full" src={videoPreview} />
+                    )}
                   </div>
                   <div className="info flex flex-col justify-between items-start">
                     <p className="text-gray-600">
@@ -80,15 +105,15 @@ export default function CreateCourseFormAdvanced() {
                     <input
                       type="file"
                       accept="video/*"
-                      ref={introVideoRef}
-                      onChange={handleVideChange}
+                      ref={videoFileRef}
+                      onChange={videoHandleFileChange}
                       hidden
                     />
                     <Button
                       sx={{ display: "flex", gap: "0.5rem" }}
                       variant="outlined"
                       disableElevation
-                      onClick={() => introVideoRef.current.click()}
+                      onClick={handleVideoUploadButtonClick}
                     >
                       <UploadArrowIcon />
                       تحميل فيديو

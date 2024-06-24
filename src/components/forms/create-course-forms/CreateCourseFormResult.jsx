@@ -7,8 +7,7 @@ import { useAuth } from "../../../contexts/AuthContext";
 export default function CreateCourseFormResult({ handleReset }) {
   const { isSubmitting, responseErrors, setResponseErrors } =
     useCreateCourseContext();
-  const { currentUser } = useAuth();
-  const navigate = useNavigate();
+
   return (
     <div className="w-full flex flex-col mt-5 content-center items-center">
       {isSubmitting && <ProgressVariant />}
@@ -24,6 +23,8 @@ export default function CreateCourseFormResult({ handleReset }) {
 }
 
 function SuccessVariant() {
+  const { currentUser } = useAuth();
+  const navigate = useNavigate();
   return (
     <>
       <p>تم إنشاء الدورة بنجاح</p>

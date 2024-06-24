@@ -18,6 +18,7 @@ export default function TeacherCoursesPage() {
   const [courses, setCourses] = useState();
   useEffect(() => {
     if (profileInfo) {
+      console.log(profileInfo);
       setCourses(combineCourses(profileInfo.courses));
     }
   }, [profileInfo]);

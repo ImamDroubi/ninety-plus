@@ -12,8 +12,8 @@ const courseSchema = z.object({
   description: z.string().min(10, { message: "قصير جدا" }),
   starts_at: z.string().date("تاريخ البدء غير صالح"),
   ends_at: z.string().date("تاريخ الانتهاء غير صالح"),
-  welcome_message: z.string(),
-  ending_message: z.string(),
-  price: z.string()
+  welcome_message: z.string().min(1, { message: "الرسالة الترحيبية مطلوبة" }),
+  ending_message: z.string().min(1, { message: "التوصيات مطلوبة" }),
+  price: z.string(),
 });
 export default courseSchema;
