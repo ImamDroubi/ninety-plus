@@ -31,4 +31,14 @@ export const adminPageList = [
     icon: <MoneyIcon />,
     url: "withdraw-section",
   },
+  {
+    text: "قسم إضافة المواد",
+    icon: <StackIcon />,
+    url: "add-course-section",
+  },
+  {
+    text: "قسم الإضافة العامة",
+    icon: <StarIcon />,
+    url: "general-adding-section",
+  },
 ];

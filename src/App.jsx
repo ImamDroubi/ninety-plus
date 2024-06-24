@@ -29,6 +29,8 @@ import StudentsSection from "./components/views/adminPageViews/StudentsSection";
 import CoursesReviewSections from "./components/views/adminPageViews/CoursesReviewSections";
 import CoursesSection from "./components/views/adminPageViews/coursesSection";
 import WithdrawSection from "./components/views/adminPageViews/WithdrawSection";
+import AddCourseSection from "./components/views/adminPageViews/AddCourseSection";
+import GeneralAddingSection from "./components/views/adminPageViews/GeneralAddingSection";
 function App() {
   return (
     <>
@@ -64,10 +66,15 @@ function App() {
           <Route path="students-section" element={<StudentsSection />} />
           <Route path="courses-section" element={<CoursesSection />} />
           <Route
+            path="general-adding-section"
+            element={<GeneralAddingSection />}
+          />
+          <Route
             path="courses-review-section"
             element={<CoursesReviewSections />}
           />
           <Route path="withdraw-section" element={<WithdrawSection />} />
+          <Route path="add-course-section" element={<AddCourseSection />} />
         </Route>
 
         <Route path="/" element={<GuestLayout />}>
