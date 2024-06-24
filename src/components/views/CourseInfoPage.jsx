@@ -27,25 +27,16 @@ export default function CourseInfoPage() {
     isError: courseError,
   } = useCourse(id);
 
-  const {
-    userInfo: instructor,
-    isLoading: instructorLoading,
-    isError: instructorError,
-  } = useUserInfo(
-    course?.instructor?.id,
-    course // this is the enable object for the dependent query
-    // the query to get the instructo deosn't run until the course is present
-  );
   const teacherImage = user;
   const starImage = <FontAwesomeIcon icon={faStar} />;
   const booksImgae =
     "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?q=80&w=1973&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
   const [buyModalOpen, setBuyModalOpen] = useState(0);
   const [rateCoursePopupOpen, setRateCoursePopupOpen] = useState(false);
-  if (courseLoading || instructorLoading) return <CircularProgress />;
-  if (courseError || instructorError) navigate("/not-found");
-  if (!course || !instructor) return <CircularProgress />;
-  console.log(course);
+  if (courseLoading ) return <CircularProgress />;
+  if (courseError  ) navigate("/not-found");
+  if (!course ) return <CircularProgress />;
+
   return (
     <>
       <div className="absolute hidden lg:block bg-gray-50 top-[7rem] h-[25rem] -z-10 w-full"></div>
@@ -63,13 +54,13 @@ export default function CourseInfoPage() {
                 <div className="flex items-center gap-1 teacher">
                   <div className="object-cover w-5 h-5 rounded-full img">
                     <img
-                      src={instructor.profile_image}
-                      alt={instructor.first_name}
+                      src={course.instructor.profile_image}
+                      alt={course.instructor.name}
                       className="w-full h-full rounded-full"
                     />
                   </div>
                   <p className="text-gray-900 name">
-                    {instructor.first_name} {instructor.last_name}
+                    {course.instructor.name}
                   </p>
                 </div>
                 <div className="flex items-center gap-1 rating">
@@ -85,10 +76,10 @@ export default function CourseInfoPage() {
               </div>
             </div>
             <div className="object-cover preview">
-              <img src={booksImgae} alt="" className="w-full h-full" />
+              <img src={course.intro_video || course.cover_image} alt="" className="w-full h-full" />
             </div>
             <div className="information">
-              <CourseInfoTabs course={course} instructor={instructor} />
+              <CourseInfoTabs course={course} instructor={course.instructor} />
             </div>
           </div>
           <div className="sticky hidden w-1/2 shadow-md widget xl:flex bg-gray-white h-fit top-2">

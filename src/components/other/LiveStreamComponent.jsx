@@ -42,7 +42,7 @@ const LivestreamView = () => {
   const participantCount = useParticipantCount();
   const isLive = useIsCallLive();
 
-  const [firstParticipant] = useParticipants();
+  const [firstParticipant] = useParticipants(); // if first participant, then it's host
   return (
     <div
       style={{

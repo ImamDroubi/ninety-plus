@@ -128,7 +128,7 @@ export default function StudentPage() {
             <div className="flex flex-col gap-2 info">
               <h1 className="font-extrabold">{`${currentUser.first_name} ${currentUser.last_name}`}</h1>
               <p className="text-sm text-gray-600">
-                {currentUser.branch || "علمي"}
+                {currentUser.branch?.name || "علمي"}
               </p>
             </div>
           </div>

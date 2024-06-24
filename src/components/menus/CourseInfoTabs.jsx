@@ -32,9 +32,7 @@ function Teacher({ instructor }) {
           />
         </div>
         <p className="text-gray-700">
-          <span className="font-bold text-gray-900">
-            {instructor.first_name} {instructor.last_name}
-          </span>
+          <span className="font-bold text-gray-900">{instructor.name}</span>
           {instructor.about}
         </p>
       </div>
@@ -107,7 +105,7 @@ function StudentsFeedback({ courseId }) {
         <h3 className="mb-3 text-xl font-bold text-gray-900 title">
           تعليقات الطلاب
         </h3>
-        
+
         <Button
           onClick={() => setAddCommentPopupOpen(true)}
           variant="contained"

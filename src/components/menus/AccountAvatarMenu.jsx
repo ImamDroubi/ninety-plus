@@ -35,7 +35,10 @@ export default function AccountAvatarMenu() {
       const res = await logoutController.mutateAsync();
       logout();
       handleClose();
-    } catch (error) {}
+    } catch (error) {
+      logout();
+      handleClose();
+    }
   };
 
   const handleVisitProfile = () => {

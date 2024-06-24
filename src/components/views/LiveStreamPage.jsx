@@ -1,33 +1,20 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faArrowRight,
-  faPlay,
-  faComment,
-  faArrowLeft,
-  faChevronLeft,
-  faBars,
-} from "@fortawesome/free-solid-svg-icons";
-import { Button, CircularProgress } from "@mui/material";
 import Container90 from "../containers/Container90";
-import video from "../../assets/videos/grass.mp4";
-import CourseInfoTabs from "../menus/CourseInfoTabs";
-import WatchCourseMenu from "../menus/WatchCourseMenu";
 import PopupLayout from "../layouts/PopupLayout";
 import { useEffect, useState } from "react";
-import WatchMenu from "../popups/watchMenu";
 import ClosePopupButton from "../buttons/ClosePopupButton";
-import LiveStreamCard from "../cards/LiveStreamCard";
 import { ChatIcon } from "../icons/icons";
 import LiveStreamChat from "../chatComponents/LiveStreamChat";
 import LiveStreamComponent from "../other/LiveStreamComponent";
-import { useLiveStreamAuth } from "../../contexts/LiveStreamAuthContext";
-
+import { useAuth } from "../../contexts/AuthContext";
+import { CircularProgress } from "@mui/material";
 
 export default function LiveStreamPage() {
+  const { currentUser } = useAuth();
   const [currentClient, setCurrentClient] = useState();
   const [watchPopupOpen, setWatchPopupOpen] = useState(false);
   const [isLiveStreamOn, setIsLiveStreamOn] = useState(false);
 
+  if (!currentUser) return <CircularProgress />;
   return (
     <>
       <div className="px-1 py-2 to bg-gray-50 sm:px-0">
@@ -77,7 +64,7 @@ export default function LiveStreamPage() {
             </div>
           </div>
           <div className="nav h-[60rem] hidden lg:block basis-1/4">
-            <LiveStreamChat />
+            {/* <LiveStreamChat /> */}
           </div>
         </div>
       </Container90>

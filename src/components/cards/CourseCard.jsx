@@ -106,7 +106,7 @@ export default function CourseCard({ course = sample, showOptions = false }) {
             {currentCourse.category}
           </p>
           <p className="font-bold price text-primary-500">
-            {currentCourse.price} ₪
+            {currentCourse.price} $
           </p>
         </div>
         <h3

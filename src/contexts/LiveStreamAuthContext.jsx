@@ -15,7 +15,7 @@ export function LiveStreamAuthProvider({ children }) {
   const [client, setClient] = useState();
   const [call, setCall] = useState();
   const createClient = (userId, username, callId) => {
-    if (client) return;
+    if (!!client) return;
     const user = {
       id: userId,
       name: username,

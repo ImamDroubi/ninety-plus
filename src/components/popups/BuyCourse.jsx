@@ -11,6 +11,7 @@ import { useAlert } from "../../hooks/useAlert";
 import TopAlert from "../alerts/TopAlert";
 import useDeleteResource from "../../apiCalls/useDeleteResource";
 import usePurchaseCourse from "../../apiCalls/usePurchaseCourse";
+import { Link } from "react-router-dom";
 export default function BuyCourse({ course }) {
   const { currentUser } = useAuth();
   const addToFavouriteMutation = useCreateResource(
@@ -72,7 +73,7 @@ export default function BuyCourse({ course }) {
       console.log(error);
     }
   };
-  if (!currentUser) return <CircularProgress />;
+  if (!currentUser || !course) return <CircularProgress />;
   return (
     <>
       {alertController.showSuccessAlert && (
@@ -114,14 +115,23 @@ export default function BuyCourse({ course }) {
           })}
         </div>
         <hr className="my-4" />
-        <button
-          onClick={handlePurchaseCourse}
-          disabled={purchaseMutation.isPending}
-          className="w-full py-2 mb-2 text-lg font-semibold duration-200 bg-primary-500 text-gray-white hover:bg-primary-600 disabled:cursor-default disabled:bg-gray-100 disabled:text-gray-500"
-        >
-          {purchaseMutation.isPending ? "جاري المعالجة..." : "اشتر الآن"}
-        </button>
-        {course.is_favorite ? (
+        {course.is_joined || course.instructor.id === currentUser.user_id ? (
+          <Link to={`/courses/${course.id}`}>
+            <button className="w-full py-2 mb-2 text-lg font-semibold duration-200 bg-primary-500 text-gray-white hover:bg-primary-600 disabled:cursor-default disabled:bg-gray-100 disabled:text-gray-500">
+              مشاهدة الحصص
+            </button>
+          </Link>
+        ) : (
+          <button
+            onClick={handlePurchaseCourse}
+            disabled={purchaseMutation.isPending}
+            className="w-full py-2 mb-2 text-lg font-semibold duration-200 bg-primary-500 text-gray-white hover:bg-primary-600 disabled:cursor-default disabled:bg-gray-100 disabled:text-gray-500"
+          >
+            {purchaseMutation.isPending ? "جاري المعالجة..." : "اشتر الآن"}
+          </button>
+        )}
+        {course.instructor.id ===
+        currentUser.user_id ? null : course.is_favorite ? (
           <button
             disabled={removeFromFavouriteMutation.isPending}
             onClick={handleRemoveFromFavourite}
