@@ -1,23 +1,7 @@
-import { useState } from "react";
-import { Bar } from "react-chartjs-2";
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend,
-} from "chart.js";
+import { useEffect, useState } from "react";
+import useGetResources from "../../../apiCalls/useGetResources";
 
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend
-);
+import { CircularProgress } from "@mui/material";
 
 const studentsData = [
   {
@@ -113,7 +97,7 @@ const studentsData = [
 ];
 
 const StudentsSection = () => {
-  const [students, setStudents] = useState(studentsData);
+  const [students, setStudents] = useState([]);
   const [sortConfig, setSortConfig] = useState({
     key: null,
     direction: "ascending",
@@ -146,40 +130,15 @@ const StudentsSection = () => {
   );
 
   const totalPages = Math.ceil(students.length / itemsPerPage);
+  const studentsQuery = useGetResources("users");
+  useEffect(() => {
+    if (studentsQuery.data) {
+      setStudents(studentsQuery.data.data.data);
+      console.log(studentsQuery.data.data.data);
+    }
+  }, [studentsQuery.isSuccess]);
 
-  const chartData = {
-    labels: students.map((student) => student.name),
-    datasets: [
-      {
-        label: "عدد الدورات المسجلة",
-        data: students.map((student) => student.courses),
-        backgroundColor: "rgba(75, 192, 192, 0.6)",
-        borderColor: "rgba(75, 192, 192, 1)",
-        borderWidth: 1,
-      },
-      {
-        label: "المبالغ المدفوعة",
-        data: students.map((student) => student.amountPaid),
-        backgroundColor: "rgba(153, 102, 255, 0.6)",
-        borderColor: "rgba(153, 102, 255, 1)",
-        borderWidth: 1,
-      },
-    ],
-  };
-
-  const chartOptions = {
-    responsive: true,
-    plugins: {
-      legend: {
-        position: "top",
-      },
-      title: {
-        display: true,
-        text: "Students Statistics",
-      },
-    },
-  };
-
+  if (studentsQuery.isLoading) return <CircularProgress />;
   return (
     <div className="container mx-auto px-4" dir="rtl">
       <h1 className="text-2xl font-bold text-center my-6">إحصائيات الطلاب</h1>
@@ -210,9 +169,6 @@ const StudentsSection = () => {
               </button>
             </th>
             <th className="px-4 py-2">
-              <button onClick={() => sortData("rating")}>التقييم</button>
-            </th>
-            <th className="px-4 py-2">
               <button onClick={() => sortData("registrationDate")}>
                 تاريخ التسجيل
               </button>
@@ -221,14 +177,16 @@ const StudentsSection = () => {
         </thead>
         <tbody>
           {paginatedStudents.map((student) => (
-            <tr key={student.id}>
-              <td className="border px-4 py-2">{student.name}</td>
-              <td className="border px-4 py-2">{student.email}</td>
-              <td className="border px-4 py-2">{student.courses}</td>
-              <td className="border px-4 py-2">${student.amountPaid}</td>
-              <td className="border px-4 py-2">{student.rating}</td>
+            <tr key={student.user_id}>
               <td className="border px-4 py-2">
-                {student.registrationDate.toLocaleDateString()}
+                {student.name || student.first_name}
+              </td>
+              <td className="border px-4 py-2">{student.email}</td>
+              <td className="border px-4 py-2">{student.courses || 0}</td>
+              <td className="border px-4 py-2">${student.amountPaid || 0}</td>
+              <td className="border px-4 py-2">
+                {/* {student.createdAt.toLocaleDateString()} */}
+                تاريخ التسجيل
               </td>
             </tr>
           ))}
@@ -253,10 +211,6 @@ const StudentsSection = () => {
         >
           التالي
         </button>
-      </div>
-
-      <div className="my-6">
-        <Bar data={chartData} options={chartOptions} />
       </div>
     </div>
   );

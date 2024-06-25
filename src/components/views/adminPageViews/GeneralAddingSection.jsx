@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import useGetResources from "../../../apiCalls/useGetResources";
+import useCreateResource from "../../../apiCalls/useCreateResource";
 const initialBranches = [
   { id: 1, name: "الفرع العلمي" },
   { id: 2, name: "الفرع الأدبي" },
@@ -18,15 +19,51 @@ const initialCourses = [
 ];
 
 const initialChapters = [
-  { id: 1, name: "الوحدة الاولى", courseId: 1, cityId: 1 },
-  { id: 2, name: "الوحدة الثانية", courseId: 2, cityId: 2 },
+  { id: 1, name: "الوحدة الاولى", moduleId: 1, cityId: 1 },
+  { id: 2, name: "الوحدة الثانية", moduleId: 2, cityId: 2 },
 ];
 
 const GeneralAddingSection = () => {
-  const [branches, setBranches] = useState(initialBranches);
-  const [courses, setCourses] = useState(initialCourses);
-  const [chapters, setChapters] = useState(initialChapters);
-  const [cities, setCities] = useState(initialCities);
+  const [branches, setBranches] = useState([]);
+  const [courses, setCourses] = useState([]);
+  const [modules, setModules] = useState([]);
+  const [chapters, setChapters] = useState([]);
+  const [cities, setCities] = useState([]);
+
+  const branchesQuery = useGetResources("branches");
+  const branchesMutation = useCreateResource("branches");
+  const modulesQuery = useGetResources("modules");
+  const modulesMutation = useCreateResource("modules");
+  const chaptersQuery = useGetResources("chapters");
+  const chaptersMutation = useCreateResource("chapters");
+  const citiesQuery = useGetResources("cities");
+  const citiesMutation = useCreateResource("cities");
+
+  useEffect(() => {
+    if (branchesQuery.data) {
+      console.log("branches : ", branchesQuery.data.data.data);
+      setBranches(branchesQuery.data.data.data);
+    }
+  }, [branchesQuery.isSuccess]);
+  useEffect(() => {
+    if (modulesQuery.data) {
+      console.log("modules : ", modulesQuery.data.data.data);
+      setModules(modulesQuery.data.data.data);
+    }
+  }, [modulesQuery.isSuccess]);
+  useEffect(() => {
+    if (chaptersQuery.data) {
+      console.log("chapters : ", chaptersQuery.data.data.data);
+      setChapters(chaptersQuery.data.data.data);
+    }
+  }, [chaptersQuery.isSuccess]);
+  useEffect(() => {
+    if (citiesQuery.data) {
+      console.log("cities : ", citiesQuery.data.data.data);
+      setCities(citiesQuery.data.data.data);
+    }
+  }, [citiesQuery.isSuccess]);
+
   const [newItem, setNewItem] = useState({
     type: "",
     name: "",
@@ -34,21 +71,30 @@ const GeneralAddingSection = () => {
     relatedId2: null,
   });
 
-  const handleAdd = () => {
+  const handleAdd = async () => {
     const id = Math.max(0, ...getList(newItem.type).map((item) => item.id)) + 1;
     const newEntry = { id, name: newItem.name };
-    if (newItem.type === "courses") {
+    const objectForDb = {};
+    if (newItem.type === "modules") {
       newEntry.branchId = newItem.relatedId1;
-      newEntry.cityId = newItem.relatedId2;
     }
     if (newItem.type === "chapters") {
-      newEntry.courseId = newItem.relatedId1;
+      newEntry.moduleId = newItem.relatedId1;
       newEntry.cityId = newItem.relatedId2;
     }
-
+    const currentMutation = getMutation(newItem.type);
     setList(newItem.type, [...getList(newItem.type), newEntry]);
     setNewItem({ type: "", name: "", relatedId1: null, relatedId2: null });
-    toast.success(`تم إضافة ${newItem.type} بنجاح.`);
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+      const response = await currentMutation.mutateAsync(...objectForDb);
+      console.log(response);
+      toast.success("تمت الإضافة بنجاح!");
+    } catch (error) {
+      console.log(error);
+      toast.error(`حدث خطأ ما!`);
+      setList(newItem.type, getList(newItem.type).slice(0, -1));
+    }
   };
 
   const handleDelete = (type, id) => {
@@ -63,8 +109,8 @@ const GeneralAddingSection = () => {
     switch (type) {
       case "branches":
         return branches;
-      case "courses":
-        return courses;
+      case "modules":
+        return modules;
       case "chapters":
         return chapters;
       case "cities":
@@ -79,8 +125,8 @@ const GeneralAddingSection = () => {
       case "branches":
         setBranches(list);
         break;
-      case "courses":
-        setCourses(list);
+      case "modules":
+        setModules(list);
         break;
       case "chapters":
         setChapters(list);
@@ -97,7 +143,7 @@ const GeneralAddingSection = () => {
     let branchName = "";
     if (type == "branches") {
       branchName = "الفروع";
-    } else if (type == "courses") {
+    } else if (type == "modules") {
       branchName = "المواد";
     } else if (type == "chapters") {
       branchName = "الوحدة";
@@ -154,6 +200,21 @@ const GeneralAddingSection = () => {
     );
   };
 
+  const getMutation = (type) => {
+    switch (type) {
+      case "branches":
+        return branchesMutation;
+      case "modules":
+        return modulesMutation;
+      case "chapters":
+        return chaptersMutation;
+      case "cities":
+        return citiesMutation;
+      default:
+        return new Error();
+    }
+  };
+
   return (
     <div className="container mx-auto px-4" dir="rtl">
       <h1 className="text-2xl font-bold text-center my-6">
@@ -161,13 +222,13 @@ const GeneralAddingSection = () => {
       </h1>
 
       {renderTable("branches")}
-      {renderTable("courses", [
+      {renderTable("modules", [
         { type: "branches", field: "branchId", label: "الفرع" },
         { type: "cities", field: "cityId", label: "المدينة" },
       ])}
       {renderTable("chapters", [
-        { type: "courses", field: "courseId", label: "الدورة" },
-        { type: "cities", field: "cityId", label: "المدينة" },
+        { type: "modules", field: "moduleId", label: "المادة" },
+        // { type: "cities", field: "cityId", label: "المدينة" },
       ])}
       {renderTable("cities")}
 
@@ -181,7 +242,7 @@ const GeneralAddingSection = () => {
             placeholder="اسم العنصر"
             className="border rounded px-2 py-1 mx-2 mb-2"
           />
-          {newItem.type === "courses" && (
+          {newItem.type === "modules" && (
             <>
               <select
                 value={newItem.relatedId1}
@@ -197,20 +258,6 @@ const GeneralAddingSection = () => {
                   </option>
                 ))}
               </select>
-              <select
-                value={newItem.relatedId2}
-                onChange={(e) =>
-                  setNewItem({ ...newItem, relatedId2: Number(e.target.value) })
-                }
-                className="border rounded px-2 py-1 mx-2 mb-2"
-              >
-                <option value="">اختر المدينة</option>
-                {cities.map((city) => (
-                  <option key={city.id} value={city.id}>
-                    {city.name}
-                  </option>
-                ))}
-              </select>
             </>
           )}
           {newItem.type === "chapters" && (
@@ -222,24 +269,10 @@ const GeneralAddingSection = () => {
                 }
                 className="border rounded px-2 py-1 mx-2 mb-2"
               >
-                <option value="">اختر الدورة</option>
-                {courses.map((course) => (
-                  <option key={course.id} value={course.id}>
-                    {course.name}
-                  </option>
-                ))}
-              </select>
-              <select
-                value={newItem.relatedId2}
-                onChange={(e) =>
-                  setNewItem({ ...newItem, relatedId2: Number(e.target.value) })
-                }
-                className="border rounded px-2 py-1 mx-2 mb-2"
-              >
-                <option value="">اختر المدينة</option>
-                {cities.map((city) => (
-                  <option key={city.id} value={city.id}>
-                    {city.name}
+                <option value="">اختر المادة</option>
+                {modules.map((module) => (
+                  <option key={module.id} value={module.id}>
+                    {module.name}
                   </option>
                 ))}
               </select>
@@ -252,7 +285,7 @@ const GeneralAddingSection = () => {
           >
             <option value="">اختر النوع</option>
             <option value="branches">فرع</option>
-            <option value="courses">دورة</option>
+            <option value="modules">مادة</option>
             <option value="chapters">فصل</option>
             <option value="cities">مدينة</option>
           </select>

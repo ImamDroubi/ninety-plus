@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Bar } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -9,6 +9,8 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+import useGetResources from "../../../apiCalls/useGetResources";
+import { CircularProgress } from "@mui/material";
 
 ChartJS.register(
   CategoryScale,
@@ -113,7 +115,7 @@ const coursesData = [
 ];
 
 const CoursesSection = () => {
-  const [courses, setCourses] = useState(coursesData);
+  const [courses, setCourses] = useState([]);
   const [sortConfig, setSortConfig] = useState({
     key: null,
     direction: "ascending",
@@ -147,38 +149,15 @@ const CoursesSection = () => {
 
   const totalPages = Math.ceil(courses.length / itemsPerPage);
 
-  const chartData = {
-    labels: courses.map((course) => `${course.teacher} (${course.name})`),
-    datasets: [
-      {
-        label: "عدد الأعضاء",
-        data: courses.map((course) => course.members),
-        backgroundColor: "rgba(75, 192, 192, 0.6)",
-        borderColor: "rgba(75, 192, 192, 1)",
-        borderWidth: 1,
-      },
-      {
-        label: "تكلفة الدورة",
-        data: courses.map((course) => course.cost),
-        backgroundColor: "rgba(153, 102, 255, 0.6)",
-        borderColor: "rgba(153, 102, 255, 1)",
-        borderWidth: 1,
-      },
-    ],
-  };
+  const coursesQuery = useGetResources("modules/1/courses");
+  useEffect(() => {
+    if (coursesQuery.data) {
+      setCourses(coursesQuery.data.data.data);
+      console.log(coursesQuery.data.data.data);
+    }
+  }, [coursesQuery.isSuccess]);
 
-  const chartOptions = {
-    responsive: true,
-    plugins: {
-      legend: {
-        position: "top",
-      },
-      title: {
-        display: true,
-        text: "Courses Statistics",
-      },
-    },
-  };
+  if (coursesQuery.isLoading) return <CircularProgress />;
 
   return (
     <div className="container mx-auto px-4" dir="rtl">
@@ -216,11 +195,11 @@ const CoursesSection = () => {
         <tbody>
           {paginatedCourses.map((course) => (
             <tr key={course.id}>
-              <td className="border px-4 py-2">{course.name}</td>
-              <td className="border px-4 py-2">{course.members}</td>
-              <td className="border px-4 py-2">{course.teacher}</td>
-              <td className="border px-4 py-2">${course.cost}</td>
-              <td className="border px-4 py-2">{course.rating}</td>
+              <td className="border px-4 py-2">{course.title}</td>
+              <td className="border px-4 py-2">{course.students_count}</td>
+              <td className="border px-4 py-2">{course.instructor?.name}</td>
+              <td className="border px-4 py-2">${course.price}</td>
+              <td className="border px-4 py-2">{course.rate}</td>
               <td className="border px-4 py-2">{course.status}</td>
             </tr>
           ))}
@@ -245,10 +224,6 @@ const CoursesSection = () => {
         >
           التالي
         </button>
-      </div>
-
-      <div className="my-6">
-        <Bar data={chartData} options={chartOptions} />
       </div>
     </div>
   );

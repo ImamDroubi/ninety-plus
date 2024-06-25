@@ -24,11 +24,11 @@ import TeacherEditCoursePage from "./components/views/teacherPageViews/TeacherEd
 import GuestLayout from "./components/layouts/GuestLayout";
 import NotVerifiedLayout from "./components/layouts/NotVerifiedLayout";
 
-import AdminDashboard from "./components/layouts/AdminDashboard";
+import AdminDashboardLayout from "./components/layouts/AdminDashboardLayout";
 import TeachersSection from "./components/views/adminPageViews/TeachersSection";
 import StudentsSection from "./components/views/adminPageViews/StudentsSection";
 import CoursesReviewSections from "./components/views/adminPageViews/CoursesReviewSections";
-import CoursesSection from "./components/views/adminPageViews/coursesSection";
+import CoursesSection from "./components/views/adminPageViews/CoursesSection";
 import WithdrawSection from "./components/views/adminPageViews/WithdrawSection";
 import AddCourseSection from "./components/views/adminPageViews/AddCourseSection";
 import GeneralAddingSection from "./components/views/adminPageViews/GeneralAddingSection";
@@ -68,7 +68,7 @@ function App() {
           <Route path="settings" element={<TeacherSettingsPage />} />
         </Route>
 
-        <Route path="/admin/" element={<AdminDashboard />}>
+        <Route path="/admin/" element={<AdminDashboardLayout />}>
           <Route path="teachers-section" element={<TeachersSection />} />
           <Route path="students-section" element={<StudentsSection />} />
           <Route path="courses-section" element={<CoursesSection />} />
@@ -76,12 +76,12 @@ function App() {
             path="general-adding-section"
             element={<GeneralAddingSection />}
           />
-          <Route
+          {/* <Route
             path="courses-review-section"
             element={<CoursesReviewSections />}
-          />
+          /> */}
           <Route path="withdraw-section" element={<WithdrawSection />} />
-          <Route path="add-course-section" element={<AddCourseSection />} />
+          {/* <Route path="add-course-section" element={<AddCourseSection />} /> */}
         </Route>
 
         <Route path="/" element={<GuestLayout />}>
