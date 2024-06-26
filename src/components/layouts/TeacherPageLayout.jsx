@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 
@@ -11,7 +10,7 @@ import { useAuth } from "../../contexts/AuthContext";
 import { CircularProgress } from "@mui/material";
 import { UserProfileProvider } from "../../contexts/UserProfileContext";
 export default function TeacherPageLayout() {
-  const { currentUser } = useAuth();
+  const { currentUser, fetchingUser } = useAuth();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const toggleOpenSidebar = () => {
     setSidebarOpen(!sidebarOpen);
@@ -24,7 +23,7 @@ export default function TeacherPageLayout() {
       }
     }
   }, [currentUser]);
-  if (!currentUser) return <CircularProgress />;
+  if (fetchingUser) return <CircularProgress />;
   return (
     <>
       <div className="flex">

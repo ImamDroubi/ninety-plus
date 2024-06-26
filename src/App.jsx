@@ -25,16 +25,18 @@ import GuestLayout from "./components/layouts/GuestLayout";
 import NotVerifiedLayout from "./components/layouts/NotVerifiedLayout";
 
 import AdminDashboardLayout from "./components/layouts/AdminDashboardLayout";
-import TeachersSection from "./components/views/adminPageViews/TeachersSection";
-import StudentsSection from "./components/views/adminPageViews/StudentsSection";
-import CoursesReviewSections from "./components/views/adminPageViews/CoursesReviewSections";
-import CoursesSection from "./components/views/adminPageViews/CoursesSection";
-import WithdrawSection from "./components/views/adminPageViews/WithdrawSection";
-import AddCourseSection from "./components/views/adminPageViews/AddCourseSection";
-import GeneralAddingSection from "./components/views/adminPageViews/GeneralAddingSection";
+import AdminTeachersSection from "./components/views/adminPageViews/AdminTeachersSection";
+import AdminStudentsSection from "./components/views/adminPageViews/AdminStudentsSection";
+import AdminCoursesReviewSections from "./components/views/adminPageViews/AdminCoursesReviewSections";
+import AdminCoursesSection from "./components/views/adminPageViews/AdminCoursesSection";
+import AdminWithdrawSection from "./components/views/adminPageViews/AdminWithdrawSection";
+import AdminAddCourseSection from "./components/views/adminPageViews/AdminAddCourseSection";
+import AdminGeneralAddingSection from "./components/views/adminPageViews/AdminGeneralAddingSection";
 
 import LiveStreamPage from "./components/views/LiveStreamPage";
 import TeacherCreateLecturePage from "./components/views/teacherPageViews/TeacherCreateLecturePage";
+import ProtectedRoute from "./components/other/ProtectedRoute";
+import AdminBranchesSection from "./components/views/adminPageViews/AdminBranchesSection";
 
 function App() {
   return (
@@ -48,9 +50,24 @@ function App() {
           <Route path="courses" element={<CoursesPage />} />
           <Route path="courses/:id" element={<CoursePage />} />
           <Route path="courses/:id/live" element={<LiveStreamPage />} />
-          <Route path="student/:id" element={<StudentPage />} />
+          <Route
+            path="student/:id"
+            element={
+              <ProtectedRoute>
+                <StudentPage />
+              </ProtectedRoute>
+            }
+          />
         </Route>
-        <Route path="/teacher/:id/" element={<TeacherPageLayout />}>
+
+        <Route
+          path="/teacher/:id/"
+          element={
+            <ProtectedRoute>
+              <TeacherPageLayout />
+            </ProtectedRoute>
+          }
+        >
           <Route path="dashboard" element={<TeacherDashboardPage />} />
           <Route path="create-lecture" element={<TeacherCreateLecturePage />} />
           <Route path="courses" element={<TeacherCoursesPage />} />
@@ -68,20 +85,29 @@ function App() {
           <Route path="settings" element={<TeacherSettingsPage />} />
         </Route>
 
-        <Route path="/admin/" element={<AdminDashboardLayout />}>
-          <Route path="teachers-section" element={<TeachersSection />} />
-          <Route path="students-section" element={<StudentsSection />} />
-          <Route path="courses-section" element={<CoursesSection />} />
+        <Route
+          path="/admin/"
+          element={
+            <ProtectedRoute>
+              <AdminDashboardLayout />
+            </ProtectedRoute>
+          }
+        >
+          <Route path="teachers-section" element={<AdminTeachersSection />} />
+          <Route path="students-section" element={<AdminStudentsSection />} />
+          <Route path="courses-section" element={<AdminCoursesSection />} />
+          <Route path="withdraw-section" element={<AdminWithdrawSection />} />
           <Route
             path="general-adding-section"
-            element={<GeneralAddingSection />}
+            element={<AdminGeneralAddingSection />}
           />
+          <Route path="branches-section" element={<AdminBranchesSection />} />
+
           {/* <Route
             path="courses-review-section"
-            element={<CoursesReviewSections />}
+            element={<AdminCoursesReviewSections />}
           /> */}
-          <Route path="withdraw-section" element={<WithdrawSection />} />
-          {/* <Route path="add-course-section" element={<AddCourseSection />} /> */}
+          {/* <Route path="add-course-section" element={<AdminAddCourseSection />} /> */}
         </Route>
 
         <Route path="/" element={<GuestLayout />}>

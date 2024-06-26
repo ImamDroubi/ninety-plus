@@ -6,16 +6,18 @@ export default function DeleteObjectPopup({
   callback = async () => {},
   setOpen,
   objectId = -1,
-  title = "تأكيد حذف العنصر"
+  title = "تأكيد حذف العنصر",
 }) {
   const [error, setError] = useState("");
-
+  const [isDeleting, setIsDeleting] = useState(false);
   const handleSubmit = async () => {
     try {
+      setIsDeleting(true);
       await callback(objectId);
       setOpen(false);
     } catch (error) {
-      setError(error.message)
+      setError(error.message);
+      setIsDeleting(false);
     }
   };
 
@@ -24,7 +26,9 @@ export default function DeleteObjectPopup({
       <div className="text-5xl text-error-400">
         <WarningIcon />
       </div>
-      <h3 className="font-semibold text-2xl text-gray-900 mt-3 mb-1">{title}</h3>
+      <h3 className="font-semibold text-2xl text-gray-900 mt-3 mb-1">
+        {title}
+      </h3>
       <p className="text-gray-500 text-center w-9/12 mb-4">
         هل أنت متأكد من عملية الحذف؟ لا يمكنك التراجع عن هذا الإجراء لاحقاً
       </p>
@@ -44,8 +48,9 @@ export default function DeleteObjectPopup({
           disableElevation
           sx={{ borderRadius: "0px" }}
           onClick={handleSubmit}
+          disabled={isDeleting}
         >
-          تأكيد
+          {isDeleting ? "جاري الحذف..." : "تأكيد"}
         </Button>
       </div>
     </div>

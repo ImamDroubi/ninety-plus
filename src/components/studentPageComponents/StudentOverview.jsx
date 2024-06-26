@@ -27,7 +27,8 @@ export default function StudentOverview() {
     completed: <FontAwesomeIcon icon={faTrophy} />,
     draft: <FontAwesomeIcon icon={faClock} />,
   };
-  if (isLoading || !profileInfo || !courses) return <CircularProgress />;
+  if (isLoading) return <CircularProgress />;
+  if (!profileInfo || !courses) return;
   return (
     <>
       <section className="mb-4">

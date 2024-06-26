@@ -3,6 +3,10 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import useGetResources from "../../../apiCalls/useGetResources";
 import useCreateResource from "../../../apiCalls/useCreateResource";
+import PopupLayout from "../../layouts/PopupLayout";
+import ClosePopupButton from "../../buttons/ClosePopupButton";
+import SingleFormInputContainer from "../../containers/SingleFormInputContainer";
+import { Button } from "@mui/material";
 const initialBranches = [
   { id: 1, name: "الفرع العلمي" },
   { id: 2, name: "الفرع الأدبي" },
@@ -14,8 +18,8 @@ const initialCities = [
 ];
 
 const initialCourses = [
-  { id: 1, name: "رياضيات", branchId: 1, cityId: 1 },
-  { id: 2, name: "فيزياء", branchId: 2, cityId: 2 },
+  { id: 1, name: "رياضيات", branchId: 1 },
+  { id: 2, name: "فيزياء", branchId: 2 },
 ];
 
 const initialChapters = [
@@ -24,11 +28,16 @@ const initialChapters = [
 ];
 
 const GeneralAddingSection = () => {
-  const [branches, setBranches] = useState([]);
-  const [courses, setCourses] = useState([]);
-  const [modules, setModules] = useState([]);
-  const [chapters, setChapters] = useState([]);
-  const [cities, setCities] = useState([]);
+  const [branches, setBranches] = useState(initialBranches);
+  const [modules, setModules] = useState(initialCourses);
+  const [chapters, setChapters] = useState(initialChapters);
+  const [cities, setCities] = useState(initialCities);
+
+  const [updatePopupOpen, setUpdatePopupOpen] = useState(false);
+  const [objectData, setObjectData] = useState({
+    object: null,
+    type: null,
+  });
 
   const branchesQuery = useGetResources("branches");
   const branchesMutation = useCreateResource("branches");
@@ -80,7 +89,6 @@ const GeneralAddingSection = () => {
     }
     if (newItem.type === "chapters") {
       newEntry.moduleId = newItem.relatedId1;
-      newEntry.cityId = newItem.relatedId2;
     }
     const currentMutation = getMutation(newItem.type);
     setList(newItem.type, [...getList(newItem.type), newEntry]);
@@ -103,6 +111,16 @@ const GeneralAddingSection = () => {
       getList(type).filter((item) => item.id !== id)
     );
     toast.error(`تم حذف ${type} بنجاح.`);
+  };
+
+  const handleEditClick = (type, object) => {
+    setObjectData({ object: object, type: type });
+    setUpdatePopupOpen(true);
+  };
+  const handleUpdate = (objectData) => {
+    // object data {object : {id , name} , type }
+    const message = `العنصر صاحب الرقم ${objectData.object.id}، والاسم ${objectData.object.name}، والنوع ${objectData.type}`;
+    toast.success(message);
   };
 
   const getList = (type) => {
@@ -186,6 +204,12 @@ const GeneralAddingSection = () => {
                   ))}
                 <td className="border px-4 py-2">
                   <button
+                    onClick={() => handleEditClick(type, item)}
+                    className="text-success-500 font-bold py-2 px-4 rounded"
+                  >
+                    تعديل
+                  </button>
+                  <button
                     onClick={() => handleDelete(type, item.id)}
                     className="text-error-500 font-bold py-2 px-4 rounded"
                   >
@@ -224,7 +248,7 @@ const GeneralAddingSection = () => {
       {renderTable("branches")}
       {renderTable("modules", [
         { type: "branches", field: "branchId", label: "الفرع" },
-        { type: "cities", field: "cityId", label: "المدينة" },
+        // { type: "cities", field: "cityId", label: "المدينة" },
       ])}
       {renderTable("chapters", [
         { type: "modules", field: "moduleId", label: "المادة" },
@@ -299,8 +323,79 @@ const GeneralAddingSection = () => {
       </div>
 
       <ToastContainer />
+      {updatePopupOpen ? (
+        <UpdateItemPopup
+          setOpen={setUpdatePopupOpen}
+          callback={handleUpdate}
+          objectData={objectData}
+        />
+      ) : null}
     </div>
   );
 };
 
 export default GeneralAddingSection;
+
+const UpdateItemPopup = ({ setOpen, callback, objectData }) => {
+  return (
+    <PopupLayout>
+      <div className="relative p-3 z-10 w-4/12 pt-4 bg-gray-white">
+        <ClosePopupButton setOpen={setOpen} />
+        <div>
+          <UpdateItemForm
+            objectData={objectData}
+            setOpen={setOpen}
+            callback={callback}
+          />
+        </div>
+      </div>
+    </PopupLayout>
+  );
+};
+
+const UpdateItemForm = ({ objectData, callback, setOpen }) => {
+  const [name, setName] = useState(objectData?.object?.name || "");
+  const [error, setError] = useState();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!name || name == "") {
+      setError("لا يمكن أن يكون الاسم  فارغاً");
+      return;
+    }
+    callback(objectData);
+    setOpen(false);
+  };
+
+  const labelBaseStyle = "mb-2 text-base block font-semibold";
+  const inputBaseStyle =
+    "border-[2px] border-gray-100 p-2 w-full focus:border-primary-500 outline-none duration-200";
+  return (
+    <form
+      className="flex flex-col gap-2"
+      onInput={() => {
+        setError(null);
+      }}
+      onSubmit={handleSubmit}
+    >
+      <SingleFormInputContainer error={error}>
+        <label className={`${labelBaseStyle}`}>الاسم</label>
+        <input
+          className={`${inputBaseStyle}`}
+          type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+      </SingleFormInputContainer>
+
+      <Button
+        variant="contained"
+        disableElevation
+        sx={{ borderRadius: "0px" }}
+        type="submit"
+      >
+        تعديل
+      </Button>
+    </form>
+  );
+};

@@ -82,7 +82,7 @@ export default function StudentPage() {
     completedCourses: 3,
     coursesInstructors: 3,
   };
-  const { currentUser } = useAuth();
+  const { currentUser, fetchingUser } = useAuth();
   // ============ This is to put the current page in the parameters  =======================
   const [searchParams, setSearchParams] = useSearchParams();
   const handleTabChange = (index) => {
@@ -111,7 +111,7 @@ export default function StudentPage() {
       }
     }
   }, [currentUser]);
-  if (!currentUser) return <CircularProgress />;
+  if (fetchingUser) return <CircularProgress />;
   return (
     <div className="relative lg:pt-[7rem]">
       <div className="background absolute hidden -z-10 w-full top-[0rem] h-[15rem] bg-primary-100  lg:block"></div>

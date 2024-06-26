@@ -10,12 +10,21 @@ const cookies = new Cookies(null, { path: "/" });
 
 export function AuthProvider({ children }) {
   const localStorage = useLocalStorage();
-  const [currentUser, setCurrentUser] = useState(localStorage.getItem("current_user"));
+  const [currentUser, setCurrentUser] = useState(null);
   const [accessToken, setAccessToken] = useState(cookies.get("access_token"));
+  const [fetchingUser, setFetchingUser] = useState(true);
 
   useEffect(() => {
     cookies.set("access_token", accessToken);
   }, [accessToken]);
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem("current_user");
+    if (storedUser) {
+      setCurrentUser(storedUser);
+    }
+    setFetchingUser(false);
+  }, []);
 
   function login(user) {
     setCurrentUser(user);
@@ -30,6 +39,7 @@ export function AuthProvider({ children }) {
 
   const value = {
     currentUser,
+    fetchingUser,
     login,
     logout,
     setAccessToken,

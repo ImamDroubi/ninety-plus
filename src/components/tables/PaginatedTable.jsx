@@ -129,7 +129,11 @@ export default function PaginatedTable({
           <TableRow>
             {headers?.map((header, key) => {
               return (
-                <TableCell key={key} align="right">
+                <TableCell
+                  style={{ backgroundColor: "#FF6636", color: "#ffffff" }}
+                  key={key}
+                  align="right"
+                >
                   {header}
                 </TableCell>
               );
