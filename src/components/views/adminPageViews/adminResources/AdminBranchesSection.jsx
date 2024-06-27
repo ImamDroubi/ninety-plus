@@ -1,16 +1,16 @@
-import useCreateResource from "../../../apiCalls/useCreateResource";
-import useGetResources from "../../../apiCalls/useGetResources";
-import useUpdateResource from "../../../apiCalls/useUpdateResource";
-import useDeleteResource from "../../../apiCalls/useDeleteResource";
-import { useAlert } from "../../../hooks/useAlert";
+import useCreateResource from "../../../../apiCalls/useCreateResource";
+import useGetResources from "../../../../apiCalls/useGetResources";
+import useUpdateResource from "../../../../apiCalls/useUpdateResource";
+import useDeleteResource from "../../../../apiCalls/useDeleteResource";
+import { useAlert } from "../../../../hooks/useAlert";
 import { useEffect, useState } from "react";
-import PaginatedTable from "../../tables/PaginatedTable";
+import PaginatedTable from "../../../tables/PaginatedTable";
 import { Button, CircularProgress } from "@mui/material";
-import TopAlert from "../../alerts/TopAlert";
-import PopupLayout from "../../layouts/PopupLayout";
-import ClosePopupButton from "../../buttons/ClosePopupButton";
-import TextInputPopup from "../../popups/TextInputPopup";
-import DeleteObjectPopup from "../../popups/DeleteObjectPopup";
+import TopAlert from "../../../alerts/TopAlert";
+import PopupLayout from "../../../layouts/PopupLayout";
+import ClosePopupButton from "../../../buttons/ClosePopupButton";
+import TextInputPopup from "../../../popups/TextInputPopup";
+import DeleteObjectPopup from "../../../popups/DeleteObjectPopup";
 
 const initialBranches = [
   { id: 1, name: "الفرع العلمي" },

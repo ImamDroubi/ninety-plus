@@ -36,9 +36,29 @@ export const adminPageList = [
   //   icon: <StackIcon />,
   //   url: "add-course-section",
   // },
+  // {
+  //   text: "قسم الإضافة العامة",
+  //   icon: <StarIcon />,
+  //   url: "general-adding-section",
+  // },
   {
-    text: "قسم الإضافة العامة",
-    icon: <StarIcon />,
-    url: "general-adding-section",
+    text: "قسم المدن",
+    icon: <StackIcon />,
+    url: "cities-section",
+  },
+  {
+    text: "قسم الفروع",
+    icon: <StackIcon />,
+    url: "branches-section",
+  },
+  {
+    text: "قسم المواد",
+    icon: <StackIcon />,
+    url: "modules-section",
+  },
+  {
+    text: "قسم الوحدات",
+    icon: <StackIcon />,
+    url: "chapters-section",
   },
 ];

@@ -36,7 +36,10 @@ import AdminGeneralAddingSection from "./components/views/adminPageViews/AdminGe
 import LiveStreamPage from "./components/views/LiveStreamPage";
 import TeacherCreateLecturePage from "./components/views/teacherPageViews/TeacherCreateLecturePage";
 import ProtectedRoute from "./components/other/ProtectedRoute";
-import AdminBranchesSection from "./components/views/adminPageViews/AdminBranchesSection";
+import AdminBranchesSection from "./components/views/adminPageViews/adminResources/AdminBranchesSection";
+import AdminCitiesSection from "./components/views/adminPageViews/adminResources/AdminCitiesSection";
+import AdminModulesSection from "./components/views/adminPageViews/adminResources/AdminModulesSection";
+import AdminChaptersSection from "./components/views/adminPageViews/adminResources/AdminChaptersSection";
 
 function App() {
   return (
@@ -97,11 +100,14 @@ function App() {
           <Route path="students-section" element={<AdminStudentsSection />} />
           <Route path="courses-section" element={<AdminCoursesSection />} />
           <Route path="withdraw-section" element={<AdminWithdrawSection />} />
-          <Route
+          {/* <Route
             path="general-adding-section"
             element={<AdminGeneralAddingSection />}
-          />
+          /> */}
           <Route path="branches-section" element={<AdminBranchesSection />} />
+          <Route path="cities-section" element={<AdminCitiesSection />} />
+          <Route path="modules-section" element={<AdminModulesSection />} />
+          <Route path="chapters-section" element={<AdminChaptersSection />} />
 
           {/* <Route
             path="courses-review-section"
