@@ -113,7 +113,7 @@ export function SelectedListItem({ chapter, setSearchParams }) {
   return (
     <Box sx={{ width: "100%", bgcolor: "background.paper" }}>
       <List component="nav" sx={{ padding: "0" }}>
-        {chapter.lessons.map((lesson, ind) => {
+        {chapter.lectures.map((lecture, ind) => {
           return (
             <ListItemButton
               selected={selectedIndex === ind}
@@ -122,7 +122,7 @@ export function SelectedListItem({ chapter, setSearchParams }) {
             >
               <ListItemText
                 sx={{ textAlign: "right", "& span": { fontSize: "0.9rem" } }}
-                primary={lesson.title}
+                primary={lecture.title}
               />
             </ListItemButton>
           );
@@ -132,7 +132,7 @@ export function SelectedListItem({ chapter, setSearchParams }) {
   );
 }
 
-export function CustomizedAccordions({ chapters = [], setSearchParams }) {
+export function CustomizedAccordions({ list = [], setSearchParams }) {
   const [expanded, setExpanded] = React.useState();
 
   const handleChange = (panel) => (event, newExpanded) => {
@@ -141,7 +141,7 @@ export function CustomizedAccordions({ chapters = [], setSearchParams }) {
 
   return (
     <div>
-      {chapters.map((chapter, key) => {
+      {list.map((chapter, key) => {
         return (
           <Accordion
             key={key}
@@ -157,7 +157,7 @@ export function CustomizedAccordions({ chapters = [], setSearchParams }) {
               aria-controls={`${chapter.id}-content`}
               id={`${chapter.id}-header`}
             >
-              <Typography>{chapter.name}</Typography>
+              <Typography>{chapter.title}</Typography>
             </AccordionSummary>
             <AccordionDetails sx={{ padding: "0" }}>
               <SelectedListItem

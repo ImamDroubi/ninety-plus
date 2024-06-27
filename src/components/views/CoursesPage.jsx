@@ -9,22 +9,27 @@ import BasicPagination from "../other/BasicPagination";
 import useGetResources from "../../apiCalls/useGetResources";
 import { usePermissions } from "../../hooks/usePermissions";
 import { CircularProgress } from "@mui/material";
-const NUMBER_OF_COURSES_IN_THE_PAGE = 7;
+const NUMBER_OF_COURSES_IN_THE_PAGE = 10;
 const NUMBER_OF_DATA = 12;
 
 export default function CoursesPage() {
   const searchRef = useRef();
   const [currentStream, setCurrentStream] = useState();
-  const { data, isLoading } = useGetResources("modules/1/courses");
+  const { data, isLoading } = useGetResources("courses");
   const [coursesList, setCoursesList] = useState([]);
 
   useEffect(() => {
     if (data) {
       setCoursesList(data.data.data);
+      setPagination({
+        count: data.data.data.length,
+        from: 0,
+        to: NUMBER_OF_COURSES_IN_THE_PAGE,
+      });
     }
   }, [data]);
   const [pagination, setPagination] = useState({
-    count: NUMBER_OF_DATA,
+    count: 10,
     from: 0,
     to: NUMBER_OF_COURSES_IN_THE_PAGE,
   });

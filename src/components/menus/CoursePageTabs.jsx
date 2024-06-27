@@ -132,7 +132,7 @@ export default function CourseInfoTabs() {
   return (
     <SlidingTabs showTabs={true}>
       <Description label="الوصف" />
-      <AttachedFiles label="الملفات المرفقة" />
+      {/* <AttachedFiles label="الملفات المرفقة" /> */}
       <StudentsFeedback label="تعليقات الطلاب" />
     </SlidingTabs>
   );

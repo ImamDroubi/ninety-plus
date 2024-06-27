@@ -36,6 +36,7 @@ export default function CoursePage() {
     }
   }, []);
   if (!course || courseLoading) return <CircularProgress />;
+
   return (
     <>
       <div className="px-1 py-2 to bg-gray-50 sm:px-0">

@@ -36,7 +36,7 @@ export default function CourseInfoPage() {
   if (courseLoading) return <CircularProgress />;
   if (courseError) navigate("/not-found");
   if (!course) return <CircularProgress />;
-
+  console.log(course);
   return (
     <>
       <div className="absolute hidden lg:block bg-gray-50 top-[7rem] h-[25rem] -z-10 w-full"></div>
@@ -74,11 +74,19 @@ export default function CourseInfoPage() {
               </div>
             </div>
             <div className="object-cover preview">
-              <img
-                src={course.intro_video || course.cover_image || booksImgae}
-                alt=""
-                className="w-full h-full"
-              />
+              {course.intro_video ? (
+                <video
+                  controls
+                  src={course.intro_video}
+                  className="w-full h-full"
+                />
+              ) : (
+                <img
+                  src={course.cover_image || booksImgae}
+                  alt=""
+                  className="w-full h-full"
+                />
+              )}
             </div>
             <div className="information">
               <CourseInfoTabs course={course} instructor={course.instructor} />
