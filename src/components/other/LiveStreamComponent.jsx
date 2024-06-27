@@ -1,25 +1,47 @@
 import { Button, CircularProgress } from "@mui/material";
-import { StreamVideo, StreamCall } from "@stream-io/video-react-sdk";
+import {
+  StreamVideo,
+  StreamCall,
+  SpeakerLayout,
+  CallControls,
+  LivestreamLayout,
+  LoadingIndicator,
+} from "@stream-io/video-react-sdk";
 import { ParticipantView, useCallStateHooks } from "@stream-io/video-react-sdk";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import { useLiveStreamAuth } from "../../contexts/LiveStreamAuthContext";
 
-export default function LiveStreamComponent() {
+export default function LiveStreamComponent({ liveId }) {
   const { createClient, client, call } = useLiveStreamAuth();
   const { currentUser } = useAuth();
 
   useEffect(() => {
-    createClient("user", "host", "12345");
+    if (currentUser) {
+      createClient(currentUser.user_id, currentUser.first_name, liveId);
+    }
+
+    return () => {
+      if (client) client.disconnectUser();
+    };
   }, []);
   useEffect(() => {
-    if (call) call.join({ create: true });
-  }, [client, call]);
+    if (call) {
+      if (currentUser.roles.indexOf("student") != -1) {
+        call.join({ create: true });
+      } else {
+        call.join({ create: true });
+      }
+    }
+  }, [call]);
   if (!client || !call) return <CircularProgress />;
   return (
     <StreamVideo client={client}>
       <StreamCall call={call}>
         <LivestreamView />
+        {/* <SpeakerLayout /> */}
+        {/* <LivestreamLayout /> */}
+        {/* <CallControls /> */}
       </StreamCall>
     </StreamVideo>
   );
@@ -34,15 +56,42 @@ const LivestreamView = () => {
     useIsCallLive,
     useParticipants,
     useScreenShareState,
+    useIsCallRecordingInProgress,
   } = useCallStateHooks();
 
   const { camera: cam, isEnabled: isCamEnabled } = useCameraState();
   const { microphone: mic, isEnabled: isMicEnabled } = useMicrophoneState();
   const { screenShare } = useScreenShareState();
   const participantCount = useParticipantCount();
+  const isCallRecordingInProgress = useIsCallRecordingInProgress();
+  const [isAwaitingResponse, setIsAwaitingResponse] = useState(false);
   const isLive = useIsCallLive();
-
   const [firstParticipant] = useParticipants(); // if first participant, then it's host
+
+  const toggleRecording = useCallback(async () => {
+    try {
+      setIsAwaitingResponse(true);
+      if (isCallRecordingInProgress) {
+        await call?.stopRecording();
+      } else {
+        await call?.startRecording();
+      }
+    } catch (e) {
+      console.error(`Failed start recording`, e);
+    }
+  }, [call, isCallRecordingInProgress]);
+  useEffect(() => {
+    if (!call) return;
+    // we wait until call.recording_started/stopped event
+    // to remove the loading indicator
+    const eventHandlers = [
+      call.on("call.recording_started", () => setIsAwaitingResponse(false)),
+      call.on("call.recording_stopped", () => setIsAwaitingResponse(false)),
+    ];
+    return () => {
+      eventHandlers.forEach((unsubscribe) => unsubscribe());
+    };
+  }, [call]); // ------
   return (
     <div
       style={{
@@ -52,7 +101,20 @@ const LivestreamView = () => {
       }}
     >
       {firstParticipant ? (
-        <ParticipantView participant={firstParticipant} />
+        <div>
+          <div>
+            <ParticipantView
+              trackType="screenShareTrack"
+              participant={firstParticipant}
+            />
+          </div>
+          <div>
+            <ParticipantView
+              trackType="videoTrack"
+              participant={firstParticipant}
+            />
+          </div>
+        </div>
       ) : (
         <div>The host hasn't joined yet</div>
       )}
@@ -73,6 +135,13 @@ const LivestreamView = () => {
         <Button variant="contained" onClick={() => screenShare.toggle()}>
           share screen
         </Button>
+        {isAwaitingResponse ? (
+          <LoadingIndicator />
+        ) : (
+          <Button variant="contained" onClick={toggleRecording}>
+            {isCallRecordingInProgress ? "إيقاف التسجيل" : "تسجيل"}
+          </Button>
+        )}
       </div>
     </div>
   );

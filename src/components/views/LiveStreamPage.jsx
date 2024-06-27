@@ -7,14 +7,16 @@ import LiveStreamChat from "../chatComponents/LiveStreamChat";
 import LiveStreamComponent from "../other/LiveStreamComponent";
 import { useAuth } from "../../contexts/AuthContext";
 import { CircularProgress } from "@mui/material";
+import { useParams } from "react-router-dom";
 
 export default function LiveStreamPage() {
-  const { currentUser } = useAuth();
+  let { liveId } = useParams();
+  const { currentUser, fetchingUser } = useAuth();
   const [currentClient, setCurrentClient] = useState();
   const [watchPopupOpen, setWatchPopupOpen] = useState(false);
   const [isLiveStreamOn, setIsLiveStreamOn] = useState(false);
 
-  if (!currentUser) return <CircularProgress />;
+  if (fetchingUser) return <CircularProgress />;
   return (
     <>
       <div className="px-1 py-2 to bg-gray-50 sm:px-0">
@@ -42,7 +44,7 @@ export default function LiveStreamPage() {
         <div className="flex flex-col gap-2 px-2 my-3 text-gray-900 lg:flex-row main sm:px-0">
           <div className="lg:basis-3/4 content">
             <div className="video">
-              <LiveStreamComponent />
+              <LiveStreamComponent liveId={liveId} />
               <h1 className="my-2 text-2xl font-normal md:font-bold title">
                 1.متوسط التغير
               </h1>
