@@ -98,6 +98,7 @@ const studentsData = [
 
 const StudentsSection = () => {
   const [students, setStudents] = useState([]);
+
   const [sortConfig, setSortConfig] = useState({
     key: null,
     direction: "ascending",
@@ -130,11 +131,10 @@ const StudentsSection = () => {
   );
 
   const totalPages = Math.ceil(students.length / itemsPerPage);
-  const studentsQuery = useGetResources("users");
+  const studentsQuery = useGetResources("users?role=student");
   useEffect(() => {
     if (studentsQuery.data) {
       setStudents(studentsQuery.data.data.data);
-      console.log(studentsQuery.data.data.data);
     }
   }, [studentsQuery.isSuccess]);
 
@@ -179,13 +179,14 @@ const StudentsSection = () => {
           {paginatedStudents.map((student) => (
             <tr key={student.user_id}>
               <td className="border px-4 py-2">
-                {student.name || student.first_name}
+                {student.first_name}
+                {student.last_name}
               </td>
               <td className="border px-4 py-2">{student.email}</td>
-              <td className="border px-4 py-2">{student.courses || 0}</td>
-              <td className="border px-4 py-2">${student.amountPaid || 0}</td>
+              <td className="border px-4 py-2">{student.courses_count || 0}</td>
+              <td className="border px-4 py-2">${student.total_paid || 0}</td>
               <td className="border px-4 py-2">
-                {/* {student.createdAt.toLocaleDateString()} */}
+                {student.created_at}
                 تاريخ التسجيل
               </td>
             </tr>

@@ -73,9 +73,9 @@ export default function AccountAvatarMenu() {
       >
         {/* add other badges here */}
         {/* Prvide a count for the notifications */}
-        <NotificationsMenu />
+        {/* <NotificationsMenu /> */}
         {/* provide a count for the messages  */}
-        <MessagesMenu />
+        {/* <MessagesMenu /> */}
 
         <Tooltip title="Account settings">
           <IconButton

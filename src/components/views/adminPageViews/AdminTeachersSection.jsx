@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Bar } from "react-chartjs-2";
+import useGetResources from "../../../apiCalls/useGetResources";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -112,11 +113,19 @@ const teachersData = [
 ];
 
 const TeachersSection = () => {
-  const [teachers, setTeachers] = useState(teachersData);
+  const [teachers, setTeachers] = useState([]);
   const [sortConfig, setSortConfig] = useState({
     key: null,
     direction: "ascending",
   });
+
+  const teachersQuery = useGetResources("users?role=instructor");
+
+  useEffect(() => {
+    if (teachersQuery.data) {
+      setTeachers(teachersQuery.data.data.data);
+    }
+  }, [teachersQuery.isSuccess]);
   const [itemsPerPage, setItemsPerPage] = useState(5);
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -218,15 +227,16 @@ const TeachersSection = () => {
         </thead>
         <tbody>
           {paginatedTeachers.map((teacher) => (
-            <tr key={teacher.id}>
-              <td className="border px-4 py-2">{teacher.name}</td>
-              <td className="border px-4 py-2">{teacher.email}</td>
-              <td className="border px-4 py-2">{teacher.courses}</td>
-              <td className="border px-4 py-2">${teacher.revenue}</td>
-              <td className="border px-4 py-2">{teacher.rating}</td>
+            <tr key={teacher.user_id}>
               <td className="border px-4 py-2">
-                {teacher.registrationDate.toLocaleDateString()}
+                {teacher.first_name}
+                {teacher.last_name}
               </td>
+              <td className="border px-4 py-2">{teacher.email}</td>
+              <td className="border px-4 py-2">{teacher.course_count}</td>
+              <td className="border px-4 py-2">${teacher.balance}</td>
+              <td className="border px-4 py-2">{teacher.rate}</td>
+              <td className="border px-4 py-2">{teacher.created_at}</td>
             </tr>
           ))}
         </tbody>
@@ -252,9 +262,9 @@ const TeachersSection = () => {
         </button>
       </div>
 
-      <div className="my-6">
+      {/* <div className="my-6">
         <Bar data={chartData} options={chartOptions} />
-      </div>
+      </div> */}
     </div>
   );
 };

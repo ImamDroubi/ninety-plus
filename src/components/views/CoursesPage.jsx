@@ -29,7 +29,8 @@ export default function CoursesPage() {
     }
   }, [data]);
   const [pagination, setPagination] = useState({
-    count: 10,
+    count: 12,
+    // count: 10,
     from: 0,
     to: NUMBER_OF_COURSES_IN_THE_PAGE,
   });
@@ -83,6 +84,9 @@ export default function CoursesPage() {
               return <CourseCard key={course.id} course={course} />;
             })
           )}
+          {/* {courses.slice(pagination.from, pagination.to).map((course) => {
+            return <CourseCard />;
+          })} */}
         </div>
         <div className="flex items-center justify-center my-4 pagination">
           <BasicPagination

@@ -1,6 +1,6 @@
 import { CircularProgress, Pagination } from "@mui/material";
 import { useEffect, useState } from "react";
-import mathBook from "../../assets/images/book-covers/math-scientific.jpg";
+import mathBook from "../../assets/images/book-covers/math_book.jpg";
 import Button from "@mui/material/Button";
 import { useProfileInfo } from "../../hooks/useProfileInfo";
 import CourseCard from "../cards/CourseCard";

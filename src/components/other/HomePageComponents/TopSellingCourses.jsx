@@ -23,7 +23,7 @@ export default function TopSellingCourses() {
             الدورات الأكثر مبيعاً
           </h2>
           <div className="w-11/12 justify-center grid grid-cols-4 gap-4 ">
-            {isLoading ? (
+            {/* {isLoading ? (
               <CircularProgress />
             ) : (
               coursesList.map((course, id) => {
@@ -36,7 +36,10 @@ export default function TopSellingCourses() {
                   </div>
                 );
               })
-            )}
+            )} */}
+            {numbers.map((item) => {
+              return <CourseCard />;
+            })}
           </div>
         </div>
       </Container90>

@@ -1,7 +1,5 @@
 import { Pagination } from "@mui/material";
 import { useState } from "react";
-import mathBook from "../../assets/images/book-covers/math-scientific.jpg";
-import Button from "@mui/material/Button";
 import TeacherCard from "../cards/TeacherCard";
 const NUMBER_OF_TEACHERS_IN_THE_PAGE = 8;
 const NUMBER_OF_DATA = 4;

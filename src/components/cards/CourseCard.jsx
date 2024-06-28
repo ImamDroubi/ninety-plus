@@ -1,6 +1,11 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
-import MathBook from "../../assets/images/book-covers/math-scientific.jpg";
+import MathBook from "../../assets/images/book-covers/math_book.jpg";
+import ArabicBook from "../../assets/images/book-covers/chem_book.jpg";
+import PhysicsBook from "../../assets/images/book-covers/phys_book.jpg";
+import EnglishBook from "../../assets/images/book-covers/english_book.jpeg";
+import ChemBook from "../../assets/images/book-covers/chem_book.jpg";
+
 import OptionsOverlayButton from "../overlays/OptionsOverlayButton";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -11,17 +16,23 @@ import TopAlert from "../alerts/TopAlert";
 import { useAlert } from "../../hooks/useAlert";
 import PopupLayout from "../layouts/PopupLayout";
 import ClosePopupButton from "../buttons/ClosePopupButton";
+
+const book_covers = [MathBook, ArabicBook, PhysicsBook, EnglishBook, ChemBook];
+const prices = [120, 150, 160, 200, 250, 300];
+const rates = [1.2, 4, 5, 4.8, 3, 3.5];
+const studentsNo = [36, 40, 22, 16, 19, 36];
 const sample = {
   id: 1,
   title: "رياضيات توجيهي علمي وصناعي للأستاذ محمد حرزالله",
   category: "علمي",
-  price: 400,
-  cover_image: MathBook,
-  stars: 4.5,
-  studentsNo: 120,
+  price: prices[Math.floor(Math.random() * 6)],
+  cover_image: book_covers[Math.floor(Math.random() * 6)],
+  rate: rates[Math.floor(Math.random() * 6)],
+  student_count: studentsNo[Math.floor(Math.random() * 6)],
 };
 export default function CourseCard({ course = sample, showOptions = false }) {
   // remove the = sample
+  // const [currentCourse, setCurrentCourse] = useState();
   const [currentCourse, setCurrentCourse] = useState({ ...sample, ...course });
   const deleteMutation = useDeleteResource("courses");
   const [deleteCoursePopupOpen, setDeleteCoursePopupOpen] = useState(false);
