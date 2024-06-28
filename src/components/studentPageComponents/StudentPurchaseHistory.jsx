@@ -8,7 +8,7 @@ export default function StudentPurchaseHistory() {
   const invoicesQuery = useGetResources(
     `users/${currentUser?.user_id}/invoices`
   );
-  const [invoices, setInvoices] = useState();
+  const [invoices, setInvoices] = useState([]);
   useEffect(() => {
     if (invoicesQuery.data) {
       setInvoices(invoicesQuery.data.data.data);
@@ -18,7 +18,7 @@ export default function StudentPurchaseHistory() {
   return (
     <section className="mb-4">
       <h2 className="mb-3 text-lg text-gray-900 font-semibold">
-        عمليات الشراء <span>(3)</span>
+        عمليات الشراء <span>({invoices.length})</span>
       </h2>
 
       <div className="favourite-list ">
@@ -28,16 +28,18 @@ export default function StudentPurchaseHistory() {
           <p className="w-3/12">التاريخ</p>
         </div>
         <div className="body border-x-[1px] border-gray-100 p-2 border-b-[1px] md:h-[32rem] overflow-auto">
-          <CourseCardInPurchaseHistory />
-          <CourseCardInPurchaseHistory />
-          <CourseCardInPurchaseHistory />
+          {invoices.map((invoice) => {
+            return (
+              <CourseCardInPurchaseHistory key={invoice.id} invoice={invoice} />
+            );
+          })}
         </div>
       </div>
     </section>
   );
 }
 
-export function CourseCardInPurchaseHistory() {
+export function CourseCardInPurchaseHistory({ invoice }) {
   const course = {
     photoUrl:
       "https://images.unsplash.com/photo-1501504905252-473c47e087f8?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -54,32 +56,32 @@ export function CourseCardInPurchaseHistory() {
           <div className="absolute hidden w-full h-full overlay bg-gray-white opacity-30 group-hover/card:block"></div>
           <img
             className="w-full h-full object-cover"
-            src={course.photoUrl}
-            alt={course.title}
+            src={invoice.invoiceable[0].cover_image}
+            alt={invoice.invoiceable[0].name}
           />
+          {console.log(invoice.invoiceable[0].cover_image)}
         </div>
         <div className="info flex flex-col justify-between">
           <p className="text-gray-500 flex items-center">
             <StarIcon className="text-warning-500 ml-[5px]" />{" "}
-            <span className="text-gray-900 ml-[2px]">{course.rating}</span>(
-            {course.reviewsCount} تقييم)
+            <span className="text-gray-900 ml-[2px]">
+              {invoice.invoiceable[0].rate}
+            </span>
           </p>
           <h2 className="text-gray-900 font-semibold text-lg mt-1 mb-2 h-1/2 group-hover/card:underline">
-            {course.title}
+            {invoice.invoiceable[0].name}
           </h2>
-          <p className="text-gray-400">
-            اسم المعلم:{" "}
-            <span className="text-gray-700">{course.instructor}</span>
-          </p>
         </div>
       </div>
       <div className="price w-full md:w-2/12 flex flex-col md:flex-row items-center">
-        <p className="text-primary-500 text-2xl md:text-lg">{course.price}₪</p>
+        <p className="text-primary-500 text-2xl md:text-lg">
+          {invoice.amount}$
+        </p>
       </div>
       <div className="date w-full md:w-3/12 flex flex-col md:flex-row text-center md:text-right items-center gap-2">
         <p>
           تم الشراء بتاريخ : <br />
-          <span>12/12/2024 12:35PM </span>
+          <span>{invoice.paid_date}</span>
           <CircleCheckIcon className={"text-success-500"} />
         </p>
       </div>

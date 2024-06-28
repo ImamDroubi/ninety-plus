@@ -149,7 +149,7 @@ const CoursesSection = () => {
 
   const totalPages = Math.ceil(courses.length / itemsPerPage);
 
-  const coursesQuery = useGetResources("modules/1/courses");
+  const coursesQuery = useGetResources("courses");
   useEffect(() => {
     if (coursesQuery.data) {
       setCourses(coursesQuery.data.data.data);

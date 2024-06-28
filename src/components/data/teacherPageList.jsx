@@ -34,19 +34,19 @@ export const teacherPageList = [
     icon: <MoneyIcon />,
     url: "earnings",
   },
-  {
-    text: "الرسائل",
-    icon: <MessageIcon />,
-    url: "messages",
-  },
+  // {
+  //   text: "الرسائل",
+  //   icon: <MessageIcon />,
+  //   url: "messages",
+  // },
   {
     text: "الإعدادات",
     icon: <SettingsIcon />,
     url: "settings",
   },
-  {
-    text: "تسجيل الخروج",
-    icon: <LogoutIcon />,
-    url: "/logout",
-  },
+  // {
+  //   text: "تسجيل الخروج",
+  //   icon: <LogoutIcon />,
+  //   url: "/logout",
+  // },
 ];

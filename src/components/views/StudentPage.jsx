@@ -39,11 +39,11 @@ const listItems = [
   //   icon: <TeacherIcon />,
   //   url: "?tab=teachers",
   // },
-  {
-    text: "الرسائل",
-    icon: <MessageIcon />,
-    url: "?tab=messages",
-  },
+  // {
+  //   text: "الرسائل",
+  //   icon: <MessageIcon />,
+  //   url: "?tab=messages",
+  // },
   {
     text: "المفضلة",
     icon: <FilledHeartIcon />,
@@ -64,7 +64,7 @@ const pagesList = [
   "overview",
   "courses",
   // "teachers",
-  "messages",
+  // "messages",
   "favourite",
   "purchases",
   "settings",

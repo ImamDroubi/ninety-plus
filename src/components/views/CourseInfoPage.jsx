@@ -39,10 +39,10 @@ export default function CourseInfoPage() {
   console.log(course);
   return (
     <>
-      <div className="absolute hidden lg:block bg-gray-50 top-[7rem] h-[25rem] -z-10 w-full"></div>
+      {/* <div className="absolute hidden lg:block bg-gray-50 top-[7rem] h-[25rem] -z-10 w-full"></div> */}
       <Container90>
         <div className="flex justify-between gap-4 p-1 mt-2 page">
-          <div className="content">
+          <div className="content w-full">
             <div className="header">
               <h2 className="mb-2 text-2xl font-bold text-gray-900 title">
                 {course.title}

@@ -3,8 +3,8 @@ import Cookies from "universal-cookie";
 
 const cookies = new Cookies(null, { path: "/" });
 
-// export const API_BASE_URL = "http://localhost:80/api/v1";
-export const API_BASE_URL = "http://localhost:3001/";
+export const API_BASE_URL = "http://localhost:80/api/v1";
+// export const API_BASE_URL = "http://localhost:3001/";
 
 const defaultOptions = {
   baseURL: API_BASE_URL,
