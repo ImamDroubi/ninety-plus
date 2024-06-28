@@ -6,7 +6,7 @@ import { CircularProgress } from "@mui/material";
 
 export default function MostRecentCourses() {
   const { data, isLoading, isError, error } = useGetResources(
-    "courses?sort['created_at']='asc'"
+    "courses?sort[created_at]=desc"
   );
   const [coursesList, setCoursesList] = useState([]);
   useEffect(() => {

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   CreditCardIcon,
   CrownIcon,
@@ -13,10 +13,17 @@ import {
 } from "../../data/teacherEarningsTableData";
 import { CircularProgress } from "@mui/material";
 import { useUserProfile } from "../../../contexts/UserProfileContext";
+import useGetResources from "../../../apiCalls/useGetResources";
 export default function TeacherEarningsPage() {
   const { profileInfo, isLoading } = useUserProfile();
+  const moneyRequestsQuery = useGetResources("money-request");
+
+  useEffect(() => {
+    if (moneyRequestsQuery.data) {
+      console.log(moneyRequestsQuery.data.data.data);
+    }
+  }, [moneyRequestsQuery.isSuccess]);
   if (isLoading || !profileInfo) return <CircularProgress />;
-  console.log(profileInfo);
   return (
     <div className="my-4 w-[90%] m-auto">
       <section className="statistics flex flex-wrap justify-between gap-y-2">

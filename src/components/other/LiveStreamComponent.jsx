@@ -6,49 +6,94 @@ import {
   CallControls,
   LivestreamLayout,
   LoadingIndicator,
+  StreamVideoClient,
+  CallRecordingList,
 } from "@stream-io/video-react-sdk";
 import { ParticipantView, useCallStateHooks } from "@stream-io/video-react-sdk";
 import { useCallback, useEffect, useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import { useLiveStreamAuth } from "../../contexts/LiveStreamAuthContext";
-
+import axios from "axios";
+import { axiosInstance } from "../../apiCalls";
+const apiKey = "whsuc3edb47g";
 export default function LiveStreamComponent({ liveId }) {
-  const { createClient, client, call } = useLiveStreamAuth();
   const { currentUser } = useAuth();
+  const [client, setClient] = useState();
+  const [call, setCall] = useState();
+  const [token, setToken] = useState();
+  const tokenProvider = async () => {
+    // if (!currentUser) return null;
+    try {
+      const res = await axiosInstance.get(`get-token/${currentUser.user_id}`);
+      setToken(res.data.token);
+      console.log(res);
+      // setToken(token.token);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     if (currentUser) {
-      createClient(currentUser.user_id, currentUser.first_name, liveId);
+      tokenProvider();
     }
-
-    return () => {
-      if (client) client.disconnectUser();
-    };
-  }, []);
+  }, [currentUser]);
   useEffect(() => {
-    if (call) {
+    if (token) {
+      const stringId = currentUser.user_id.toString();
+      const user = {
+        id: stringId,
+        name: currentUser.first_name,
+      };
+      const newClient = new StreamVideoClient({ apiKey, user, token });
+      const newCall = newClient.call("livestream", liveId);
       if (currentUser.roles.indexOf("student") != -1) {
-        call.join({ create: true });
+        newCall.join();
       } else {
-        call.join({ create: true });
+        newCall.join({ create: true });
       }
+      setClient(newClient);
+      setCall(newCall);
+
+      return () => {
+        if (client) client.disconnectUser();
+      };
     }
+  }, [token]);
+  const [callRecordings, setCallRecordings] = useState([]);
+  const getRecordings = async (call) => {
+    try {
+      const response = await call.queryRecordings();
+      console.log(response);
+      setCallRecordings(response.recordings);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getRecordings(call);
   }, [call]);
   if (!client || !call) return <CircularProgress />;
   return (
-    <StreamVideo client={client}>
-      <StreamCall call={call}>
-        <LivestreamView />
-        {/* <SpeakerLayout /> */}
-        {/* <LivestreamLayout /> */}
-        {/* <CallControls /> */}
-      </StreamCall>
-    </StreamVideo>
+    <>
+      <StreamVideo client={client}>
+        <StreamCall call={call}>
+          <LivestreamView call={call} />
+          {/* <SpeakerLayout /> */}
+          {/* <LivestreamLayout /> */}
+          {/* <CallControls /> */}
+        </StreamCall>
+      </StreamVideo>
+      <div className="bg-primary-100 my-3 p-3 text-gray-900">
+        <CallRecordingList callRecordings={callRecordings} />
+      </div>
+    </>
   );
 }
 
-const LivestreamView = () => {
-  const { call } = useLiveStreamAuth();
+const LivestreamView = ({ call }) => {
+  const { currentUser } = useAuth();
   const {
     useCameraState,
     useMicrophoneState,
@@ -101,14 +146,14 @@ const LivestreamView = () => {
       }}
     >
       {firstParticipant ? (
-        <div>
-          <div>
+        <div className="flex">
+          <div className="basis-3/4">
             <ParticipantView
               trackType="screenShareTrack"
               participant={firstParticipant}
             />
           </div>
-          <div>
+          <div className="basis-1/4">
             <ParticipantView
               trackType="videoTrack"
               participant={firstParticipant}
@@ -116,33 +161,37 @@ const LivestreamView = () => {
           </div>
         </div>
       ) : (
-        <div>The host hasn't joined yet</div>
+        <div>لم يبدأ البث المباشر بعد، حاول تحديث الصفحة...</div>
       )}
       <div>{isLive ? `Live: ${participantCount}` : `In Backstage`}</div>
-      <div style={{ display: "flex", gap: "4px" }}>
-        <Button
-          variant="contained"
-          onClick={() => (isLive ? call.stopLive() : call.goLive())}
-        >
-          {isLive ? "Stop Live" : "Go Live"}
-        </Button>
-        <Button variant="contained" onClick={() => cam.toggle()}>
-          {isCamEnabled ? "Disable camera" : "Enable camera"}
-        </Button>
-        <Button variant="contained" onClick={() => mic.toggle()}>
-          {isMicEnabled ? "Mute Mic" : "Unmute Mic"}
-        </Button>
-        <Button variant="contained" onClick={() => screenShare.toggle()}>
-          share screen
-        </Button>
-        {isAwaitingResponse ? (
-          <LoadingIndicator />
-        ) : (
-          <Button variant="contained" onClick={toggleRecording}>
-            {isCallRecordingInProgress ? "إيقاف التسجيل" : "تسجيل"}
+      {currentUser?.roles.indexOf("student") != -1 ? (
+        <div></div>
+      ) : (
+        <div style={{ display: "flex", gap: "4px" }}>
+          <Button
+            variant="contained"
+            onClick={() => (isLive ? call.stopLive() : call.goLive())}
+          >
+            {isLive ? "إيقاف البث" : "بدء البث"}
           </Button>
-        )}
-      </div>
+          <Button variant="contained" onClick={() => cam.toggle()}>
+            {isCamEnabled ? "إيقاف الكاميرا" : "تفعيل الكاميرا"}
+          </Button>
+          <Button variant="contained" onClick={() => mic.toggle()}>
+            {isMicEnabled ? "إيقاف المايك" : "تفعيل المايك"}
+          </Button>
+          <Button variant="contained" onClick={() => screenShare.toggle()}>
+            مشاركة الشاشة
+          </Button>
+          {isAwaitingResponse ? (
+            <LoadingIndicator />
+          ) : (
+            <Button variant="contained" onClick={toggleRecording}>
+              {isCallRecordingInProgress ? "إيقاف التسجيل" : "تسجيل"}
+            </Button>
+          )}
+        </div>
+      )}
     </div>
   );
 };

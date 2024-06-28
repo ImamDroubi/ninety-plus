@@ -32,7 +32,7 @@ export function LiveStreamAuthProvider({ children }) {
   };
 
   const tokenProvider = async () => {
-    if (!currentUser) return null;
+    // if (!currentUser) return null;
     try {
       const res = await fetch(
         `http://localhost:3001/get-token/${currentUser.user_id}`

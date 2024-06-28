@@ -14,31 +14,15 @@ import DeleteObjectPopup from "../../../popups/DeleteObjectPopup";
 import SingleFormInputContainer from "../../../containers/SingleFormInputContainer";
 import SelectDropdown from "../../../menus/SelectDropdown";
 
-const initialModules = [
-  { id: 1, name: "رياضيات", branch_id: 1 },
-  { id: 2, name: "عربي2", branch_id: 2 },
-];
-
-const initialBranchesList = [
-  {
-    id: 1,
-    name: "العلمي",
-  },
-  {
-    id: 2,
-    name: "الأدبي",
-  },
-];
-
 const modulesPaginatedHeaders = ["الرقم", "الاسم", "الفرع", "الإجراءات"];
 
 export default function AdminModulesSection() {
-  const [modules, setModules] = useState(initialModules);
+  const [modules, setModules] = useState([]);
   const [updatePopupOpen, setUpdatePopupOpen] = useState(false);
   const [deletePopupOpen, setDeletePopupOpen] = useState(false);
 
-  const getModulesQuery = useGetResources("modules");
-  const createModuleMutation = useCreateResource("modules");
+  const getModulesQuery = useGetResources("countries/1/modules");
+  const createModuleMutation = useCreateResource("countries/1/modules");
   const updateModuleMutation = useUpdateResource("modules");
   const deleteModuleMutation = useDeleteResource("modules");
 
@@ -64,6 +48,10 @@ export default function AdminModulesSection() {
       id: index,
       name: newModuleName,
       branch_id: newModuleBranch.id,
+      branch: {
+        id: newModuleBranch.id,
+        name: newModuleBranch.name,
+      },
     };
     setIsCreating(true);
     const oldList = modules;
@@ -84,15 +72,15 @@ export default function AdminModulesSection() {
   };
 
   const handleUpdate = async (oldObject, data) => {
-    const index = modules.indexOf(oldObject.id);
     const newItem = { ...oldObject, name: data };
     setModules(
       modules.map((item) => (item.id == oldObject.id ? newItem : item))
     );
     try {
       const response = await updateModuleMutation.mutateAsync(oldObject.id, {
-        ...newItem,
-        id: undefined,
+        name: newItem.name,
+        branch_id: newItem.branch_id,
+        // id: undefined,
       });
       alertController.alertSuccessToggle("تم التعديل بنجاح!");
     } catch (error) {
@@ -129,7 +117,7 @@ export default function AdminModulesSection() {
 
   // ====================================== Other Rseources Dependency ==========================
 
-  const [branches, setBranches] = useState(initialBranchesList);
+  const [branches, setBranches] = useState([]);
   const getBranchesQuery = useGetResources("branches");
   const [newModuleBranch, setNewModuleBranch] = useState({});
 
@@ -168,7 +156,7 @@ export default function AdminModulesSection() {
                 return [
                   module.id,
                   module.name,
-                  initialBranchesList[module.branch_id - 1].name,
+                  module.branch.name,
                   <>
                     <Button onClick={() => handleUpdateClick(module)}>
                       <span className="text-success-500">تعديل</span>
@@ -205,7 +193,7 @@ export default function AdminModulesSection() {
                 ) : (
                   <SelectDropdown
                     title="الفرع"
-                    list={initialBranchesList}
+                    list={branches}
                     stateChanger={setNewModuleBranch}
                   />
                 )}

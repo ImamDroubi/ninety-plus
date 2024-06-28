@@ -1,6 +1,20 @@
 import { Button } from "@mui/material";
 import { CircleCheckIcon, StarIcon, TrashIcon } from "../icons/icons";
+import { useAuth } from "../../contexts/AuthContext";
+import useGetResources from "../../apiCalls/useGetResources";
+import { useEffect, useState } from "react";
 export default function StudentPurchaseHistory() {
+  const { currentUser } = useAuth();
+  const invoicesQuery = useGetResources(
+    `users/${currentUser?.user_id}/invoices`
+  );
+  const [invoices, setInvoices] = useState();
+  useEffect(() => {
+    if (invoicesQuery.data) {
+      setInvoices(invoicesQuery.data.data.data);
+      console.log(invoicesQuery.data.data.data);
+    }
+  }, [invoicesQuery.isSuccess]);
   return (
     <section className="mb-4">
       <h2 className="mb-3 text-lg text-gray-900 font-semibold">

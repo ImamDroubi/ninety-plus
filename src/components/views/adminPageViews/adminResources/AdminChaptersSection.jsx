@@ -33,7 +33,7 @@ const initialModulesList = [
 const chaptersPaginatedHeaders = ["الرقم", "الاسم", "المادة", "الإجراءات"];
 
 export default function AdminChaptersSection() {
-  const [chapters, setChapters] = useState(initialChapters);
+  const [chapters, setChapters] = useState([]);
   const [updatePopupOpen, setUpdatePopupOpen] = useState(false);
   const [deletePopupOpen, setDeletePopupOpen] = useState(false);
 
@@ -62,7 +62,7 @@ export default function AdminChaptersSection() {
     const index = chapters.length + 1;
     const newItem = {
       id: index,
-      name: newChapterName,
+      title: newChapterName,
       module_id: newChapterModule.id,
     };
     setIsCreating(true);
@@ -129,8 +129,8 @@ export default function AdminChaptersSection() {
 
   // ====================================== Other Rseources Dependency ==========================
 
-  const [modules, setModules] = useState(initialModulesList);
-  const getModulesQuery = useGetResources("modules");
+  const [modules, setModules] = useState([]);
+  const getModulesQuery = useGetResources("countries/1/modules");
   const [newChapterModule, setNewChapterModule] = useState({});
 
   useEffect(() => {
@@ -167,8 +167,8 @@ export default function AdminChaptersSection() {
               ...chapters.map((chapter) => {
                 return [
                   chapter.id,
-                  chapter.name,
-                  initialModulesList[chapter.module_id - 1].name,
+                  chapter.title,
+                  // initialModulesList[chapter.module_id - 1].name,
                   <>
                     <Button onClick={() => handleUpdateClick(chapter)}>
                       <span className="text-success-500">تعديل</span>
@@ -205,7 +205,7 @@ export default function AdminChaptersSection() {
                 ) : (
                   <SelectDropdown
                     title="المادة"
-                    list={initialModulesList}
+                    list={modules}
                     stateChanger={setNewChapterModule}
                   />
                 )}
@@ -241,7 +241,7 @@ export default function AdminChaptersSection() {
       {deletePopupOpen ? (
         <PopupLayout>
           <div className="w-9/12  md:w-5/12 z-10 bg-gray-50 p-4 relative py-5">
-            <ClosePopupButton setOpen={setUpdatePopupOpen} />
+            <ClosePopupButton setOpen={setDeletePopupOpen} />
             <DeleteObjectPopup
               callback={handleDelete}
               objectId={currentObject.id}

@@ -42,12 +42,12 @@ export default function LiveStreamPage() {
       </div>
       <Container90>
         <div className="flex flex-col gap-2 px-2 my-3 text-gray-900 lg:flex-row main sm:px-0">
-          <div className="lg:basis-3/4 content">
+          <div className="lg:w-full content">
             <div className="video">
-              <LiveStreamComponent liveId={liveId} />
               <h1 className="my-2 text-2xl font-normal md:font-bold title">
                 1.متوسط التغير
               </h1>
+              <LiveStreamComponent liveId={liveId} />
               {/* <div className="flex justify-between text-sm info md:text-base">
                 <p className="text-gray-600">
                   <span className="text-lg font-bold text-gray-900">523 </span>
@@ -65,9 +65,9 @@ export default function LiveStreamPage() {
               </div> */}
             </div>
           </div>
-          <div className="nav h-[60rem] hidden lg:block basis-1/4">
-            {/* <LiveStreamChat /> */}
-          </div>
+          {/* <div className="nav h-[60rem] hidden lg:block basis-1/4">
+            <LiveStreamChat />
+          </div> */}
         </div>
       </Container90>
       {watchPopupOpen ? (
