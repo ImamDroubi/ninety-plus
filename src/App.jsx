@@ -40,6 +40,8 @@ import AdminBranchesSection from "./components/views/adminPageViews/adminResourc
 import AdminCitiesSection from "./components/views/adminPageViews/adminResources/AdminCitiesSection";
 import AdminModulesSection from "./components/views/adminPageViews/adminResources/AdminModulesSection";
 import AdminChaptersSection from "./components/views/adminPageViews/adminResources/AdminChaptersSection";
+import AboutUs from "./components/views/AboutUs";
+import ContactUs from "./components/views/ContactUs";
 
 function App() {
   return (
@@ -48,7 +50,8 @@ function App() {
         <Route path="/" element={<MainLayout />}>
           <Route index element={<HomePage />} />
           <Route path="/not-found" element={<NotFoundPage />} />
-
+          <Route path="/about" element={<AboutUs />} />
+          <Route path="/contact" element={<ContactUs />} />
           <Route path="course-info/:id" element={<CourseInfoPage />} />
           <Route path="courses" element={<CoursesPage />} />
           <Route path="courses/:id" element={<CoursePage />} />
