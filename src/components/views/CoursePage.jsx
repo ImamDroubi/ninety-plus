@@ -212,10 +212,10 @@ export default function CoursePage() {
           </div>
           <div className="nav h-[60rem] hidden lg:block basis-1/4">
             {isLiveStreamOn && <LiveStreamCard />}
-            {/* <WatchCourseMenu
+            <WatchCourseMenu
               chapters={course.chapters}
               setSearchParams={setSearchParams}
-            /> */}
+            />
           </div>
         </div>
       </Container90>

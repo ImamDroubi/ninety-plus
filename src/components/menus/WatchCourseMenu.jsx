@@ -104,7 +104,18 @@ const courseChapters = [
 
 export function SelectedListItem({ chapter, setSearchParams }) {
   const [selectedIndex, setSelectedIndex] = React.useState(1);
-
+  const [lectures, setLectures] = React.useState([]);
+  React.useEffect(() => {
+    if (chapter) {
+      if (Array.isArray(chapter.lectures)) {
+        setLectures(chapter.lectures);
+      } else if (chapter.lectures) {
+        setLectures([chapter.lectures]);
+      } else {
+        setLectures([]);
+      }
+    }
+  }, [chapter]);
   const handleListItemClick = (event, index) => {
     setSearchParams({ lesson: index + 1 });
     setSelectedIndex(index);
@@ -113,7 +124,7 @@ export function SelectedListItem({ chapter, setSearchParams }) {
   return (
     <Box sx={{ width: "100%", bgcolor: "background.paper" }}>
       <List component="nav" sx={{ padding: "0" }}>
-        {chapter.lectures?.map((lecture, ind) => {
+        {lectures.map((lecture, ind) => {
           return (
             <ListItemButton
               selected={selectedIndex === ind}
@@ -134,7 +145,7 @@ export function SelectedListItem({ chapter, setSearchParams }) {
 
 export function CustomizedAccordions({ list = [], setSearchParams }) {
   const [expanded, setExpanded] = React.useState();
-  console.log(list);
+
   const handleChange = (panel) => (event, newExpanded) => {
     setExpanded(newExpanded ? panel : false);
   };
