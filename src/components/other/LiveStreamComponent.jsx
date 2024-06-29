@@ -24,7 +24,7 @@ export default function LiveStreamComponent({ liveId }) {
   const tokenProvider = async () => {
     // if (!currentUser) return null;
     try {
-      const res = await axiosInstance.get(`get-token/${currentUser.user_id}`);
+      const res = await axiosInstance.get(`lectures/${liveId}/join-live`);
       setToken(res.data.token);
       console.log(res);
       // setToken(token.token);

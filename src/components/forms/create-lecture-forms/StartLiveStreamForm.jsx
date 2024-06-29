@@ -1,58 +1,98 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SingleFormInputContainer from "../../containers/SingleFormInputContainer";
 import SelectDropdown from "../../menus/SelectDropdown";
 import UploadFileHandler from "../UploadFileHandler";
 import { coursesList } from "../../data/coursesList";
-import { Button } from "@mui/material";
+import { Button, CircularProgress } from "@mui/material";
 import { liveStreamsList } from "../../data/livestreamsList";
-import { Link } from "react-router-dom";
-
+import { Link, useNavigate } from "react-router-dom";
+import useGetResources from "../../../apiCalls/useGetResources";
+import useCreateResource from "../../../apiCalls/useCreateResource";
+import { useAlert } from "../../../hooks/useAlert";
+import TopAlert from "../../alerts/TopAlert";
 export default function StartLiveStreamForm() {
-  const [selectedLiveStream, setSelectedLiveStream] = useState({
-    courseId: 5,
-    liveId: 123456,
-  });
+  const [liveStreamsList, setLiveStreamsList] = useState([]);
+  const [selectedLiveStream, setSelectedLiveStream] = useState();
+
+  const navigate = useNavigate();
+  const getLecturesQuery = useGetResources("lectures?role=instructor");
+  const startLiveMutation = useCreateResource(
+    `lectures/${selectedLiveStream?.id}/start-live`
+  );
+
+  useEffect(() => {
+    if (getLecturesQuery.data) {
+      setLiveStreamsList(getLecturesQuery.data.data.data);
+    }
+  }, [getLecturesQuery.isSuccess]);
+  const alertController = useAlert();
   const [isSubmitting, setIsSubmitting] = useState();
   const labelBaseStyle = "mb-2 text-base block font-semibold";
-  const inputBaseStyle =
-    "border-[2px] border-gray-100 p-2 w-full focus:border-primary-500 outline-none duration-200";
 
-  const DATE = "2024/6/25 - PM 3:00"; // delete later, date should be fetched form the backend
+  const handleStartLive = async () => {
+    if (!selectedLiveStream) return;
+    setIsCreating(true);
+    try {
+      const response = await startLiveMutation.mutateAsync();
+      navigate(
+        `/courses/${selectedLiveStream?.course[0].id}/live/${selectedLiveStream?.id}`
+      );
+    } catch (error) {
+      console.log(error);
+      alertController.alertErrorToggle(`خطأ في الإضافة!`);
+    }
+    setIsCreating(false);
+  };
   return (
-    <form>
-      {/* Select Live Stream Dropdown */}
-      <SingleFormInputContainer extraStyles={"my-2"} error={null}>
-        <div className="mb-3 flex items-center gap-1 ">
-          <label className={`${labelBaseStyle}`}>
-            اختر البث المباشر المحدد مسبقا
-          </label>
-          <SelectDropdown
-            width={300}
-            title="البث المباشر"
-            list={liveStreamsList}
-            stateChanger={setSelectedLiveStream}
-          />
-        </div>
-      </SingleFormInputContainer>
+    <>
+      {alertController.showSuccessAlert && (
+        <TopAlert
+          message={alertController.successAlertMessage}
+          type="success"
+        />
+      )}
+      {alertController.showErrorAlert && (
+        <TopAlert message={alertController.errorAlertMessage} type="error" />
+      )}
+      <form>
+        {/* Select Live Stream Dropdown */}
+        <SingleFormInputContainer extraStyles={"my-2"} error={null}>
+          <div className="mb-3 flex items-center gap-1 ">
+            <label className={`${labelBaseStyle}`}>
+              اختر البث المباشر المحدد مسبقا
+            </label>
+            {getLecturesQuery.isPending ? (
+              <CircularProgress />
+            ) : (
+              <SelectDropdown
+                width={300}
+                title="البث المباشر"
+                list={liveStreamsList}
+                stateChanger={setSelectedLiveStream}
+              />
+            )}
+          </div>
+        </SingleFormInputContainer>
 
-      <p className="my-2">{`تم تحديد موعد البث في ${DATE}`}</p>
-      <p className="my-2">
-        الرجاء بدء البث قبل الموعد المحدد بخمس دقائق على الأكثر
-      </p>
-      <Link
-        to={`/courses/${selectedLiveStream.courseId}/live?id=${selectedLiveStream.liveId}`}
-      >
+        <p className="my-2">{`تم تحديد موعد البث في ${
+          selectedLiveStream?.starts_at || "-"
+        }`}</p>
+        <p className="my-2">
+          الرجاء بدء البث قبل الموعد المحدد بخمس دقائق على الأكثر
+        </p>
+
         <Button
           type="submit"
           variant="contained"
           sx={{ borderRadius: "0px", fontSize: "1rem" }}
           fullWidth
-          disableElevation
-          disabled={isSubmitting}
+          disableElevationk
+          disabled={isCreating}
+          onClick={handleStartLive}
         >
-          {isSubmitting ? "جاري الانتقال..." : "الانتقال إلى صفحة البث المباشر"}
+          {isCreating ? "جاري الانتقال..." : "الانتقال إلى صفحة البث المباشر"}
         </Button>
-      </Link>
-    </form>
+      </form>
+    </>
   );
 }

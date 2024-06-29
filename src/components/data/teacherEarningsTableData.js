@@ -8,7 +8,6 @@ export const teacherEarningsTableData = [
 ];
 export const teacherEarningsTableHeaders = [
   "التاريخ",
-  "وسيلة الدفع",
   "المبلغ",
   "الحالة",
 ];

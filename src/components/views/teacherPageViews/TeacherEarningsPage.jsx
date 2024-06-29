@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   CreditCardIcon,
   CrownIcon,
@@ -19,6 +19,7 @@ import TopAlert from "../../alerts/TopAlert";
 import { useAlert } from "../../../hooks/useAlert";
 export default function TeacherEarningsPage() {
   const { profileInfo, isLoading } = useUserProfile();
+  const [withdrawRequsts, setWithdrawRequests] = useState([]);
   const moneyRequestsQuery = useGetResources("money-requests");
   const moneyRequestsMutation = useCreateResource("money-requests");
   const alertController = useAlert();
@@ -35,6 +36,7 @@ export default function TeacherEarningsPage() {
 
   useEffect(() => {
     if (moneyRequestsQuery.data) {
+      setWithdrawRequests(moneyRequestsQuery.data.data.data);
       console.log(moneyRequestsQuery.data.data.data);
     }
   }, [moneyRequestsQuery.isSuccess]);
@@ -92,7 +94,11 @@ export default function TeacherEarningsPage() {
         <div className="withdraw-history bg-gray-white p-4 my-3">
           <h5 className="my-2 text-lg">عمليات السحب</h5>
           <PaginatedTable
-            data={teacherEarningsTableData}
+            data={[
+              ...withdrawRequsts.map((request) => {
+                return [request.requested_date, request.amount, "قيد المعالجة"];
+              }),
+            ]}
             headers={teacherEarningsTableHeaders}
           />
         </div>
