@@ -1,15 +1,27 @@
-import React, { useState } from "react";
-import { Outlet } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Outlet, useNavigate } from "react-router-dom";
 import Sidebar from "../menus/Sidebar";
 import AccountAvatarMenu from "../menus/AccountAvatarMenu";
 import MenuDrawer from "../menus/MenuDrawer";
 import HamburgerMenuOpenner from "../other/HamburgerMenuOpenner";
 import { adminPageList } from "../data/adminPageList";
+import { CircularProgress } from "@mui/material";
+import { useAuth } from "../../contexts/AuthContext";
 const AdminDashboard = () => {
+  const { currentUser, fetchingUser } = useAuth();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const toggleOpenSidebar = () => {
     setSidebarOpen(!sidebarOpen);
   };
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (currentUser) {
+      if (currentUser.roles.indexOf("admin") == -1) {
+        navigate("/");
+      }
+    }
+  }, [currentUser]);
+  if (fetchingUser) return <CircularProgress />;
   return (
     <>
       <div className="flex">
