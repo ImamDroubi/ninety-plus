@@ -20,6 +20,69 @@ import LiveStreamCard from "../cards/LiveStreamCard";
 import { useParams, useSearchParams } from "react-router-dom";
 import { useCourse } from "../../hooks/useCourse";
 import { useLesson } from "../../hooks/useLesson";
+import lecturePreview from "../../assets/images/lecturePreview.jpg";
+
+const chaptersSample = [
+  {
+    id: 1,
+    title: "حساب التفاضل",
+    lectures: [
+      {
+        id: 1,
+        title: "متوسط التغير",
+      },
+      {
+        id: 2,
+        title: "قواعد الاشتقاق",
+      },
+      {
+        id: 3,
+        title: "مشتقات الاقترانات المثلثية",
+      },
+      {
+        id: 4,
+        title: "قاعدة لوبيتال ومشتقة الاقتران الأسي واللوغاريتمي",
+      },
+      {
+        id: 5,
+        title: "تطبيقات هندسية وفيزيائية",
+      },
+      {
+        id: 6,
+        title: "قاعدة السلة",
+      },
+      {
+        id: 7,
+        title: "الاشتقاق الضمني",
+      },
+    ],
+  },
+  {
+    id: 2,
+    title: "تطبيقات التفاضل",
+    lectures: [],
+  },
+  {
+    id: 3,
+    title: "المصفوفات والمحددات",
+    lectures: [],
+  },
+  {
+    id: 4,
+    title: "التكامل غير المحدود، وتطبيقاته",
+    lectures: [],
+  },
+  {
+    id: 5,
+    title: "التكامل المحدود وتطبيقاته",
+    lectures: [],
+  },
+  {
+    id: 6,
+    title: "الأعداد المركبة",
+    lectures: [],
+  },
+];
 
 export default function CoursePage() {
   let { id } = useParams();
@@ -94,11 +157,12 @@ export default function CoursePage() {
         <div className="flex flex-col gap-2 px-2 my-3 text-gray-900 lg:flex-row main sm:px-0">
           <div className="lg:basis-3/4 content">
             <div className="video">
-              <video controls src={video} className="max-w-full"></video>
+              <img src={lecturePreview} className="max-w-full" />
+              {/* <video controls src={video} className="max-w-full"></video> */}
               <h1 className="my-2 text-2xl font-normal md:font-bold title">
-                1.متوسط التغير
+                2. قواعد الاشتقاق
               </h1>
-              <div className="flex justify-between text-sm info md:text-base">
+              {/* <div className="flex justify-between text-sm info md:text-base">
                 <p className="text-gray-600">
                   <span className="text-lg font-bold text-gray-900">523 </span>
                   مشاهد
@@ -112,7 +176,7 @@ export default function CoursePage() {
                     التعليقات: <span className="text-gray-900">154</span>
                   </p>
                 </div>
-              </div>
+              </div> */}
             </div>
             <hr className="my-2 " />
             <CoursePageTabs />
@@ -120,7 +184,8 @@ export default function CoursePage() {
           <div className="nav h-[60rem] hidden lg:block basis-1/4">
             {isLiveStreamOn && <LiveStreamCard />}
             <WatchCourseMenu
-              chapters={course.chapters}
+              chapters={chaptersSample}
+              // chapters={course.chapters}
               setSearchParams={setSearchParams}
             />
           </div>

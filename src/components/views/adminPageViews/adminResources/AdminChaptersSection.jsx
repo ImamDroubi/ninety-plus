@@ -169,6 +169,7 @@ export default function AdminChaptersSection() {
                   chapter.id,
                   chapter.title,
                   // initialModulesList[chapter.module_id - 1].name,
+                  chapter.module[0].name,
                   <>
                     <Button onClick={() => handleUpdateClick(chapter)}>
                       <span className="text-success-500">تعديل</span>

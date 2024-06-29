@@ -147,13 +147,13 @@ const LivestreamView = ({ call }) => {
     >
       {firstParticipant ? (
         <div className="flex">
-          <div className="basis-3/4">
+          <div className="basis-3/5">
             <ParticipantView
               trackType="screenShareTrack"
               participant={firstParticipant}
             />
           </div>
-          <div className="basis-1/4">
+          <div className="basis-1/5">
             <ParticipantView
               trackType="videoTrack"
               participant={firstParticipant}
@@ -165,7 +165,11 @@ const LivestreamView = ({ call }) => {
       )}
       <div>{isLive ? `Live: ${participantCount}` : `In Backstage`}</div>
       {currentUser?.roles.indexOf("student") != -1 ? (
-        <div></div>
+        <div>
+          <Button variant="contained" onClick={() => mic.toggle()}>
+            {isMicEnabled ? "إيقاف المايك" : "تفعيل المايك"}
+          </Button>
+        </div>
       ) : (
         <div style={{ display: "flex", gap: "4px" }}>
           <Button

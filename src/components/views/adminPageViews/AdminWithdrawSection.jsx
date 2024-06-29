@@ -27,7 +27,33 @@ const initialWithdrawRequestsData = [
   },
 ];
 
+// const first_names = [" أحمد", " محمد", " كامل", " صهيب", " ربحي"];
+// const last_names = ["أحمد", "السيد", "الحسن", "حرزالله", "قاروط", "الفار"];
+// const paymentMethods = ["visa", "mastercard", "bank account"];
+// const getCourse = () => {
+//   const courseSample = {
+//     user_id: 1,
+//     id: 1,
+//     teacherId: 1,
+//     teacherName: `${(() =>
+//       first_names[Math.floor(Math.random() * 5)])()} ${(() =>
+//       last_names[Math.floor(Math.random() * 6)])()}`,
+
+//     rate: (() => last_names[Math.floor(Math.random() * 6)])(),
+//     paymentMethod: (() => paymentMethods[Math.floor(Math.random() * 3)])(),
+//     students_count: (() => Math.floor(Math.random() * 40))(),
+//     amount: (() => Math.floor(Math.random() * 1245) + 70)(),
+
+//     created_at: "26-6-2024",
+//   };
+//   return courseSample;
+// };
+// const numbers = [1, 2, 3, 4, 5, 6];
+
 const WithdrawSection = () => {
+  // const [withdrawRequests, setWithdrawRequests] = useState(
+  //   numbers.map((item) => getCourse())
+  // );
   const [withdrawRequests, setWithdrawRequests] = useState(
     initialWithdrawRequestsData
   );

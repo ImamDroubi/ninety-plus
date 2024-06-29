@@ -6,10 +6,10 @@ import useDeleteResource from "../../apiCalls/useDeleteResource";
 import { useAlert } from "../../hooks/useAlert";
 import TopAlert from "../alerts/TopAlert";
 import usePurchaseCourse from "../../apiCalls/usePurchaseCourse";
+import { useState } from "react";
 
 export default function StudentFavourite() {
   const { favouriteList, isLoading, isError } = useFavouriteList();
-
   if (isLoading || !favouriteList) return <CircularProgress />;
 
   return (
@@ -35,6 +35,7 @@ export default function StudentFavourite() {
 }
 
 export function CourseCardInFavourite({ course }) {
+  const [currentCourse, setCourse] = useState(course);
   const removeFromFavouriteMutation = useDeleteResource(`favorites/course`);
   const alertController = useAlert();
   const handleRemoveFromFavourite = async () => {
@@ -60,7 +61,7 @@ export function CourseCardInFavourite({ course }) {
       console.log(error);
     }
   };
-  if (!course) return <CircularProgress />;
+  if (!currentCourse) return null;
   return (
     <>
       {alertController.showSuccessAlert && (
@@ -78,28 +79,32 @@ export function CourseCardInFavourite({ course }) {
             <div className="absolute hidden w-full h-full overlay bg-gray-white opacity-30 group-hover/card:block"></div>
             <img
               className="w-full h-full object-cover"
-              src={course.cover_image}
-              alt={course.title}
+              src={currentCourse.cover_image}
+              alt={currentCourse.title}
             />
           </div>
           <div className="info flex flex-col justify-between">
             <p className="text-gray-500 flex items-center">
               <StarIcon className="text-warning-500 ml-[5px]" />{" "}
-              <span className="text-gray-900 ml-[2px]">{course.rate}</span>
+              <span className="text-gray-900 ml-[2px]">
+                {currentCourse.rate}
+              </span>
               {/* ({course.reviewsCount} تقييم) */}
             </p>
             <h2 className="text-gray-900 font-semibold text-lg mt-1 mb-2 h-1/2 group-hover/card:underline">
-              {course.title}
+              {currentCourse.title}
             </h2>
             <p className="text-gray-400">
               اسم المعلم:{" "}
-              <span className="text-gray-700">{course.instructor.name}</span>
+              <span className="text-gray-700">
+                {currentCourse.instructor.name}
+              </span>
             </p>
           </div>
         </div>
         <div className="price w-full md:w-2/12 flex flex-col md:flex-row items-center">
           <p className="text-primary-500 text-2xl md:text-lg">
-            {course.price}₪
+            {currentCourse.price}₪
           </p>
         </div>
         <div className="actions w-full md:w-3/12 flex justify-center items-center gap-2">

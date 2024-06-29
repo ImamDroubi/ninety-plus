@@ -26,13 +26,12 @@ const sample = {
   title: "رياضيات توجيهي علمي وصناعي للأستاذ محمد حرزالله",
   category: "علمي",
   price: prices[Math.floor(Math.random() * 6)],
-  cover_image: book_covers[Math.floor(Math.random() * 6)],
+  cover_image: book_covers[Math.floor(Math.random() * 5)],
   rate: rates[Math.floor(Math.random() * 6)],
   student_count: studentsNo[Math.floor(Math.random() * 6)],
 };
 export default function CourseCard({ course = sample, showOptions = false }) {
   // remove the = sample
-  // const [currentCourse, setCurrentCourse] = useState();
   const [currentCourse, setCurrentCourse] = useState({ ...sample, ...course });
   const deleteMutation = useDeleteResource("courses");
   const [deleteCoursePopupOpen, setDeleteCoursePopupOpen] = useState(false);

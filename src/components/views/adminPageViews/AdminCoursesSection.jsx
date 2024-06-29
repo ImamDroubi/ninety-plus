@@ -21,100 +21,44 @@ ChartJS.register(
   Legend
 );
 
-const coursesData = [
-  {
-    id: 1,
-    name: "رياضيات",
-    members: 25,
-    teacher: "عبدالرحمن شقير",
-    cost: 100,
-    rating: 4.5,
-    status: "Completed",
-  },
-  {
-    id: 2,
-    name: "فيزياء",
-    members: 30,
-    teacher: "صفا أبو صفا",
-    cost: 120,
-    rating: 4.7,
-    status: "Ongoing",
-  },
-  {
-    id: 3,
-    name: "تكنولوجيا",
-    members: 18,
-    teacher: "فرس النبي",
-    cost: 130,
-    rating: 4.9,
-    status: "Completed",
-  },
-  {
-    id: 4,
-    name: "أحياء",
-    members: 40,
-    teacher: "مجاهد بركات",
-    cost: 150,
-    rating: 4.8,
-    status: "Completed",
-  },
-  {
-    id: 5,
-    name: "التربية الإسلامية",
-    members: 35,
-    teacher: "فائد الفرح",
-    cost: 90,
-    rating: 4.6,
-    status: "Ongoing",
-  },
-  {
-    id: 6,
-    name: "الدراسات التاريخية",
-    members: 28,
-    teacher: "رائد الفرح",
-    cost: 110,
-    rating: 4.4,
-    status: "Due",
-  },
-  {
-    id: 7,
-    name: "كيمياء",
-    members: 20,
-    teacher: "أدهم خليلية",
-    cost: 80,
-    rating: 4.3,
-    status: "Due",
-  },
-  {
-    id: 8,
-    name: "اللغة العربية",
-    members: 22,
-    teacher: "أشرف أبوصاع",
-    cost: 95,
-    rating: 4.7,
-    status: "Ongoing",
-  },
-  {
-    id: 9,
-    name: "اللغة الإنجليزية",
-    members: 26,
-    teacher: "نضال الزرعي",
-    cost: 115,
-    rating: 4.5,
-    status: "Due",
-  },
-  {
-    id: 10,
-    name: "الدراسات الجغرافية",
-    members: 33,
-    teacher: "رائد الفرح",
-    cost: 105,
-    rating: 4.6,
-    status: "Completed",
-  },
-];
+// const titles = [
+//   "دورة شاملة في منهج الرياضيات توجيهي علمي",
+//   "دورة في الفصل الأول من الفيزياء للتوجيهي العلمي",
+//   "دورة في اللغة الإنجليزية توجيهي أدبي",
+//   "دورة حل سنوات سابقة في الكيمياء للعلمي",
+// ];
+// const first_names = [" أحمد", " محمد", " كامل", " صهيب", " ربحي"];
+// const last_names = ["أحمد", "السيد", "الحسن", "حرزالله", "قاروط", "الفار"];
+// const emails = [
+//   "student1@hotmail.com",
+//   "student2@hotmail.com",
+//   "student3@hotmail.com",
+// ];
+// const rates = [3.2, 4.6, 5, 3.7, 2.6, 4];
+// const statuses = ["جارية", "منقضية", "لم تبدأ"];
+// const getCourse = () => {
+//   const courseSample = {
+//     user_id: 1,
+//     instructor: {
+//       id: 1,
+//       name: `${(() => first_names[Math.floor(Math.random() * 5)])()} ${(() =>
+//         last_names[Math.floor(Math.random() * 6)])()}`,
+//     },
+
+//     rate: (() => last_names[Math.floor(Math.random() * 6)])(),
+//     email: (() => emails[Math.floor(Math.random() * 3)])(),
+//     students_count: (() => Math.floor(Math.random() * 40))(),
+//     price: (() => Math.floor(Math.random() * 1245) + 70)(),
+//     status: (() => statuses[Math.floor(Math.random() * 3)])(),
+//     title: (() => titles[Math.floor(Math.random() * 4)])(),
+//     created_at: "26-6-2024",
+//   };
+//   return courseSample;
+// };
+// const numbers = [1, 2, 3, 4, 5, 6];
 
 const CoursesSection = () => {
+  // const [courses, setCourses] = useState(numbers.map((item) => getCourse()));
   const [courses, setCourses] = useState([]);
   const [sortConfig, setSortConfig] = useState({
     key: null,
@@ -153,7 +97,6 @@ const CoursesSection = () => {
   useEffect(() => {
     if (coursesQuery.data) {
       setCourses(coursesQuery.data.data.data);
-      console.log(coursesQuery.data.data.data);
     }
   }, [coursesQuery.isSuccess]);
 

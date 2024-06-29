@@ -143,7 +143,7 @@ export default function StudentPage() {
               <StudentOverview label="نظرة عامة" />
               <StudentCourses label="الدورات" />
               {/* <StudentTeachers label="الأساتذة" /> */}
-              <StudentMessages label="الرسائل" />
+              {/* <StudentMessages label="الرسائل" /> */}
               <StudentFavourite label="المفضلة" />
               <StudentPurchaseHistory label="عمليات الشراء" />
               <StudentSettings label="الإعدادات" />
@@ -165,7 +165,7 @@ export default function StudentPage() {
               <StudentOverview label="نظرة عامة" />
               <StudentCourses label="الدورات" />
               {/* <StudentTeachers label="الأساتذة" /> */}
-              <StudentMessages label="الرسائل" />
+              {/* <StudentMessages label="الرسائل" /> */}
               <StudentFavourite label="المفضلة" />
               <StudentPurchaseHistory label="عمليات الشراء" />
               <StudentSettings label="الإعدادات" />

@@ -19,100 +19,40 @@ ChartJS.register(
   Legend
 );
 
-const teachersData = [
-  {
-    id: 1,
-    name: "مونكي دي لوفي",
-    email: "monkeyDLuffy@example.com",
-    courses: 5,
-    revenue: 1200,
-    rating: 4.5,
-    registrationDate: new Date(2021, 0, 10),
-  },
-  {
-    id: 2,
-    name: "رورونوا زورو",
-    email: "roronoaZoro@example.com",
-    courses: 3,
-    revenue: 1500,
-    rating: 4.7,
-    registrationDate: new Date(2021, 1, 15),
-  },
-  {
-    id: 3,
-    name: "إدواردو ألريك",
-    email: "idward@example.com",
-    courses: 8,
-    revenue: 2100,
-    rating: 4.3,
-    registrationDate: new Date(2020, 5, 6),
-  },
-  {
-    id: 4,
-    name: "نامي",
-    email: "nami@example.com",
-    courses: 10,
-    revenue: 2200,
-    rating: 4.8,
-    registrationDate: new Date(2021, 3, 10),
-  },
-  {
-    id: 5,
-    name: "سانجي",
-    email: "sanji@example.com",
-    courses: 11,
-    revenue: 1300,
-    rating: 4.6,
-    registrationDate: new Date(2021, 5, 10),
-  },
-  {
-    id: 6,
-    name: "توني توني تشوبر",
-    email: "tonyTonyChopper@example.com",
-    courses: 12,
-    revenue: 1400,
-    rating: 4.4,
-    registrationDate: new Date(2021, 6, 10),
-  },
-  {
-    id: 7,
-    name: "نيكو روبن",
-    email: "nicoRobin@example.com",
-    courses: 13,
-    revenue: 1500,
-    rating: 4.9,
-    registrationDate: new Date(2021, 7, 10),
-  },
-  {
-    id: 8,
-    name: "فرانكي",
-    email: "franky@example.com",
-    courses: 6,
-    revenue: 1800,
-    rating: 4.7,
-    registrationDate: new Date(2020, 9, 20),
-  },
-  {
-    id: 9,
-    name: "بروك",
-    email: "brook@example.com",
-    courses: 7,
-    revenue: 2000,
-    rating: 4.8,
-    registrationDate: new Date(2021, 10, 25),
-  },
-  {
-    id: 10,
-    name: "جيمبي",
-    email: "jimbei@example.com",
-    courses: 4,
-    revenue: 1100,
-    rating: 4.5,
-    registrationDate: new Date(2021, 11, 30),
-  },
-];
-
+// const first_names = [" أحمد", " محمد", " كامل", " صهيب", " ربحي"];
+// const last_names = ["أحمد", "السيد", "الحسن", "حرزالله", "قاروط", "الفار"];
+// const emails = [
+//   "teacher1@hotmail.com",
+//   "teacher2@hotmail.com",
+//   "teacher3@hotmail.com",
+// ];
+// const rates = [3.2, 4.6, 5, 3.7, 2.6, 4];
+// const teacherSample = {
+//   user_id: 1,
+//   first_name: (() => first_names[Math.floor(Math.random() * 5)])(),
+//   last_name: (() => last_names[Math.floor(Math.random() * 6)])(),
+//   rate: (() => last_names[Math.floor(Math.random() * 6)])(),
+//   email: (() => emails[Math.floor(Math.random() * 3)])(),
+//   course_count: (() => Math.floor(Math.random() * 12))(),
+//   balance: (() => Math.floor(Math.random() * 1245))(),
+//   created_at: "26-6-2024",
+// };
+// const getTeacher = () => {
+//   const teacherSample = {
+//     user_id: 1,
+//     first_name: (() => first_names[Math.floor(Math.random() * 5)])(),
+//     last_name: (() => last_names[Math.floor(Math.random() * 6)])(),
+//     rate: (() => last_names[Math.floor(Math.random() * 6)])(),
+//     email: (() => emails[Math.floor(Math.random() * 3)])(),
+//     course_count: (() => Math.floor(Math.random() * 12))(),
+//     balance: (() => Math.floor(Math.random() * 1245))(),
+//     created_at: "26-6-2024",
+//   };
+//   return teacherSample;
+// };
+// const numbers = [1, 2, 3, 4, 5, 6];
 const TeachersSection = () => {
+  // const [teachers, setTeachers] = useState(numbers.map((item) => getTeacher()));
   const [teachers, setTeachers] = useState([]);
   const [sortConfig, setSortConfig] = useState({
     key: null,
@@ -229,8 +169,7 @@ const TeachersSection = () => {
           {paginatedTeachers.map((teacher) => (
             <tr key={teacher.user_id}>
               <td className="border px-4 py-2">
-                {teacher.first_name}
-                {teacher.last_name}
+                {`${teacher.first_name} ${teacher.last_name}`}
               </td>
               <td className="border px-4 py-2">{teacher.email}</td>
               <td className="border px-4 py-2">{teacher.course_count}</td>

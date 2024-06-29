@@ -3,100 +3,41 @@ import useGetResources from "../../../apiCalls/useGetResources";
 
 import { CircularProgress } from "@mui/material";
 
-const studentsData = [
-  {
-    id: 1,
-    name: "يوسوب",
-    email: "usopp@example.com",
-    courses: 3,
-    amountPaid: 300,
-    rating: 4.2,
-    registrationDate: new Date(2021, 0, 12),
-  },
-  {
-    id: 2,
-    name: "نامي",
-    email: "nami@example.com",
-    courses: 5,
-    amountPaid: 500,
-    rating: 4.8,
-    registrationDate: new Date(2021, 1, 22),
-  },
-  {
-    id: 3,
-    name: "سانجي",
-    email: "sanji@example.com",
-    courses: 4,
-    amountPaid: 400,
-    rating: 4.5,
-    registrationDate: new Date(2021, 3, 15),
-  },
-  {
-    id: 4,
-    name: "توني توني تشوبر",
-    email: "tonyTonyChopper@example.com",
-    courses: 2,
-    amountPaid: 200,
-    rating: 4.4,
-    registrationDate: new Date(2021, 4, 19),
-  },
-  {
-    id: 5,
-    name: "نيكو روبن",
-    email: "nicoRobin@example.com",
-    courses: 6,
-    amountPaid: 600,
-    rating: 4.9,
-    registrationDate: new Date(2021, 5, 21),
-  },
-  {
-    id: 6,
-    name: "فرانكي",
-    email: "franky@example.com",
-    courses: 4,
-    amountPaid: 450,
-    rating: 4.7,
-    registrationDate: new Date(2021, 6, 28),
-  },
-  {
-    id: 7,
-    name: "بروك",
-    email: "brook@example.com",
-    courses: 5,
-    amountPaid: 550,
-    rating: 4.6,
-    registrationDate: new Date(2021, 7, 25),
-  },
-  {
-    id: 8,
-    name: "جيمبي",
-    email: "jimbei@example.com",
-    courses: 3,
-    amountPaid: 300,
-    rating: 4.5,
-    registrationDate: new Date(2021, 8, 30),
-  },
-  {
-    id: 9,
-    name: "زورو",
-    email: "zoro@example.com",
-    courses: 2,
-    amountPaid: 200,
-    rating: 4.3,
-    registrationDate: new Date(2021, 9, 11),
-  },
-  {
-    id: 10,
-    name: "مونكي دي لوفي",
-    email: "monkeyDLuffy@example.com",
-    courses: 1,
-    amountPaid: 150,
-    rating: 4.1,
-    registrationDate: new Date(2021, 10, 14),
-  },
-];
 
+// const first_names = [" أحمد", " محمد", " كامل", " صهيب", " ربحي"];
+// const last_names = ["أحمد", "السيد", "الحسن", "حرزالله", "قاروط", "الفار"];
+// const emails = [
+//   "student1@hotmail.com",
+//   "student2@hotmail.com",
+//   "student3@hotmail.com",
+// ];
+// const rates = [3.2, 4.6, 5, 3.7, 2.6, 4];
+// const studentSample = {
+//   user_id: 1,
+//   first_name: (() => first_names[Math.floor(Math.random() * 5)])(),
+//   last_name: (() => last_names[Math.floor(Math.random() * 6)])(),
+//   rate: (() => last_names[Math.floor(Math.random() * 6)])(),
+//   email: (() => emails[Math.floor(Math.random() * 3)])(),
+//   course_count: (() => Math.floor(Math.random() * 12))(),
+//   balance: (() => Math.floor(Math.random() * 1245))(),
+//   created_at: "26-6-2024",
+// };
+// const getStudent = () => {
+//   const studentSample = {
+//     user_id: 1,
+//     first_name: (() => first_names[Math.floor(Math.random() * 5)])(),
+//     last_name: (() => last_names[Math.floor(Math.random() * 6)])(),
+//     rate: (() => last_names[Math.floor(Math.random() * 6)])(),
+//     email: (() => emails[Math.floor(Math.random() * 3)])(),
+//     courses_count: (() => Math.floor(Math.random() * 12))(),
+//     total_paid: (() => Math.floor(Math.random() * 1245))(),
+//     created_at: "26-6-2024",
+//   };
+//   return studentSample;
+// };
+// const numbers = [1, 2, 3, 4, 5, 6];
 const StudentsSection = () => {
+  // const [students, setStudents] = useState(numbers.map((item) => getStudent()));
   const [students, setStudents] = useState([]);
 
   const [sortConfig, setSortConfig] = useState({
@@ -179,15 +120,13 @@ const StudentsSection = () => {
           {paginatedStudents.map((student) => (
             <tr key={student.user_id}>
               <td className="border px-4 py-2">
-                {student.first_name}
-                {student.last_name}
+                {`${student.first_name} ${student.last_name}`}
               </td>
               <td className="border px-4 py-2">{student.email}</td>
               <td className="border px-4 py-2">{student.courses_count || 0}</td>
               <td className="border px-4 py-2">${student.total_paid || 0}</td>
               <td className="border px-4 py-2">
                 {student.created_at}
-                تاريخ التسجيل
               </td>
             </tr>
           ))}
