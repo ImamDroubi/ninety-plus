@@ -17,72 +17,72 @@ import { useEffect, useState } from "react";
 import WatchMenu from "../popups/watchMenu";
 import ClosePopupButton from "../buttons/ClosePopupButton";
 import LiveStreamCard from "../cards/LiveStreamCard";
-import { useParams, useSearchParams } from "react-router-dom";
+import { Link, useParams, useSearchParams } from "react-router-dom";
 import { useCourse } from "../../hooks/useCourse";
 import { useLesson } from "../../hooks/useLesson";
 import lecturePreview from "../../assets/images/lecturePreview.jpg";
 
-const chaptersSample = [
-  {
-    id: 1,
-    title: "حساب التفاضل",
-    lectures: [
-      {
-        id: 1,
-        title: "متوسط التغير",
-      },
-      {
-        id: 2,
-        title: "قواعد الاشتقاق",
-      },
-      {
-        id: 3,
-        title: "مشتقات الاقترانات المثلثية",
-      },
-      {
-        id: 4,
-        title: "قاعدة لوبيتال ومشتقة الاقتران الأسي واللوغاريتمي",
-      },
-      {
-        id: 5,
-        title: "تطبيقات هندسية وفيزيائية",
-      },
-      {
-        id: 6,
-        title: "قاعدة السلة",
-      },
-      {
-        id: 7,
-        title: "الاشتقاق الضمني",
-      },
-    ],
-  },
-  {
-    id: 2,
-    title: "تطبيقات التفاضل",
-    lectures: [],
-  },
-  {
-    id: 3,
-    title: "المصفوفات والمحددات",
-    lectures: [],
-  },
-  {
-    id: 4,
-    title: "التكامل غير المحدود، وتطبيقاته",
-    lectures: [],
-  },
-  {
-    id: 5,
-    title: "التكامل المحدود وتطبيقاته",
-    lectures: [],
-  },
-  {
-    id: 6,
-    title: "الأعداد المركبة",
-    lectures: [],
-  },
-];
+// const chaptersSample = [
+//   {
+//     id: 1,
+//     title: "حساب التفاضل",
+//     lectures: [
+//       {
+//         id: 1,
+//         title: "متوسط التغير",
+//       },
+//       {
+//         id: 2,
+//         title: "قواعد الاشتقاق",
+//       },
+//       {
+//         id: 3,
+//         title: "مشتقات الاقترانات المثلثية",
+//       },
+//       {
+//         id: 4,
+//         title: "قاعدة لوبيتال ومشتقة الاقتران الأسي واللوغاريتمي",
+//       },
+//       {
+//         id: 5,
+//         title: "تطبيقات هندسية وفيزيائية",
+//       },
+//       {
+//         id: 6,
+//         title: "قاعدة السلة",
+//       },
+//       {
+//         id: 7,
+//         title: "الاشتقاق الضمني",
+//       },
+//     ],
+//   },
+//   {
+//     id: 2,
+//     title: "تطبيقات التفاضل",
+//     lectures: [],
+//   },
+//   {
+//     id: 3,
+//     title: "المصفوفات والمحددات",
+//     lectures: [],
+//   },
+//   {
+//     id: 4,
+//     title: "التكامل غير المحدود، وتطبيقاته",
+//     lectures: [],
+//   },
+//   {
+//     id: 5,
+//     title: "التكامل المحدود وتطبيقاته",
+//     lectures: [],
+//   },
+//   {
+//     id: 6,
+//     title: "الأعداد المركبة",
+//     lectures: [],
+//   },
+// ];
 
 export default function CoursePage() {
   let { id } = useParams();
@@ -93,22 +93,29 @@ export default function CoursePage() {
   const { course, isLoading: courseLoading } = useCourse(id);
   const [watchPopupOpen, setWatchPopupOpen] = useState(false);
   const [isLiveStreamOn, setIsLiveStreamOn] = useState(false);
+  const [currentLecture, setCurrentLecture] = useState();
+
+  useEffect(() => {
+    if (lesson) {
+      setCurrentLecture(lesson);
+    }
+  }, [lesson]);
   useEffect(() => {
     if (searchParams.get("lesson") == null) {
       setSearchParams({ lesson: 1 });
     }
   }, []);
   if (!course || courseLoading) return <CircularProgress />;
-
+  if (lessonLoading) return <CircularProgress />;
   return (
     <>
       <div className="px-1 py-2 to bg-gray-50 sm:px-0">
         <Container90>
           <div className="flex justify-between content">
             <div className="flex gap-2 right">
-              <button className="flex items-center justify-center w-6 h-6 text-gray-900 rounded-full shadow back shrink-0 bg-gray-white hover:bg-gray-200 focus:bg-gray-200">
+              {/* <button className="flex items-center justify-center w-6 h-6 text-gray-900 rounded-full shadow back shrink-0 bg-gray-white hover:bg-gray-200 focus:bg-gray-200">
                 <FontAwesomeIcon icon={faArrowRight} />
-              </button>
+              </button> */}
               <div className="info flex flex-col justify-center gap-[0.2rem]">
                 <h2 className="font-bold text-gray-900">{course.title}</h2>
                 {/* <div className="videos flex items-center gap-[3px]">
@@ -126,7 +133,7 @@ export default function CoursePage() {
             </div>
             <div className="items-center hidden gap-2 left lg:flex">
               {/* <Button variant="outlined" disableElevation sx={{borderRadius:0}}>اترك تعليقاً </Button> */}
-              <Button
+              {/* <Button
                 variant="contained"
                 disableElevation
                 sx={{ borderRadius: 0 }}
@@ -137,7 +144,7 @@ export default function CoursePage() {
                     <FontAwesomeIcon icon={faChevronLeft} />
                   </div>
                 </div>
-              </Button>
+              </Button> */}
             </div>
             <div className="flex items-center gap-1 left lg:hidden ">
               <button
@@ -157,10 +164,32 @@ export default function CoursePage() {
         <div className="flex flex-col gap-2 px-2 my-3 text-gray-900 lg:flex-row main sm:px-0">
           <div className="lg:basis-3/4 content">
             <div className="video">
-              <img src={lecturePreview} className="max-w-full" />
-              {/* <video controls src={video} className="max-w-full"></video> */}
+              {/* <img src={lecturePreview} className="max-w-full" /> */}
+              {currentLecture?.record ? (
+                <video
+                  controls
+                  src={currentLecture?.record}
+                  className="max-w-full"
+                ></video>
+              ) : (
+                <>
+                  <p>لم يتم رفع تسجيل هذه الحصة بعد</p>
+                  <p className="my-2">{`البث المباشر محدد بتاريخ ${currentLecture?.starts_at}`}</p>
+                  <Link
+                    to={`/courses/${course?.id}/live/${currentLecture?.id}`}
+                  >
+                    <Button
+                      disableElevation
+                      sx={{ borderRadius: "0px" }}
+                      variant="contained"
+                    >
+                      الانتقال لصفحة البث المباشر
+                    </Button>
+                  </Link>
+                </>
+              )}
               <h1 className="my-2 text-2xl font-normal md:font-bold title">
-                2. قواعد الاشتقاق
+                {`${currentLecture?.id}. ${currentLecture?.name}`}
               </h1>
               {/* <div className="flex justify-between text-sm info md:text-base">
                 <p className="text-gray-600">
@@ -179,15 +208,14 @@ export default function CoursePage() {
               </div> */}
             </div>
             <hr className="my-2 " />
-            <CoursePageTabs />
+            <CoursePageTabs lecture={currentLecture} />
           </div>
           <div className="nav h-[60rem] hidden lg:block basis-1/4">
             {isLiveStreamOn && <LiveStreamCard />}
-            <WatchCourseMenu
-              chapters={chaptersSample}
-              // chapters={course.chapters}
+            {/* <WatchCourseMenu
+              chapters={course.chapters}
               setSearchParams={setSearchParams}
-            />
+            /> */}
           </div>
         </div>
       </Container90>
@@ -197,7 +225,7 @@ export default function CoursePage() {
             <ClosePopupButton setOpen={setWatchPopupOpen} />
             {isLiveStreamOn && <LiveStreamCard />}
             <WatchCourseMenu
-              chapters={course.chapters}
+              // chapters={course.chapters}
               setSearchParams={setSearchParams}
             />
           </div>

@@ -36,7 +36,7 @@ export default function CourseInfoPage() {
   if (courseLoading) return <CircularProgress />;
   if (courseError) navigate("/not-found");
   if (!course) return <CircularProgress />;
-  console.log(course);
+
   return (
     <>
       {/* <div className="absolute hidden lg:block bg-gray-50 top-[7rem] h-[25rem] -z-10 w-full"></div> */}

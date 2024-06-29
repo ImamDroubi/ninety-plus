@@ -8,16 +8,11 @@ import AddComent from "../popups/AddComment";
 import SlidingTabs from "./SlidingTabs";
 import ClosePopupButton from "../buttons/ClosePopupButton";
 
-function Description() {
+function Description({ text = "" }) {
   return (
     <>
       <h3 className="mb-3 text-xl font-bold text-gray-900 title">الوصف</h3>
-      <p className="text-gray-700">
-        دورة شاملة في منهاج الرياضيات للتوجيهي العلمي على مدار الفصل الأول
-        كاملاً، ثلاث لقاءات أسبوعيا، بثوث مباشرة وحلول لأسئلة الدروس وأسئلة
-        خارجية وأسئلة سنوات سابقة نماذج امتحانات ومواد إثرائية يقدمها الأستاذ
-        محمد حرزالله
-      </p>
+      <p className="text-gray-700">{text}</p>
     </>
   );
 }
@@ -113,9 +108,7 @@ function StudentsFeedback() {
           </div>
         </Button>
       </div>
-      <StudentComment />
-      <StudentComment />
-      <StudentComment />
+
       {addCommentPopupOpen ? (
         <PopupLayout>
           <div className="relative z-10 w-10/12 max-w-[40rem] pt-6 pb-2 px-3 bg-gray-white">
@@ -128,10 +121,10 @@ function StudentsFeedback() {
   );
 }
 
-export default function CourseInfoTabs() {
+export default function CourseInfoTabs({ lecture }) {
   return (
     <SlidingTabs showTabs={true}>
-      <Description label="الوصف" />
+      <Description text={lecture?.description} label="الوصف" />
       {/* <AttachedFiles label="الملفات المرفقة" /> */}
       <StudentsFeedback label="تعليقات الطلاب" />
     </SlidingTabs>

@@ -12,7 +12,6 @@ export default function MostRecentCourses() {
   useEffect(() => {
     if (data) {
       setCoursesList(data.data.data.slice(0, 4));
-      console.log(data.data.data);
     }
   }, [data]);
   const numbers = [0, 1, 2, 3];

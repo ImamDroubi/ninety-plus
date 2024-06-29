@@ -10,9 +10,10 @@ import { useAlert } from "../../../hooks/useAlert";
 import { useAuth } from "../../../contexts/AuthContext";
 import TopAlert from "../../alerts/TopAlert";
 import { combineCourses } from "../../../utils/coursesFunctions";
+import { useProfileInfo } from "../../../hooks/useProfileInfo";
 export default function SetLiveStreamForm() {
   const { currentUser } = useAuth();
-
+  const { user, isLoading } = useProfileInfo();
   const [selectedCourse, setSelectedCourse] = useState({});
   const [selectedChapter, setSelectedChapter] = useState({});
   const [startsAt, setStartsAt] = useState("");
@@ -59,26 +60,12 @@ export default function SetLiveStreamForm() {
       );
   }, [selectedCourse]);
 
-  // useEffect(() => {
-  //   if (getCoursesQuery.data) {
-  //     setCoursesList(
-  //       getCoursesQuery.data.data.data?.map((course) => {
-  //         return {
-  //           id: course.id,
-  //           name: course.title,
-  //           chapters: course.chapters,
-  //         };
-  //       }) || []
-  //     );
-  //   }
-  // }, [getCoursesQuery.isSuccess]);
-
   useEffect(() => {
-    if (currentUser) {
-      const userCourses = combineCourses(currentUser.courses);
-      console.log(userCourses);
+    if (user) {
+      const userCourses = combineCourses(user.courses);
+      console.log(user);
       setCoursesList(
-        userCourses.map((course) => {
+        userCourses?.map((course) => {
           return {
             id: course.id,
             name: course.title,
@@ -87,7 +74,22 @@ export default function SetLiveStreamForm() {
         }) || []
       );
     }
-  }, [currentUser]);
+  }, [user]);
+
+  // useEffect(() => {
+  //   if (currentUser) {
+  //     const userCourses = combineCourses(currentUser.courses);
+  //     setCoursesList(
+  //       userCourses.map((course) => {
+  //         return {
+  //           id: course.id,
+  //           name: course.title,
+  //           chapters: course.chapters,
+  //         };
+  //       }) || []
+  //     );
+  //   }
+  // }, [currentUser]);
   const labelBaseStyle = "mb-2 text-base block font-semibold";
   const inputBaseStyle =
     "border-[2px] border-gray-100 p-2 w-full focus:border-primary-500 outline-none duration-200";
@@ -108,7 +110,7 @@ export default function SetLiveStreamForm() {
         <SingleFormInputContainer extraStyles={"my-2"} error={null}>
           <div className="mb-3 flex items-center gap-1 ">
             <label className={`${labelBaseStyle}`}>اختر الدورة</label>
-            {getCoursesQuery.isPending ? (
+            {isLoading ? (
               <CircularProgress />
             ) : (
               <SelectDropdown

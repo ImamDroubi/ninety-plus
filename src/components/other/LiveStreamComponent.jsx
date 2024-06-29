@@ -15,18 +15,19 @@ import { useAuth } from "../../contexts/AuthContext";
 import { useLiveStreamAuth } from "../../contexts/LiveStreamAuthContext";
 import axios from "axios";
 import { axiosInstance } from "../../apiCalls";
+import useCreateResource from "../../apiCalls/useCreateResource";
 const apiKey = "whsuc3edb47g";
 export default function LiveStreamComponent({ liveId }) {
   const { currentUser } = useAuth();
   const [client, setClient] = useState();
   const [call, setCall] = useState();
   const [token, setToken] = useState();
+  const joinLiveMutation = useCreateResource(`lectures/${liveId}/join-live`);
   const tokenProvider = async () => {
     // if (!currentUser) return null;
     try {
-      const res = await axiosInstance.get(`lectures/${liveId}/join-live`);
+      const res = await joinLiveMutation.mutateAsync();
       setToken(res.data.token);
-      console.log(res);
       // setToken(token.token);
     } catch (error) {
       console.log(error);
@@ -74,7 +75,13 @@ export default function LiveStreamComponent({ liveId }) {
   useEffect(() => {
     getRecordings(call);
   }, [call]);
-  if (!client || !call) return <CircularProgress />;
+  if (!client || !call)
+    return (
+      <>
+        <p>لم يبدأ البث المباشر بعد...</p>
+        <CircularProgress />
+      </>
+    );
   return (
     <>
       <StreamVideo client={client}>

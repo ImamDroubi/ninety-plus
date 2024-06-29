@@ -8,15 +8,25 @@ import LiveStreamComponent from "../other/LiveStreamComponent";
 import { useAuth } from "../../contexts/AuthContext";
 import { CircularProgress } from "@mui/material";
 import { useParams } from "react-router-dom";
+import useGetResource from "../../apiCalls/useGetResource";
 
 export default function LiveStreamPage() {
   let { liveId } = useParams();
+  const getLectureQuery = useGetResource("lectures", liveId);
   const { currentUser, fetchingUser } = useAuth();
   const [currentClient, setCurrentClient] = useState();
   const [watchPopupOpen, setWatchPopupOpen] = useState(false);
   const [isLiveStreamOn, setIsLiveStreamOn] = useState(false);
-
+  const [currentLecture, setCurrentLecture] = useState();
+  useEffect(() => {
+    if (getLectureQuery.data) {
+      setCurrentLecture(getLectureQuery.data.data.data);
+    }
+    if (getLectureQuery.data) {
+    }
+  }, [getLectureQuery.isSuccess]);
   if (fetchingUser) return <CircularProgress />;
+  if (getLectureQuery.isPending) return <CircularProgress />;
   return (
     <>
       <div className="px-1 py-2 to bg-gray-50 sm:px-0">
@@ -25,7 +35,7 @@ export default function LiveStreamPage() {
             <div className="flex gap-2 right">
               <div className="info flex flex-col gap-[0.2rem]">
                 <h2 className="font-bold text-gray-900">
-                  رياضيات التوجيهي العلمي أ.محمد حرزالله
+                  {currentLecture?.course?.name}
                 </h2>
               </div>
             </div>
@@ -45,7 +55,7 @@ export default function LiveStreamPage() {
           <div className="lg:w-full content">
             <div className="video">
               <h1 className="my-2 text-2xl font-normal md:font-bold title">
-                1.متوسط التغير
+                {`${currentLecture?.id}. ${currentLecture?.name}`}
               </h1>
               <LiveStreamComponent liveId={liveId} />
               {/* <div className="flex justify-between text-sm info md:text-base">

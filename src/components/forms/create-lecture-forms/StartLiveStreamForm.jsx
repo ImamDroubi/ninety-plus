@@ -19,21 +19,22 @@ export default function StartLiveStreamForm() {
   const startLiveMutation = useCreateResource(
     `lectures/${selectedLiveStream?.id}/start-live`
   );
-
+  console.log(selectedLiveStream);
   useEffect(() => {
     if (getLecturesQuery.data) {
       setLiveStreamsList(getLecturesQuery.data.data.data);
     }
   }, [getLecturesQuery.isSuccess]);
   const alertController = useAlert();
-  const [isSubmitting, setIsSubmitting] = useState();
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const labelBaseStyle = "mb-2 text-base block font-semibold";
 
   const handleStartLive = async () => {
     if (!selectedLiveStream) return;
-    setIsCreating(true);
+    setIsSubmitting(true);
     try {
       const response = await startLiveMutation.mutateAsync();
+      console.log(response);
       navigate(
         `/courses/${selectedLiveStream?.course[0].id}/live/${selectedLiveStream?.id}`
       );
@@ -41,7 +42,7 @@ export default function StartLiveStreamForm() {
       console.log(error);
       alertController.alertErrorToggle(`خطأ في الإضافة!`);
     }
-    setIsCreating(false);
+    setIsSubmitting(false);
   };
   return (
     <>
@@ -86,11 +87,11 @@ export default function StartLiveStreamForm() {
           variant="contained"
           sx={{ borderRadius: "0px", fontSize: "1rem" }}
           fullWidth
-          disableElevationk
-          disabled={isCreating}
+          disableElevation
+          disabled={isSubmitting}
           onClick={handleStartLive}
         >
-          {isCreating ? "جاري الانتقال..." : "الانتقال إلى صفحة البث المباشر"}
+          {isSubmitting ? "جاري الانتقال..." : "الانتقال إلى صفحة البث المباشر"}
         </Button>
       </form>
     </>

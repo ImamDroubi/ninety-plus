@@ -113,7 +113,7 @@ export function SelectedListItem({ chapter, setSearchParams }) {
   return (
     <Box sx={{ width: "100%", bgcolor: "background.paper" }}>
       <List component="nav" sx={{ padding: "0" }}>
-        {chapter.lectures.map((lecture, ind) => {
+        {chapter.lectures?.map((lecture, ind) => {
           return (
             <ListItemButton
               selected={selectedIndex === ind}
@@ -134,7 +134,7 @@ export function SelectedListItem({ chapter, setSearchParams }) {
 
 export function CustomizedAccordions({ list = [], setSearchParams }) {
   const [expanded, setExpanded] = React.useState();
-
+  console.log(list);
   const handleChange = (panel) => (event, newExpanded) => {
     setExpanded(newExpanded ? panel : false);
   };

@@ -11,5 +11,5 @@ export const useProfileInfo = () => {
     }
   }, [isSuccess]);
 
-  return { user };
+  return { user, isLoading };
 };

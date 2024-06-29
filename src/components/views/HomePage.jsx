@@ -15,7 +15,7 @@ export default function HomePage() {
       <TopSellingCourses />
       <TopCategories />
       <MostRecentCourses />
-      <TopInstructors />
+      {/* <TopInstructors /> */}
       <FooterInfo />
     </>
   );
