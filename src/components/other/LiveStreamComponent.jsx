@@ -27,7 +27,7 @@ export default function LiveStreamComponent({ liveId }) {
     // if (!currentUser) return null;
     try {
       const res = await joinLiveMutation.mutateAsync();
-      setToken(res.data.token);
+      setToken(res.data.data.token);
       // setToken(token.token);
     } catch (error) {
       console.log(error);
@@ -64,9 +64,8 @@ export default function LiveStreamComponent({ liveId }) {
   const [callRecordings, setCallRecordings] = useState([]);
   const getRecordings = async (call) => {
     try {
-      const response = await call.queryRecordings();
-      console.log(response);
-      setCallRecordings(response.recordings);
+      const response = await call?.queryRecordings();
+      setCallRecordings(response?.recordings || []);
     } catch (error) {
       console.log(error);
     }

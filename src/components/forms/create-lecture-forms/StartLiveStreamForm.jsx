@@ -19,7 +19,7 @@ export default function StartLiveStreamForm() {
   const startLiveMutation = useCreateResource(
     `lectures/${selectedLiveStream?.id}/start-live`
   );
-  console.log(selectedLiveStream);
+
   useEffect(() => {
     if (getLecturesQuery.data) {
       setLiveStreamsList(getLecturesQuery.data.data.data);

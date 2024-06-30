@@ -1,6 +1,6 @@
 import { CircularProgress, Pagination } from "@mui/material";
 import { useEffect, useState } from "react";
-import mathBook from "../../assets/images/book-covers/math_book.jpg";
+
 import Button from "@mui/material/Button";
 import { useProfileInfo } from "../../hooks/useProfileInfo";
 import CourseCard from "../cards/CourseCard";
@@ -13,7 +13,7 @@ function Lecture() {
   return (
     <div className="lecture w-full sm:w-[15rem] h-[20rem] border-2 border-gray-100">
       <div className="preview w-full h-[12rem] overflow-clip">
-        <img src={mathBook} alt="" className="" />
+        <img src={""} alt="" className="" />
       </div>
       <div className="p-1 border-b-2 info border-b-gray-100">
         <p className="mb-1 text-sm text-gray-600">

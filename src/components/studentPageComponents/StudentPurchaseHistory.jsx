@@ -12,7 +12,6 @@ export default function StudentPurchaseHistory() {
   useEffect(() => {
     if (invoicesQuery.data) {
       setInvoices(invoicesQuery.data.data.data);
-      console.log(invoicesQuery.data.data.data);
     }
   }, [invoicesQuery.isSuccess]);
   return (
@@ -57,10 +56,12 @@ export function CourseCardInPurchaseHistory({ invoice }) {
           <div className="absolute hidden w-full h-full overlay bg-gray-white opacity-30 group-hover/card:block"></div>
           <img
             className="w-full h-full object-cover"
-            src={currentInvoice.invoiceable[0].cover_image}
+            src={
+              currentInvoice.invoiceable[0].cover_image ||
+              dbModulesPhotosList[currentInvoice.invoiceable[0].module]
+            }
             alt={currentInvoice.invoiceable[0].name}
           />
-          {console.log(currentInvoice.invoiceable[0].cover_image)}
         </div>
         <div className="info flex flex-col justify-between">
           <p className="text-gray-500 flex items-center">

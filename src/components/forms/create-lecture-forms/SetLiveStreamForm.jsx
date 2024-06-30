@@ -63,7 +63,6 @@ export default function SetLiveStreamForm() {
   useEffect(() => {
     if (user) {
       const userCourses = combineCourses(user.courses);
-      console.log(user);
       setCoursesList(
         userCourses?.map((course) => {
           return {

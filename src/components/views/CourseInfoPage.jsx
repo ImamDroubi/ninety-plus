@@ -17,6 +17,7 @@ import { Button, CircularProgress } from "@mui/material";
 import { useUserInfo } from "../../hooks/useUserInfo";
 import AddRating from "../popups/AddRating";
 import AddComment from "../popups/AddComment";
+import { dbUserPhotosList } from "../data/seedingImages";
 
 export default function CourseInfoPage() {
   let { id } = useParams();
@@ -54,7 +55,10 @@ export default function CourseInfoPage() {
                 <div className="flex items-center gap-1 teacher">
                   <div className="object-cover w-5 h-5 rounded-full img">
                     <img
-                      src={course.instructor.profile_image}
+                      src={
+                        course.instructor.profile_image ||
+                        dbUserPhotosList[course.instructor.id]
+                      }
                       alt={course.instructor.name}
                       className="w-full h-full rounded-full"
                     />

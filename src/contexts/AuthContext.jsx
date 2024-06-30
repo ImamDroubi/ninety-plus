@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import Cookies from "universal-cookie";
+import { dbUserPhotosList } from "../components/data/seedingImages";
 const AuthContext = React.createContext();
 
 export function useAuth() {
@@ -27,6 +28,9 @@ export function AuthProvider({ children }) {
   }, []);
 
   function login(user) {
+    if (!user.profile_image && user.user_id < 15) {
+      user.profile_image = dbUserPhotosList[user.user_id];
+    }
     setCurrentUser(user);
     localStorage.setItem("current_user", user);
   }

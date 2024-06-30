@@ -10,6 +10,7 @@ import AddComment from "../popups/AddComment";
 import ClosePopupButton from "../buttons/ClosePopupButton";
 import { useComments } from "../../hooks/useComments";
 import { useUserInfo } from "../../hooks/useUserInfo";
+import { dbUserPhotosList } from "../data/seedingImages";
 
 function Description({ text }) {
   return (
@@ -26,7 +27,7 @@ function Teacher({ instructor }) {
       <div className="flex flex-col gap-3 teacher">
         <div className="object-cover w-full img">
           <img
-            src={instructor.profile_image}
+            src={instructor.profile_image || dbUserPhotosList[instructor.id]}
             alt=""
             className="w-full h-full"
           />
@@ -42,7 +43,6 @@ function Teacher({ instructor }) {
 function StudentComment({ comment }) {
   const [extended, setExtended] = useState(false);
   const { userInfo, isLoading } = useUserInfo(comment?.user_id, comment);
-  console.log(userInfo);
   const text = comment.content;
   if (isLoading || !comment || !userInfo) return <CircularProgress />;
   return (

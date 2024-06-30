@@ -7,7 +7,6 @@ import {
   faClock,
 } from "@fortawesome/free-solid-svg-icons";
 import CourseCard from "../cards/CourseCard";
-import MathBook from "../../assets/images/book-covers/math_book.jpg";
 import { Button, CircularProgress } from "@mui/material";
 import { useProfileInfo } from "../../hooks/useProfileInfo";
 import { useEffect, useState } from "react";

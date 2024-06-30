@@ -7,6 +7,7 @@ import { useAlert } from "../../hooks/useAlert";
 import TopAlert from "../alerts/TopAlert";
 import usePurchaseCourse from "../../apiCalls/usePurchaseCourse";
 import { useState } from "react";
+import { dbModulesPhotosList } from "../data/seedingImages";
 
 export default function StudentFavourite() {
   const { favouriteList, isLoading, isError } = useFavouriteList();
@@ -79,7 +80,10 @@ export function CourseCardInFavourite({ course }) {
             <div className="absolute hidden w-full h-full overlay bg-gray-white opacity-30 group-hover/card:block"></div>
             <img
               className="w-full h-full object-cover"
-              src={currentCourse.cover_image}
+              src={
+                currentCourse.cover_image ||
+                dbModulesPhotosList[currentCourse.module]
+              }
               alt={currentCourse.title}
             />
           </div>

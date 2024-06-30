@@ -1,10 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
-import MathBook from "../../assets/images/book-covers/math_book.jpg";
-import ArabicBook from "../../assets/images/book-covers/chem_book.jpg";
-import PhysicsBook from "../../assets/images/book-covers/phys_book.jpg";
-import EnglishBook from "../../assets/images/book-covers/english_book.jpeg";
-import ChemBook from "../../assets/images/book-covers/chem_book.jpg";
 
 import OptionsOverlayButton from "../overlays/OptionsOverlayButton";
 import { useState } from "react";
@@ -16,23 +11,11 @@ import TopAlert from "../alerts/TopAlert";
 import { useAlert } from "../../hooks/useAlert";
 import PopupLayout from "../layouts/PopupLayout";
 import ClosePopupButton from "../buttons/ClosePopupButton";
+import { dbModulesPhotosList } from "../data/seedingImages";
 
-const book_covers = [MathBook, ArabicBook, PhysicsBook, EnglishBook, ChemBook];
-const prices = [120, 150, 160, 200, 250, 300];
-const rates = [1.2, 4, 5, 4.8, 3, 3.5];
-const studentsNo = [36, 40, 22, 16, 19, 36];
-const sample = {
-  id: 1,
-  title: "رياضيات توجيهي علمي وصناعي للأستاذ محمد حرزالله",
-  category: "علمي",
-  price: prices[Math.floor(Math.random() * 6)],
-  cover_image: book_covers[Math.floor(Math.random() * 5)],
-  rate: rates[Math.floor(Math.random() * 6)],
-  student_count: studentsNo[Math.floor(Math.random() * 6)],
-};
-export default function CourseCard({ course = sample, showOptions = false }) {
+export default function CourseCard({ course, showOptions = false }) {
   // remove the = sample
-  const [currentCourse, setCurrentCourse] = useState({ ...sample, ...course });
+  const [currentCourse, setCurrentCourse] = useState(course);
   const deleteMutation = useDeleteResource("courses");
   const [deleteCoursePopupOpen, setDeleteCoursePopupOpen] = useState(false);
   const navigate = useNavigate();
@@ -40,7 +23,6 @@ export default function CourseCard({ course = sample, showOptions = false }) {
   const handleNavigate = () => {
     navigate(`/course-info/${course.id}`);
   };
-
   const optionsList = [
     {
       text: "عرض الدورة",
@@ -106,7 +88,11 @@ export default function CourseCard({ course = sample, showOptions = false }) {
         <div className="preview w-full h-[12rem] object-cover overflow-hidden relative">
           <div className="absolute hidden w-full h-full overlay bg-gray-white opacity-30 group-hover:block"></div>
           <img
-            src={currentCourse.cover_image}
+            src={
+              currentCourse.cover_image ||
+              dbModulesPhotosList[course.module] ||
+              dbModulesPhotosList[course.module.id]
+            }
             alt="math book"
             className="w-full"
           />
