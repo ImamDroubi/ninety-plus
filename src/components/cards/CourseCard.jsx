@@ -99,7 +99,7 @@ export default function CourseCard({ course, showOptions = false }) {
         </div>
         <div className="flex items-center justify-between w-full p-2 info">
           <p className="category font-semibold bg-primary-100 p-[0.3rem] text-primary-700">
-            {currentCourse.category}
+            {currentCourse.category || "علمي"}
           </p>
           <p className="font-bold price text-primary-500">
             {currentCourse.price} $

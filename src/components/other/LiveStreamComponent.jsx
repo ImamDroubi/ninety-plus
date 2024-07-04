@@ -16,7 +16,9 @@ import { useLiveStreamAuth } from "../../contexts/LiveStreamAuthContext";
 import axios from "axios";
 import { axiosInstance } from "../../apiCalls";
 import useCreateResource from "../../apiCalls/useCreateResource";
-const apiKey = "whsuc3edb47g";
+
+const apiKey = import.meta.env.VITE_STREAM_API_KEY;
+
 export default function LiveStreamComponent({ liveId }) {
   const { currentUser } = useAuth();
   const [client, setClient] = useState();

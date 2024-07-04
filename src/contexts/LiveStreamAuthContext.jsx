@@ -10,9 +10,8 @@ export function useLiveStreamAuth() {
   return useContext(LiveStreamAuthContext);
 }
 
-const apiKey = "whsuc3edb47g";
-// const token =
-//   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoidXNlciIsImlhdCI6MTcxOTQ5OTk0Mn0.R5tka7Fasr-QX-cZuylce89CP7Uij4ZYkzrpNYQ1COY";
+const apiKey = import.meta.env.VITE_STREAM_API_KEY;
+
 export function LiveStreamAuthProvider({ children }) {
   const { currentUser } = useAuth();
   const [client, setClient] = useState();
